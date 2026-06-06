@@ -49,8 +49,14 @@ s $a seq Ga => ph $.
 
 $(
 ###############################################################################
-  STRUCTURAL AND IDENTITY RULES
+  AXIOMS
 ###############################################################################
+$)
+
+$(
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+  STRUCTURAL AND IDENTITY RULES
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
 $c |- $.
@@ -80,17 +86,10 @@ $}
 
 ax-idc $a |- Ga , ps , De => ps $.
 
-ax-id $p |- ps => ps $=
-  ( cf wtru ax-idc ax-str ) AABACBZFDE $.
-ax-idl $p |- ps , Ga => ps $=
-  ( cf cc wtru ax-idc ax-str ) AACBDAECZBHDFG $.
-ax-idr $p |- Ga , ps => ps $=
-  ( cf cc wtru ax-idc ax-str ) ABACDAECZBDHFG $.
-
 $(
-###############################################################################
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
   LOGICAL RULES
-###############################################################################
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
 ${
@@ -157,14 +156,53 @@ ${
 $}
 
 $(
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+  DERIVED AXIOMS
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+$)
+
+ax-id $p |- ps => ps $=
+  ( cf wtru ax-idc ax-str ) AABACBZFDE $.
+
+ax-idl $p |- ps , Ga => ps $=
+  ( cf cc wtru ax-idc ax-str ) AACBDAECZBHDFG $.
+
+ax-idr $p |- Ga , ps => ps $=
+  ( cf cc wtru ax-idc ax-str ) ABACDAECZBDHFG $.
+
+$(
+###############################################################################
+  HYPOTHETICAL DEDUCTIONS
+###############################################################################
+$)
+
+$( Ex contradictione quodlibet sequitur $)
+contr $p |- ph , ~ ph =>  ps $=
+  ( cf wn cc ax-idl ax-idr ax-enot ax-efal ) BACZADZCZEZAMALFKJGHI $.
+
+$( Modus ponens $)
+mp $p |- ( ph -> ps ) , ph => ps $=
+  ( wi cf cc ax-idl ax-idr ax-eim ) ABABCZDZADZEIKFAJGH $.
+
+$( Modus tollendo ponens $)
+mtp $p |- ( ph \/ ps ) , ~ ph => ps $=
+  ( wo cf wn cc ax-idl ax-idr ax-idc ax-enot ax-efal ax-eor ) ABBABCZDZAEZDZFZM
+  PGBNPADZFFZASAQHONRIJKBQHL $.
+
+$( Hypothetical syllogism $)
+syl $p |- ( ph -> ps ) , ( ps -> ch ) => ( ph -> ch ) $=
+  ( wi cf cc ax-idc wtru ax-str ax-eim ax-iim ) ACABDZEZBCDZEZFZBCMOAEZFFZNMQGA
+  BRLRLHEZOQSFFGIARASPFSGIJJK $.
+
+notnot $p |- ( ph \/ ~ ph ) => ( ~ ~ ph -> ph ) $=
+  ( wn wo cf cc ax-idl ax-idr ax-idc ax-enot ax-efal ax-eor ax-iim ) ABZBZAAMCZ
+  DZAMAPNDZEZOQFARGAPQMDZEEZMTMRGNPSHIJKL $.
+
+$(
 ###############################################################################
   TAUTOLOGIES
 ###############################################################################
 $)
-
-$( Not true implies false. $)
-nottru $p |- T. => ( ~ T. -> F. ) $=
-  ( wtru wn wfal cf cc ax-idl ax-idr ax-enot ax-iim ) ABZCADZAKJDZEALFJKGHI $.
 
 $( Law of non-contradiction $)
 lnc $p |- T. => ~ ( ph /\ ~ ph ) $=
@@ -200,30 +238,6 @@ andil $p |- T. => ( ( ph /\ ( ps \/ ch ) )
 curry $p |- T. => ( ( ( ph /\ ps ) -> ch ) -> ( ph -> ( ps -> ch ) ) ) $=
   ( wa wi wtru cf cc ax-idc ax-str ax-ian ax-eim ax-iim ) ABDZCEZABCEZEFGZAPQOG
   ZHZBCQRAGZHHZNCQRTBGZHZHHOQUCIABUAUBAUAAQSHQIJBUBBQQIJKLMMM $.
-
-$(
-###############################################################################
-  HYPOTHETICAL DEDUCTIONS
-###############################################################################
-$)
-
-$( Modus ponens $)
-mp $p |- ( ph -> ps ) , ph => ps $=
-  ( wi cf cc ax-idl ax-idr ax-eim ) ABABCZDZADZEIKFAJGH $.
-
-$( Modus tollendo ponens $)
-mtp $p |- ( ph \/ ps ) , ~ ph => ps $=
-  ( wo cf wn cc ax-idl ax-idr ax-idc ax-enot ax-efal ax-eor ) ABBABCZDZAEZDZFZM
-  PGBNPADZFFZASAQHONRIJKBQHL $.
-
-$( Hypothetical syllogism $)
-syl $p |- ( ph -> ps ) , ( ps -> ch ) => ( ph -> ch ) $=
-  ( wi cf cc ax-idc wtru ax-str ax-eim ax-iim ) ACABDZEZBCDZEZFZBCMOAEZFFZNMQGA
-  BRLRLHEZOQSFFGIARASPFSGIJJK $.
-
-notnot $p |- ( ph \/ ~ ph ) => ( ~ ~ ph -> ph ) $=
-  ( wn wo cf cc ax-idl ax-idr ax-idc ax-enot ax-efal ax-eor ax-iim ) ABZBZAAMCZ
-  DZAMAPNDZEZOQFARGAPQMDZEEZMTMRGNPSHIJKL $.
 
 $(
 ###############################################################################
