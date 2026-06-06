@@ -313,6 +313,11 @@ inotnot $p |- Ga => ( ph -> ~ ~ ph ) $=
   ( wn cf cc ax-idc idr ax-enot ax-inot ax-iim ) AACZCBKBADZEZABLKDZEEABNFKMGHI
   J $.
 
+$( A weak version of the law of excluded middle. $)
+exmidw $p |- Ga => ~ ~ ( ph \/ ~ ph ) $=
+  ( wn wo cf cc idr ax-iorl ax-idc ax-enot ax-inot ax-iorr ) AACZDZCZBNBOEZFZAM
+  QAQNBPAEZFFZAMSAQGHOBRIJKLOBGJK $.
+
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
   PROPERTIES OF CONJUNCTION
