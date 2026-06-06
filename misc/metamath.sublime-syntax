@@ -1,0 +1,55 @@
+%YAML 1.2
+# https://www.sublimetext.com/docs/syntax.html
+# https://www.sublimetext.com/docs/scope_naming.html
+# https://us.metamath.org/downloads/metamath.pdf
+---
+name: Metamath
+file_extensions: [mm]
+scope: source.mm
+version: 2
+
+variables:
+  label: "[A-Za-z0-9-_.]+"
+
+contexts:
+  main:
+    - match: \$\(
+      scope: punctuation.definition.comment.begin.metamath
+      push: comment
+    - match: "{{label}}"
+      scope: entity.name.label.metamath
+    - match: \$[cv]
+      scope: keyword.control.metamath
+      push: declaration
+    - match: \$[def]
+      scope: keyword.control.metamath
+      push: hypothesis
+    - match: \$[ap]
+      scope: keyword.control.metamath
+      push: assertion
+
+  comment:
+    - meta_scope: comment.block.metamath
+    - match: \$\)
+      scope: punctuation.definition.comment.end.metamath
+      pop: true
+
+  declaration:
+    - meta_scope: markup.other.metamath
+    - match: \$\.
+      scope: punctuation.terminator.metamath
+      pop: true
+
+  hypothesis:
+    - meta_scope: markup.other.metamath
+    - match: \$\.
+      scope: punctuation.terminator.metamath
+      pop: true
+
+  assertion:
+    - meta_scope: markup.other.metamath
+    - match: \$=
+      scope: punctuation.separator.metamath
+    - match: \$\.
+      scope: punctuation.terminator.metamath
+      pop: true
