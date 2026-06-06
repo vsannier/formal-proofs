@@ -7,7 +7,7 @@ $(
 ###############################################################################
 $)
 
-$c S K I ( ) term => = wff |- $.
+$c ( ) term wff |- $.
 $v f g h x y z $.
 
 tf $f term f $.
@@ -18,14 +18,7 @@ tx $f term x $.
 ty $f term y $.
 tz $f term z $.
 
-tS $a term S $.
-tK $a term K $.
-tI $a term I $.
-
 tap $a term ( f x ) $.
-
-wss $a wff x => y $.
-weq $a wff x = y $.
 
 $(
 ###############################################################################
@@ -35,37 +28,25 @@ $)
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-  EQUALITY
+  DEFINITIONAL EQUALITY
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
-ax-eqid $a |- x = x $.
-
-${
-  ax-eqsym.1 $e |- x = y $.
-  ax-eqsym $a |- y = x $.
-$}
-
-${
-  ax-eqtr.1 $e |- x = y $.
-  ax-eqtr.2 $e |- y = z $.
-  ax-eqtr $a |- x = z $.
-$}
-
-${
-  ax-eqap.1 $e |- f = g $.
-  ax-eqap.2 $e |- x = y $.
-  ax-eqap $a |- ( f x ) = ( g y ) $.
-$}
+$c := $.
+weq $a wff x := y $.
+ax-eqid $a |- x := x $.
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-  REDUCTION (BIG-STEP)
+  MULTI-STEP REDUCTION
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
+$c => $.
+wss $a wff x => y $.
+
 ${
-  ax-eqbs.1 $e |- x = y $.
+  ax-eqbs.1 $e |- x := y $.
   ax-eqbs $a |- x => y $.
 $}
 
@@ -83,12 +64,34 @@ $}
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+  JOINABILITY (OBSERVATIONAL EQUALITY)
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+$)
+
+$c =><= $.
+wjn $a wff x =><= y $.
+
+${
+  ax-ijn.1 $e |- x => z $.
+  ax-ijn.2 $e |- y => z $.
+  ax-ijn $a |- x =><= y $.
+$}
+
+$(
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
   BASE COMBINATORS
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
+$c S K I $.
+
+tS $a term S $.
 ax-S $a |- ( ( ( S x ) y ) z ) => ( ( x z ) ( y z ) ) $.
+
+tK $a term K $.
 ax-K $a |- ( ( K x ) y ) => x $.
+
+tI $a term I $.
 ax-I $a |- ( I x ) => x $.
 
 $(
@@ -99,7 +102,7 @@ $)
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-  EQUALITY AND REDUCTION
+  EQUALITY, REDUCTION AND JOINABILITY
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
@@ -116,13 +119,20 @@ ${
 $}
 
 ${
-  eqapl.1 $e |- f = g $.
+  eqapl.1 $e |- f := g $.
   eqapl $p |- ( f x ) => ( g x ) $= ( ax-eqbs bsid ax-ap ) ABCCABDECFG $.
 $}
 
 ${
-  eqapr.1 $e |- x = y $.
+  eqapr.1 $e |- x := y $.
   eqapr $p |- ( f x ) => ( f y ) $= ( bsid ax-eqbs ax-ap ) AABCAEBCDFG $.
+$}
+
+jnid $p |- x =><= x $= ( bsid ax-ijn ) AAAABZDC $.
+
+${
+  eqjn.1 $e |- x := y $.
+  eqjn $p |- x =><= y $= ( ax-eqbs bsid ax-ijn ) ABBABCDBEF $.
 $}
 
 $(
@@ -131,8 +141,9 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
-SKK $p |- ( ( ( S K ) K ) x ) => x $=
-  ( tS tK tap ax-S ax-K ax-bstr ) BCDCDADCADZHDACCAEAHFG $.
+SKK $p |- ( ( ( S K ) K ) x ) =><= ( I x ) $=
+  ( tS tK tap tI ax-S ax-K ax-bstr ax-I ax-ijn ) BCDCDADZEADAKCADZLDACCAFALGHAI
+  J $.
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
@@ -140,23 +151,23 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
-$c F T NOT OR AND $.
+$c F T NOT OR AND IMP $.
 
 tT $a term T $.
-df-T $a |- T = K $.
+df-T $a |- T := K $.
 
 etru $p |- ( ( T x ) y ) => x $=
   ( tT tap tK df-T eqapl apl ax-K ax-bstr ) CADZBDEADZBDAKLBCEAFGHABIJ $.
 
 tF $a term F $.
-df-F $a |- F = ( S K ) $.
+df-F $a |- F := ( S K ) $.
 
 efal $p |- ( ( F x ) y ) => y $=
   ( tF tap tS tK df-F eqapl apl ax-S ax-K ax-bstr ) CADZBDEFDZADZBDZBMOBCNAGHIP
   FBDABDZDBFABJBQKLL $.
 
 tNOT $a term NOT $.
-df-NOT $a |- NOT = ( ( S ( ( S I ) ( K F ) ) ) ( K T ) ) $.
+df-NOT $a |- NOT := ( ( S ( ( S I ) ( K F ) ) ) ( K T ) ) $.
 
 eNOT $p |- ( NOT x ) => ( ( x F ) T ) $=
   ( tNOT tap tS tI tK tF tT df-NOT eqapl ax-S apl ax-I ax-K ax-ap ax-bstr ) BAC
@@ -170,7 +181,7 @@ notfal $p |- ( NOT F ) => T $=
   ( tNOT tF tap tT eNOT efal ax-bstr ) ABCBBCDCDBEBDFG $.
 
 tOR $a term OR $.
-df-OR $a |- OR = ( ( S I ) ( K T ) ) $.
+df-OR $a |- OR := ( ( S I ) ( K T ) ) $.
 
 eOR $p |- ( ( OR x ) y ) => ( ( x T ) y ) $=
   ( tOR tap tS tI tK tT df-OR eqapl apl ax-S ax-I ax-K ax-ap ax-bstr ) CADZBDEF
@@ -183,7 +194,7 @@ orfal $p |- ( ( OR F ) y ) => y $=
   ( tOR tF tap tT eOR efal ax-bstr ) BCDADCEDADACAFEAGH $.
 
 tAND $a term AND $.
-df-AND $a |- AND = ( ( S S ) ( K ( K F ) ) ) $.
+df-AND $a |- AND := ( ( S S ) ( K ( K F ) ) ) $.
 
 eAND $p |- ( ( AND x ) y ) => ( ( x y ) F ) $=
   ( tAND tap tS tK tF df-AND eqapl apl ax-S ax-K ax-bstr apr ) CADZBDEEDFFGDZDZ
