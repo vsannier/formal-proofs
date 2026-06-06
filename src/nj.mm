@@ -62,6 +62,7 @@ $(
 $)
 
 $c |- $.
+$( $j syntax '|-' as 'wff'; $)
 
 $( Identity (center) $)
 ax-idc $a |- Ga , ps , De => ps $.

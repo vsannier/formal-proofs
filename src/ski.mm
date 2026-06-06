@@ -9,6 +9,7 @@ $(
 $)
 
 $c ( ) term wff |- $.
+$( $j syntax '|-' as 'wff'; $)
 $v f g h x y z $.
 
 tf $f term f $.
