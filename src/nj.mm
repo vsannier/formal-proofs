@@ -480,6 +480,13 @@ $( Conjunction implies disjunction. $)
 animor $p |- Ga => ( ( ph /\ ps ) -> ( ps \/ ph ) ) $=
   ( wa wo cf cc idr ax-eanr ax-iorl ax-iim ) ABDZBAECBACLFGZABMLCHIJK $.
 
+$( Distributivity of implication over conjunction $)
+jcab $p |- Ga => ( ( ph -> ( ps /\ ch ) )
+  <-> ( ( ph -> ps ) /\ ( ph -> ch ) ) ) $=
+  ( wi wa cf cc ax-idc ax-eanl idr ax-eim ax-eanr jca ax-iim impbi ) ABEZACEZFZ
+  ABCFZEZDSUADATDSGZHZCBDUBAGZHHZABUEQRUESDUDIZJAUCKZLACUEQRUEUFMUGLNOOUASDRQDU
+  AGZHZABUIBCDUHUDHHZATUJUADUDIAUIKLZJOACUIBCUJUKMONOP $.
+
 $( Left-distributivity of conjunction over disjunction $)
 andil $p |- Ga => ( ( ph /\ ( ps \/ ch ) )
   -> ( ( ph /\ ps ) \/ ( ph /\ ch ) ) ) $=
