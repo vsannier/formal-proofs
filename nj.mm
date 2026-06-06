@@ -137,9 +137,7 @@ ${
   ax-eor $a |- Ga => ch $.
 $}
 
-${
-  ax-itru $a |- Ga => T. $.
-$}
+ax-itru $a |- Ga => T. $.
 
 ${
   ax-efal.1 $e |- Ga => F. $.
