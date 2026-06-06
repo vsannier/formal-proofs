@@ -206,3 +206,12 @@ antru $p |- ( ( AND T ) y ) => y $=
 
 anfal $p |- ( ( AND F ) y ) => F $=
   ( tAND tF tap eAND efal ax-bstr ) BCDADCADCDCCAEACFG $.
+
+tIMP $a term IMP $.
+df-IMP $a |- IMP := ( ( S ( K OR ) ) ( ( S ( K NOT ) ) I ) ) $.
+
+eIMP $p |- ( ( IMP x ) y ) => ( ( OR ( NOT x ) ) y ) $=
+  ( tIMP tap tS tK tOR tNOT df-IMP eqapl apl ax-S ax-K ax-I ax-ap ax-bstr apr
+  tI ) CADZBDEFGDZDEFHDZDRDZDZADZBDZGHADZDZBDZSUDBCUCAIJKUETADZUBADZDZBDZUHUDUK
+  BTUBALKULGUJDZBDUHUKUMBUIGUJGAMKKUMUGBGUJUFUJUAADZRADZDUFUARALUNHUOAHAMANOPQK
+  PPP $.
