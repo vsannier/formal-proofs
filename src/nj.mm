@@ -263,6 +263,18 @@ $)
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+  PROPERTIES OF IMPLICATION
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+$)
+
+$( Frege's theorem $)
+frege $p |- Ga => ( ( ph -> ( ps -> ch ) )
+  -> ( ( ph -> ps ) -> ( ph -> ch ) ) ) $=
+  ( wi cf cc ax-idc ax-idr ax-eim ax-iim ) ABCEZEZABEZACEZEDNODMFZGZACDPNFZGGZB
+  CDPRAFZGZGGZALUBMDUAHASIZJABUBNQTHUCJJKKK $.
+
+$(
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
   PROPERTIES OF NEGATION
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
