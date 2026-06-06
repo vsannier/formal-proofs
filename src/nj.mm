@@ -460,6 +460,18 @@ orabs $p |- Ga => ( ( ph \/ ( ph /\ ps ) ) <-> ph ) $=
   ( wa wo wi cf cc idr ax-eanl ax-eor ax-iim ax-iorl jca ax-ibi ) AABDZEZACAQFQ
   AFCQACAPACQGZHZQCIASIABCRPGHHPSIJKLAQCAPCAGHACIMLNO $.
 
+dmor $p |- Ga => ( ~ ( ph \/ ps ) <-> ( ~ ph /\ ~ ps ) ) $=
+  ( wo wn wa wi cf cc idr ax-iorl ax-idc ax-enot ax-inot ax-iorr ax-iim ax-eanl
+  jca wfal ax-eanr ax-eor ax-ibi ) ABDZEZAEZBEZFZCUGUDGUDUGGCUDUGCUFUECUDHZIZAU
+  IUCCUHAHZIIZABUKAUIJKUDCUJLMNBUIUCCUHBHZIIZABUMBUIJOUDCULLMNRPUGUDCUCCUGHZIZA
+  BSCUNUCHZIIZUCUOJACUNUPUJIZIIZAUQJUEUFUSUGCURLQMBCUNUPULIZIIZBUQJUEUFVAUGCUTL
+  TMUANPRUB $.
+
+dman $p |- Ga => ( ( ~ ph \/ ~ ps ) -> ~ ( ph /\ ps ) ) $=
+  ( wn wo wa cf wfal ax-idc ax-eanl idr ax-enot ax-eanr ax-eor ax-inot ax-iim
+  cc ) ADZBDZEZABFZDCUACTGZQZRSHCUBUAGZQQZTCUDIACUBUDRGZQQQZABUGUAUCUFIJRUEKLBC
+  UBUDSGZQQQZABUIUAUCUHIMSUEKLNOP $.
+
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
   CLASSICAL TAUTOLOGIES
