@@ -214,7 +214,8 @@ $(
 $)
 
 $( Ex falso quodlibet sequitur $)
-efq $p |- F. =>  ps $= ( wfal cf ax-id ax-efal ) ABCBDE $.
+efq $p |- F. =>  ps $=
+  ( wfal cf ax-id ax-efal ) ABCBDE $.
 
 $( Ex contradictione quodlibet sequitur $)
 ecq $p |- ph , ~ ph =>  ps $=
@@ -269,18 +270,19 @@ $)
 ${
   jca.1 $e |- Ga => ps $.
   jca.2 $e |- Ga => ph $.
-  jca $p |- Ga => ( ps /\ ph ) $= ( wa ax-ian ax-dup ) BAFCBACCDEGH $.
+  jca $p |- Ga => ( ps /\ ph ) $=
+    ( wa ax-ian ax-dup ) BAFCBACCDEGH $.
 $}
 
 $( Conjunction is idempotent. $)
 anidm $p |- Ga => ( ( ph /\ ph ) <-> ph ) $=
-  ( wa wi cf cc ax-idr ax-eanl ax-iim ax-ian ax-dup ax-ibi ) AACZABMADZAMDZCBNO
-  BBMABAABMEFMBGHIAMBMBAEFZAAPPABGZQJKIJKL $.
+  ( wa wi cf cc ax-idr ax-eanl ax-iim jca ax-ibi ) AACZABALDLADBLABAABLEFLBGHIA
+  LBAABAEFABGZMJIJK $.
 
 $( Conjunction is commutative. $)
 ancom $p |- Ga => ( ( ph /\ ps ) -> ( ps /\ ph ) ) $=
-  ( wa cf cc ax-idr ax-eanr ax-eanl ax-ian ax-dup ax-iim ) ABDZBADZCNCMEFZBAOOA
-  BOMCGZHABOPIJKL $.
+  ( wa cf cc ax-idr ax-eanr ax-eanl jca ax-iim ) ABDZBADCABCLEFZABMLCGZHABMNIJK
+  $.
 
 $( Conjunction is associative. $)
 anass $p |- Ga => ( ( ( ph /\ ps ) /\ ch ) <-> ( ph /\ ( ps /\ ch ) ) ) $=
@@ -303,23 +305,21 @@ uncurry $p |- Ga => ( ( ph -> ( ps -> ch ) ) -> ( ( ph /\ ps ) -> ch ) ) $=
 
 $( Law of exportation $)
 export $p |- Ga => ( ( ph -> ( ps -> ch ) ) <-> ( ( ph /\ ps ) -> ch ) ) $=
-  ( wi wa uncurry curry ax-ian ax-dup ax-ibi ) ABCEEZABFCEZDLMEZMLEZFDNODDABCDG
-  ABCDHIJK $.
+  ( wi wa uncurry curry jca ax-ibi ) ABCEEZABFCEZDLKEKLEDABCDGABCDHIJ $.
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
   PROPERTIES OF DISJUNCTION
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-$)
 
 truorfal $p |- Ga => ( ( T. \/ F. ) <-> T. ) $=
-  ( wtru wfal wo wi cf cc ax-idr ax-strr ax-iim ax-iorl jca ax-ibi ) BCDZBABNEN
-  BEANBABANFGZBOHIJBNABCABFGBAHKJLM $.
+  ( wtru wfal wo wi cf cc ax-itru ax-iim ax-idr ax-iorl jca ax-ibi ) BCDZBABNEN
+  BEANBAANFGHIBNABCABFGBAJKILM $.
 
 $( Disjunction is idempotent. $)
 oridm $p |- Ga => ( ( ph \/ ph ) <-> ph ) $=
-  ( wo wi wa cf cc ax-idr ax-eor ax-iim ax-iorl ax-ian ax-dup ax-ibi ) AACZABOA
-  DZAODZEBPQBBOABAAABOFGZOBHARHZSIJAOBAABAFGABHKJLMN $.
+  ( wo wi cf cc ax-idr ax-eor ax-iim ax-iorl jca ax-ibi ) AACZABAMDMADBMABAAABM
+  EFZMBGANGZOHIAMBAABAEFABGJIKL $.
 
 $( Disjunction is commutative. $)
 orcom $p |- Ga => ( ( ph \/ ps ) -> ( ps \/ ph ) ) $=
@@ -351,9 +351,9 @@ andil $p |- Ga => ( ( ph /\ ( ps \/ ch ) )
 $( Left-distributivity of disjunction over conjunction $)
 ordil $p |- Ga => ( ( ph \/ ( ps /\ ch ) )
   -> ( ( ph \/ ps ) /\ ( ph \/ ch ) ) ) $=
-  ( wa wo cf ax-idr ax-iorl ax-eanl ax-iorr ax-eor ax-eanr ax-ian ax-dup ax-iim
-  cc ) ABCEZFZABFZACFZEZDUBDSGZQZTUAUDUDARTUDSDHZABDUCAGQQZAUDHZIABDUCRGQQZBCUH
-  RUDHZJKLARUAUDUEACUFUGIACUHBCUHUIMKLNOP $.
+  ( wa wo cf cc ax-idr ax-iorl ax-eanl ax-iorr ax-eor ax-eanr jca ax-iim ) ABCE
+  ZFZABFZACFZEDTSDRGZHZAQSUBRDIZABDUAAGHHZAUBIZJABDUAQGHHZBCUFQUBIZKLMAQTUBUCAC
+  UDUEJACUFBCUFUGNLMOP $.
 
 $(
 ###############################################################################
