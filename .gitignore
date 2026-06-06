@@ -1,4 +1,4 @@
-src/set.mm
+misc/set.mm
 src/*.min
 scripts/*
 !scripts/mmtool.lua
