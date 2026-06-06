@@ -49,13 +49,11 @@ s $a seq Ga => ph $.
 
 $(
 ###############################################################################
-  IDENTITY AND STRUCTURAL RULES
+  STRUCTURAL AND IDENTITY RULES
 ###############################################################################
 $)
 
 $c |- $.
-
-ax-id $a |- Ga , ps , De => ps $.
 
 ${
   ax-weak.1 $e |- Ga , De => ps $.
@@ -79,6 +77,15 @@ ${
   ax-str.1 $e |- T. , Ga , T. => ph $.
   ax-str $a |- Ga => ph $.
 $}
+
+ax-idc $a |- Ga , ps , De => ps $.
+
+ax-id $p |- ps => ps $=
+  ( cf wtru ax-idc ax-str ) AABACBZFDE $.
+ax-idl $p |- ps , Ga => ps $=
+  ( cf cc wtru ax-idc ax-str ) AACBDAECZBHDFG $.
+ax-idr $p |- Ga , ps => ps $=
+  ( cf cc wtru ax-idc ax-str ) ABACDAECZBDHFG $.
 
 $(
 ###############################################################################
@@ -159,45 +166,42 @@ $)
 
 $( Not true implies false. $)
 nottru $p |- T. => ( ~ T. -> F. ) $=
-  ( wtru wn wfal cf cc ax-id ax-str ax-enot ax-iim ) ABZCADZAKJDZEZAMAKLKEFGJMJ
-  KKEKFGHI $.
+  ( wtru wn wfal cf cc ax-idl ax-idr ax-enot ax-iim ) ABZCADZAKJDZEALFJKGHI $.
 
 $( Law of non-contradiction $)
 lnc $p |- T. => ~ ( ph /\ ~ ph ) $=
-  ( wn wa wtru cf cc ax-id ax-str ax-eanl ax-eanr ax-enot ax-inot )
-  AABZCZDEZAONEFZAMPNPNOOFOGHZIAMPQJKL $.
+  ( wn wa wtru cf cc ax-idr ax-eanl ax-eanr ax-enot ax-inot ) AABZCZDEZANMEFZAL
+  OMNGZHALOPIJK $.
 
 $( Law of contraposition $)
 con $p |- T. => ( ( ph -> ps ) -> ( ~ ps -> ~ ph ) ) $=
-  ( wi wn wtru cf cc ax-id ax-str ax-eim ax-enot ax-inot ax-iim )
-  ABCZBDZADZCEFZOPQNFZGZAQROFZGGZBQRTAFZGZGGZABUDNQUCHAUDAQUAGQHIJOSUBHKLMM $.
+  ( wi wn wtru cf cc ax-idc ax-idr ax-eim ax-enot ax-inot ax-iim ) ABCZBDZADZCE
+  FZOPQNFZGZAQROFZGGZBQRTAFZGZGGZABUDNQUCHAUAIJOSUBHKLMM $.
 
 $( Conjunction is commutative. $)
 ancom $p |- T. => ( ( ph /\ ps ) -> ( ps /\ ph ) ) $=
-  ( wa wtru cf cc ax-id ax-str ax-eanr ax-eanl ax-ian ax-contr ax-iim )
-  ABCZBACZDEZOPNEZFZNOPPFZPBAPRFZQPFZABTNTNPSFPGHIABUANUANPSGHJKLHM $.
+  ( wa wtru cf cc ax-idc ax-str ax-eanr ax-eanl ax-ian ax-contr ax-iim ) ABCZBA
+  CZDEZOPNEZFZNOPPFZPBAPRFZQPFZABTNTNPSFPGHIABUANUANPSGHJKLHM $.
 
 $( Disjunction is commutative. $)
 orcom $p |- T. => ( ( ph \/ ps ) -> ( ps \/ ph ) ) $=
-  ( wo wtru cf cc ax-id ax-str ax-iorr ax-iorl ax-eor ax-iim )
-  ABCZBACZDEZABNOMEZFZMQMOOFOGHBAOPAEFFZARAOQFZOGHIBAOPBEFFZBTBSOGHJKL $.
+  ( wo wtru cf cc ax-idr ax-iorr ax-iorl ax-eor ax-iim ) ABCZBACZDEZABMNLEZFZLN
+  GBANOAEFFAPGHBANOBEFFBPGIJK $.
 
 animor $p |- T. => ( ( ph /\ ps ) -> ( ps \/ ph ) ) $=
-  ( wa wo wtru cf cc ax-id ax-str ax-eanr ax-iorl ax-iim )
-  ABCZBADEFZBANMFGZABOMOMNNGNHIJKL $.
+  ( wa wo wtru cf cc ax-idr ax-eanr ax-iorl ax-iim ) ABCZBADEFZBAMLFGZABNLMHIJK
+  $.
 
 $( Left-distributivity of conjunction over disjunction $)
 andil $p |- T. => ( ( ph /\ ( ps \/ ch ) )
   -> ( ( ph /\ ps ) \/ ( ph /\ ch ) ) ) $=
-  ( wo wa wtru cf cc ax-id ax-str ax-eanr ax-eanl ax-ian ax-iorl ax-iorr ax-eor
-  ax-contr ax-iim ) ABCDZEZABEZACEZDZFGZBCUCUDTGZHZASUFTUFTUDUDHUDIJZKUAUBUDUEB
-  GZHZHTUAUDUHABUFUIASUFUGLZBUIBUFUDIJMQNUAUBUDUECGZHZHTUBUDUKACUFULUJCULCUFUDI
-  JMQOPR $.
+  ( wo wa wtru cf ax-idr ax-eanr ax-eanl ax-ian ax-contr ax-iorl ax-iorr ax-eor
+  cc ax-iim ) ABCDZEZABEZACEZDZFGZBCUBUCSGZPZARUESUCHZITUAUCUDBGZPZPSTUCUGABUEU
+  HARUEUFJZBUDHKLMTUAUCUDCGZPZPSUAUCUJACUEUKUICUDHKLNOQ $.
 
 curry $p |- T. => ( ( ( ph /\ ps ) -> ch ) -> ( ph -> ( ps -> ch ) ) ) $=
-  ( wa wi wtru cf cc ax-id ax-str ax-ian ax-eim ax-iim )
-  ABDZCEZABCEZEFGZAPQOGZHZBCQRAGZHHZNCQRTBGZHZHHOQUCIABUAUBAUAAQSHQIJBUBBQQIJKL
-  MMM $.
+  ( wa wi wtru cf cc ax-idc ax-str ax-ian ax-eim ax-iim ) ABDZCEZABCEZEFGZAPQOG
+  ZHZBCQRAGZHHZNCQRTBGZHZHHOQUCIABUAUBAUAAQSHQIJBUBBQQIJKLMMM $.
 
 $(
 ###############################################################################
@@ -207,22 +211,21 @@ $)
 
 $( Modus ponens $)
 mp $p |- ( ph -> ps ) , ph => ps $=
-  ( wi cf cc wtru ax-id ax-str ax-eim ) ABABCZDZADZEZJMJFDZLNEGHAMANKENGHI $.
+  ( wi cf cc ax-idl ax-idr ax-eim ) ABABCZDZADZEIKFAJGH $.
 
 $( Modus tollendo ponens $)
 mtp $p |- ( ph \/ ps ) , ~ ph => ps $=
-  ( wo cf wn cc wtru ax-id ax-str ax-enot ax-efal ax-eor )
-  ABBABCZDZAEZDZFZMQMGDZPRFHIBNPADZFFZATATARQFZRHIONSHJKBNPBDFFBUARHIL $.
+  ( wo cf wn cc ax-idl ax-idr ax-idc ax-enot ax-efal ax-eor ) ABBABCZDZAEZDZFZM
+  PGBNPADZFFZASAQHONRIJKBQHL $.
 
 $( Hypothetical syllogism $)
 syl $p |- ( ph -> ps ) , ( ps -> ch ) => ( ph -> ch ) $=
-  ( wi cf cc ax-id wtru ax-str ax-eim ax-iim )
-  ACABDZEZBCDZEZFZBCMOAEZFFZNMQGABRLRLHEZOQSFFGIARASPFSGIJJK $.
+  ( wi cf cc ax-idc wtru ax-str ax-eim ax-iim ) ACABDZEZBCDZEZFZBCMOAEZFFZNMQGA
+  BRLRLHEZOQSFFGIARASPFSGIJJK $.
 
 notnot $p |- ( ph \/ ~ ph ) => ( ~ ~ ph -> ph ) $=
-  ( wn wo cf cc wtru ax-id ax-str ax-enot ax-efal ax-eor ax-iim )
-  ABZBZAAMCZDZAMAPNDZEZOROFDZQSEGHAPQADEEASREZSGHAPQMDZEEZMUBMUBMTSGHNPUAGIJKL
-  $.
+  ( wn wo cf cc ax-idl ax-idr ax-idc ax-enot ax-efal ax-eor ax-iim ) ABZBZAAMCZ
+  DZAMAPNDZEZOQFARGAPQMDZEEZMTMRGNPSHIJKL $.
 
 $(
 ###############################################################################
