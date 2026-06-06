@@ -179,66 +179,66 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
-$c F T NOT OR AND IMP $.
+$c FALSE TRUE NOT OR AND IMPLIES $.
 
-tT $a term T $.
-df-T $a |- T := K $.
+tTRUE $a term TRUE $.
+df-TRUE $a |- TRUE := K $.
 
-etru $p |- ( ( T x ) y ) => x $=
-  ( tT tap tK df-T eqapll ax-K ax-bstr ) CADBDEADBDACEABFGABHI $.
+etru $p |- ( ( TRUE x ) y ) => x $=
+  ( tTRUE tap tK df-TRUE eqapll ax-K ax-bstr ) CADBDEADBDACEABFGABHI $.
 
-tF $a term F $.
-df-F $a |- F := ( S K ) $.
+tFALSE $a term FALSE $.
+df-FALSE $a |- FALSE := ( S K ) $.
 
-efal $p |- ( ( F x ) y ) => y $=
-  ( tF tap tS tK df-F eqapll ax-S ax-K ax-bstr ) CADBDEFDZADBDZBCLABGHMFBDABDZD
-  BFABIBNJKK $.
+efal $p |- ( ( FALSE x ) y ) => y $=
+  ( tFALSE tap tS tK df-FALSE eqapll ax-S ax-K ax-bstr ) CADBDEFDZADBDZBCLABGHM
+  FBDABDZDBFABIBNJKK $.
 
 tNOT $a term NOT $.
-df-NOT $a |- NOT := ( ( S ( ( S I ) ( K F ) ) ) ( K T ) ) $.
+df-NOT $a |- NOT := ( ( S ( ( S I ) ( K FALSE ) ) ) ( K TRUE ) ) $.
 
-eNOT $p |- ( NOT x ) => ( ( x F ) T ) $=
-  ( tNOT tap tS tI tK tF tT df-NOT eqapl ax-S apl ax-I ax-K ax-ap ax-bstr ) BAC
-  DDECFGCZCZCFHCZCZACZAGCZHCZBTAIJUARACZSACZCZUCRSAKUFEACZQACZCZUECUCUDUIUEEQAK
-  LUIUBUEHUGAUHGAMGANOHANOPPP $.
+eNOT $p |- ( NOT x ) => ( ( x FALSE ) TRUE ) $=
+  ( tNOT tap tS tI tFALSE tTRUE df-NOT eqapl ax-S apl ax-I ax-K ax-ap ax-bstr
+  tK ) BACDDECPFCZCZCPGCZCZACZAFCZGCZBTAHIUARACZSACZCZUCRSAJUFEACZQACZCZUECUCUD
+  UIUEEQAJKUIUBUEGUGAUHFALFAMNGAMNOOO $.
 
-nottru $p |- ( NOT T ) => F $=
-  ( tNOT tT tap tF eNOT etru ax-bstr ) ABCBDCBCDBEDBFG $.
+nottru $p |- ( NOT TRUE ) => FALSE $=
+  ( tNOT tTRUE tap tFALSE eNOT etru ax-bstr ) ABCBDCBCDBEDBFG $.
 
-notfal $p |- ( NOT F ) => T $=
-  ( tNOT tF tap tT eNOT efal ax-bstr ) ABCBBCDCDBEBDFG $.
+notfal $p |- ( NOT FALSE ) => TRUE $=
+  ( tNOT tFALSE tap tTRUE eNOT efal ax-bstr ) ABCBBCDCDBEBDFG $.
 
 tOR $a term OR $.
-df-OR $a |- OR := ( ( S I ) ( K T ) ) $.
+df-OR $a |- OR := ( ( S I ) ( K TRUE ) ) $.
 
-eOR $p |- ( ( OR x ) y ) => ( ( x T ) y ) $=
-  ( tOR tap tS tI tK tT df-OR eqapll ax-S ax-I ax-K ax-ap ax-bstr apl ) CADBDEF
-  DGHDZDZADZBDAHDZBDCRABIJSTBSFADZQADZDTFQAKUAAUBHALHAMNOPO $.
+eOR $p |- ( ( OR x ) y ) => ( ( x TRUE ) y ) $=
+  ( tOR tap tS tI tK tTRUE df-OR eqapll ax-S ax-I ax-K ax-ap ax-bstr apl ) CADB
+  DEFDGHDZDZADZBDAHDZBDCRABIJSTBSFADZQADZDTFQAKUAAUBHALHAMNOPO $.
 
-ortru $p |- ( ( OR T ) y ) => T $=
-  ( tOR tT tap eOR etru ax-bstr ) BCDADCCDADCCAECAFG $.
+ortru $p |- ( ( OR TRUE ) y ) => TRUE $=
+  ( tOR tTRUE tap eOR etru ax-bstr ) BCDADCCDADCCAECAFG $.
 
-orfal $p |- ( ( OR F ) y ) => y $=
-  ( tOR tF tap tT eOR efal ax-bstr ) BCDADCEDADACAFEAGH $.
+orfal $p |- ( ( OR FALSE ) y ) => y $=
+  ( tOR tFALSE tap tTRUE eOR efal ax-bstr ) BCDADCEDADACAFEAGH $.
 
 tAND $a term AND $.
-df-AND $a |- AND := ( ( S S ) ( K ( K F ) ) ) $.
+df-AND $a |- AND := ( ( S S ) ( K ( K FALSE ) ) ) $.
 
-eAND $p |- ( ( AND x ) y ) => ( ( x y ) F ) $=
-  ( tAND tap tS tK tF df-AND eqapll ax-S apl ax-K ax-bstr apr ) CADBDEEDFFGDZDZ
-  DZADZBDZABDZGDZCQABHISEADPADZDZBDZUARUCBEPAJKUDTUBBDZDUAAUBBJTUEGUEOBDGUBOBOA
-  LKGBLMNMMM $.
+eAND $p |- ( ( AND x ) y ) => ( ( x y ) FALSE ) $=
+  ( tAND tap tS tK tFALSE df-AND eqapll ax-S apl ax-K ax-bstr apr ) CADBDEEDFFG
+  DZDZDZADZBDZABDZGDZCQABHISEADPADZDZBDZUARUCBEPAJKUDTUBBDZDUAAUBBJTUEGUEOBDGUB
+  OBOALKGBLMNMMM $.
 
-antru $p |- ( ( AND T ) y ) => y $=
-  ( tAND tT tap tF eAND etru ax-bstr ) BCDADCADEDACAFAEGH $.
+antru $p |- ( ( AND TRUE ) y ) => y $=
+  ( tAND tTRUE tap tFALSE eAND etru ax-bstr ) BCDADCADEDACAFAEGH $.
 
-anfal $p |- ( ( AND F ) y ) => F $=
-  ( tAND tF tap eAND efal ax-bstr ) BCDADCADCDCCAEACFG $.
+anfal $p |- ( ( AND FALSE ) y ) => FALSE $=
+  ( tAND tFALSE tap eAND efal ax-bstr ) BCDADCADCDCCAEACFG $.
 
-tIMP $a term IMP $.
-df-IMP $a |- IMP := ( ( S ( K OR ) ) ( ( S ( K NOT ) ) I ) ) $.
+tIMP $a term IMPLIES $.
+df-IMP $a |- IMPLIES := ( ( S ( K OR ) ) ( ( S ( K NOT ) ) I ) ) $.
 
-eIMP $p |- ( ( IMP x ) y ) => ( ( OR ( NOT x ) ) y ) $=
+eIMP $p |- ( ( IMPLIES x ) y ) => ( ( OR ( NOT x ) ) y ) $=
   ( tIMP tap tS tK tOR tNOT df-IMP eqapll ax-S apl ax-K ax-I ax-ap ax-bstr apr
   tI ) CADBDEFGDZDEFHDZDRDZDZADZBDZGHADZDZBDZCUBABIJUDSADZUAADZDZBDZUGUCUJBSUAA
   KLUKGUIDZBDUGUJULBUHGUIGAMLLULUFBGUIUEUITADZRADZDUETRAKUMHUNAHAMANOPQLPPP $.
@@ -249,7 +249,7 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
-$c B C W $.
+$c B C W T $.
 
 $( Bluebird combinator $)
 tB $a term B $.
@@ -278,6 +278,14 @@ eW $p |- ( ( W f ) x )  => ( ( f x ) x ) $=
   ( tW tap tS tK tI df-W eqapll ax-S apl ax-K ax-I ax-bstr apr ) CADBDEEDFGDZDZ
   ADZBDZABDZBDZCQABHISEADPADZDZBDZUARUCBEPAJKUDTUBBDZDUAAUBBJTUEBUEGBDBUBGBGALK
   BMNONNN $.
+
+$( Thrush combinator $)
+tT $a term T $.
+df-T $a |- T := ( C I ) $.
+
+eT $p |- ( ( T x ) f ) => ( f x ) $=
+  ( tT tap tC tI df-T eqapll eC ax-I apl ax-bstr ) CBDADEFDZBDADZABDZCMBAGHNFAD
+  ZBDOFBAIPABAJKLL $.
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
@@ -339,20 +347,20 @@ eMUL $p |- ( ( ( MUL x ) y ) f ) => ( x ( y f ) ) $=
 $c ISZERO $.
 
 tISZERO $a term ISZERO $.
-df-ISZERO $a |- ISZERO := ( ( S ( ( S I ) ( K ( K F ) ) ) ) ( K T ) ) $.
+df-ISZERO $a |- ISZERO := ( ( S ( ( S I ) ( K ( K FALSE ) ) ) ) ( K TRUE ) ) $.
 
-eISZERO $p |- ( ISZERO x ) => ( ( x ( K F ) ) T ) $=
-  ( tISZERO tap tS tI tK tF tT df-ISZERO eqapl ax-S ax-K ax-ap ax-I apl ax-bstr
-  ) BACDDECFFGCZCZCZCFHCZCZACZAQCZHCZBUAAIJUBSACZTACZCZUDSTAKUGEACZRACZCZHCUDUE
-  UJUFHERAKHALMUJUCHUHAUIQANQALMOPPP $.
+eISZERO $p |- ( ISZERO x ) => ( ( x ( K FALSE ) ) TRUE ) $=
+  ( tISZERO tap tS tI tFALSE tTRUE df-ISZERO eqapl ax-S ax-K ax-ap ax-I ax-bstr
+  tK apl ) BACDDECOOFCZCZCZCOGCZCZACZAQCZGCZBUAAHIUBSACZTACZCZUDSTAJUGEACZRACZC
+  ZGCUDUEUJUFGERAJGAKLUJUCGUHAUIQAMQAKLPNNN $.
 
-0eq0 $p |- ( ISZERO 0 ) => T $=
-  ( tISZERO t0 tap tK tF tT eISZERO e0 ax-bstr ) ABCBDECZCFCFBGJFHI $.
+0eq0 $p |- ( ISZERO 0 ) => TRUE $=
+  ( tISZERO t0 tap tK tFALSE tTRUE eISZERO e0 ax-bstr ) ABCBDECZCFCFBGJFHI $.
 
-1ne0 $p |- ( ISZERO 1 ) => F $=
-  ( tISZERO t1 tap tK tF tT eISZERO e1 ax-K ax-bstr ) ABCBDECZCFCZEBGLKFCEKFHEF
-  IJJ $.
+1ne0 $p |- ( ISZERO 1 ) => FALSE $=
+  ( tISZERO t1 tap tK tFALSE tTRUE eISZERO e1 ax-K ax-bstr ) ABCBDECZCFCZEBGLKF
+  CEKFHEFIJJ $.
 
-succne0 $p |- ( ISZERO ( SUCC x ) ) => F $=
-  ( tISZERO tSUCC tap tK tF tT eISZERO eSUCC ax-K ax-bstr ) BCADZDLEFDZDGDZFLHN
-  MAMDGDZDFMAGIFOJKK $.
+succne0 $p |- ( ISZERO ( SUCC x ) ) => FALSE $=
+  ( tISZERO tSUCC tap tK tFALSE tTRUE eISZERO eSUCC ax-K ax-bstr ) BCADZDLEFDZD
+  GDZFLHNMAMDGDZDFMAGIFOJKK $.
