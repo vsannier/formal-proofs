@@ -278,15 +278,21 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
+${
+  iim2.1 $e |- Ga , ph , ps => ch $.
+  iim2 $p |- Ga => ( ph -> ( ps -> ch ) ) $=
+    ( wi cf cc ax-iim ) ABCFDBCDAGHEII $.
+$}
+
 $( Positive paradox $)
 simp $p |- Ga => ( ph -> ( ps -> ph ) ) $=
-  ( wi cf cc ax-idc ax-iim ) ABADCBACAEFACBEGHH $.
+  ( cf ax-idc iim2 ) ABACACBDEF $.
 
 $( Frege's theorem $)
 frege $p |- Ga => ( ( ph -> ( ps -> ch ) )
   -> ( ( ph -> ps ) -> ( ph -> ch ) ) ) $=
-  ( wi cf cc ax-idc idr ax-eim ax-iim ) ABCEZEZABEZACEZEDNODMFZGZACDPNFZGGZBCDP
-  RAFZGZGGZALUBMDUAHASIZJABUBNQTHUCJJKKK $.
+  ( wi cf cc ax-idc idr ax-eim ax-iim iim2 ) ABCEZEZABEZACEDACDNFZOFZGGZBCDPQAF
+  ZGZGGZAMUANDTHARIZJABUAODPGSHUBJJKL $.
 
 biid $p |- Ga => ( ph <-> ph ) $=
   ( wi wa idr ax-iim ax-ian dup ax-ibi ) AABAACZJDBJJBBAABABEFZKGHI $.
@@ -297,20 +303,20 @@ bicom $p |- Ga => ( ( ph <-> ps ) -> ( ps <-> ph ) ) $=
   LABUAABCTAEZFFZUCUBUGABUGRCUFGHMAUAJKLNOPL $.
 
 bitr $p |- Ga => ( ( ph <-> ps ) -> ( ( ps <-> ch ) -> ( ph <-> ch ) ) ) $=
-  ( wb wi cf ax-idc ax-ebi ax-eanl idr ax-eim ax-iim ax-eanr ax-ian dup ax-ibi
-  cc wa ) ABEZBCEZACEZFDUAUBDTGZRZACDUCUAGZRRZACFZCAFZSUFUGUHUFUFACUFBCDUCUEAGZ
-  RZRRZBCFZCBFZUKBCUKUAUDUIHIJABUKABFZBAFZUKABUKTDUJHIJAUFKLLMCAUFBADUCUECGZRZR
-  RZUNUOURABURTDUQHINCBURULUMURBCURUAUDUPHINCUFKLLMOPQMM $.
+  ( wb cf cc wi ax-idc ax-ebi ax-eanl idr ax-eim ax-iim ax-eanr ax-ian dup iim2
+  wa ax-ibi ) ABEZBCEZACEDACDUAFZUBFZGGZACHZCAHZSUEUFUGUEUEACUEBCDUCUDAFZGZGGZB
+  CHZCBHZUJBCUJUBDUCGZUHIJKABUJABHZBAHZUJABUJUADUIIJKAUELMMNCAUEBADUCUDCFZGZGGZ
+  UNUOURABURUADUQIJOCBURUKULURBCURUBUMUPIJOCUELMMNPQTR $.
 
 $( Biconditional implies forward implication. $)
 biimp $p |- Ga => ( ( ph <-> ps ) -> ( ph -> ps ) ) $=
-  ( wb wi cf cc ax-idc ax-ebi ax-eanl idr ax-eim ax-iim ) ABDZABEZCABCNFZGZABCP
-  AFZGGZOBAESABSNCRHIJAQKLMM $.
+  ( wb cf cc wi ax-idc ax-ebi ax-eanl idr ax-eim iim2 ) ABDZABCABCNEZAEZFFZABGB
+  AGQABQNCPHIJACOFKLM $.
 
 $( Biconditional implies reverse implication. $)
 biimpr $p |- Ga => ( ( ph <-> ps ) -> ( ps -> ph ) ) $=
-  ( wb wi cf cc ax-idc ax-ebi ax-eanr idr ax-eim ax-iim ) ABDZBAEZCBACNFZGZBACP
-  BFZGGZABEOSABSNCRHIJBQKLMM $.
+  ( wb cf cc wi ax-idc ax-ebi ax-eanr idr ax-eim iim2 ) ABDZBACBACNEZBEZFFZABGB
+  AGQABQNCPHIJBCOFKLM $.
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
@@ -337,8 +343,8 @@ con $p |- Ga => ( ( ph -> ps ) -> ( ~ ps -> ~ ph ) ) $=
   ACQOFZGGZBCQSAFZGZGGZABUCNCUBHATIJORUAHKLMM $.
 
 con2 $p |- Ga => ( ( ph -> ~ ps ) -> ( ps -> ~ ph ) ) $=
-  ( wn wi cf cc ax-idc idr ax-eim ax-enot ax-inot ax-iim ) ABDZEZBADZECBPCOFZGZ
-  ACQBFZGGZBCQSAFZGZGGZBRUAHANUCOCUBHATIJKLMM $.
+  ( wn wi cf cc ax-idc idr ax-eim ax-enot ax-inot iim2 ) ABDZEZBADCACOFZBFZGGZB
+  CPQAFZGZGGZBCPGSHANUAOCTHARIJKLM $.
 
 $( Double negation introduction $)
 inotnot $p |- Ga => ( ph -> ~ ~ ph ) $=
@@ -384,16 +390,16 @@ anass $p |- Ga => ( ( ( ph /\ ps ) /\ ch ) <-> ( ph /\ ( ps /\ ch ) ) ) $=
 
 $( Conjunction is monotonic with respect to implication. $)
 anmonl $p |- Ga => ( ( ph -> ps ) -> ( ( ph /\ ch ) -> ( ps /\ ch ) ) ) $=
-  ( wi wa cf cc ax-idc idr ax-eanl ax-eim ax-eanr jca ax-iim ) ABEZACFZBCFZEDQR
-  DPGZHZCBDSQGZHHZABUBPDUAIACUBQTJZKLACUBUCMNOO $.
+  ( wi wa cf cc ax-idc idr ax-eanl ax-eim ax-eanr jca iim2 ) ABEZACFZBCFDCBDPGZ
+  QGZHHZABTPDSIACTQDRHJZKLACTUAMNO $.
 
 curry $p |- Ga => ( ( ( ph /\ ps ) -> ch ) -> ( ph -> ( ps -> ch ) ) ) $=
-  ( wa wi cf cc ax-idc idr id ax-ian ax-eim ax-iim ) ABEZCFZABCFZFDAQDPGZHZBCDR
-  AGZHHZOCDRTBGZHZHHPDUCIABUAUBASJBKLMNNN $.
+  ( wa wi cf cc ax-idc idr id ax-ian ax-eim ax-iim iim2 ) ABEZCFZABCFDBCDQGZAGZ
+  HHZPCDRSBGZHZHHQDUBIABTUAADRHJBKLMNO $.
 
 uncurry $p |- Ga => ( ( ph -> ( ps -> ch ) ) -> ( ( ph /\ ps ) -> ch ) ) $=
-  ( wi wa cf cc ax-idc idr ax-eanl ax-eim ax-eanr ax-iim ) ABCEZEZABFZCEDQCDPGZ
-  HZBCDRQGZHHZAOUAPDTIABUAQSJZKLABUAUBMLNN $.
+  ( wi wa cf cc ax-idc idr ax-eanl ax-eim ax-eanr iim2 ) ABCEZEZABFZCDBCDPGZQGZ
+  HHZAOTPDSIABTQDRHJZKLABTUAMLN $.
 
 $( Law of exportation $)
 export $p |- Ga => ( ( ph -> ( ps -> ch ) ) <-> ( ( ph /\ ps ) -> ch ) ) $=
@@ -448,6 +454,13 @@ $(
   COMPLEX TAUTOLOGIES
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
+
+${
+  impbi.1 $e |- Ga => ( ph -> ps ) $.
+  impbi.2 $e |- Ga => ( ps -> ph ) $.
+  impbi $p |- Ga => ( ps <-> ph ) $=
+    ( wi jca ax-ibi ) BACABFBAFCEDGH $.
+$}
 
 dfnot $p |- Ga => ( ~ ph <-> ( ph -> F. ) ) $=
   ( wn wfal wi cf cc idr ax-idc ax-enot ax-iim ax-eim ax-inot jca ax-ibi ) ACZA
