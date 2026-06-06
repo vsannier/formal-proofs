@@ -312,13 +312,20 @@ Vval $p |- ( ( ( V x ) y ) f ) => ( ( f x ) y ) $=
   EZEZBEZCEAEZABEZCEZDRBCAIJTGQBEZEZCEAEZUBSUDCAGQBKLUEUCAEZCEUBUCCAMUFUACUFHAE
   ZBEUAHBAMUGABANOPOPPP $.
 
-$( Mockingbord combinator (self-apply) $)
+$( Mockingbird combinator (self-apply) $)
 tM $a term M $.
 df-M $a |- M := ( ( S I ) I ) $.
 
 Mval $p |- ( M x ) => ( x x ) $=
   ( tM tap tS tI df-M apeql ax-S ax-I ax-ap ax-bstr ) BACDECECZACZAACZBLAFGMEAC
   ZOCNEEAHOAOAAIZPJKK $.
+
+mi $p |- ( M I ) => I $=
+  ( tM tI tap Mval ax-I ax-bstr ) ABCBBCBBDBEF $.
+
+wi $p |- ( ( W I ) x ) =><= ( M x ) $=
+  ( tW tI tap tM Wval ax-I apl ax-bstr Mval ax-ijn ) BCDADZEADAADZLCADZADMCAFNA
+  AAGHIAJK $.
 
 $( Why combinator $)
 tY $a term Y $.
