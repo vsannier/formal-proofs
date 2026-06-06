@@ -420,12 +420,20 @@ andil $p |- Ga => ( ( ph /\ ( ps \/ ch ) )
   BCEZFZABFZACFZEZDBCUBDSGZHZARUDSDIZJTUADUCBGZHHABUDUFARUDUEKZBLMNTUADUCCGZHHA
   CUDUHUGCLMOPQ $.
 
+anabs $p |- Ga => ( ( ph /\ ( ph \/ ps ) ) <-> ph ) $=
+  ( wo wa wi cf cc idr ax-eanl ax-iim ax-iorl jca ax-ibi ) AABDZEZACAPFPAFCPACA
+  OCPGHPCIJKAPCOACAGHZACIZABQRLMKMN $.
+
 $( Left-distributivity of disjunction over conjunction $)
 ordil $p |- Ga => ( ( ph \/ ( ps /\ ch ) )
   -> ( ( ph \/ ps ) /\ ( ph \/ ch ) ) ) $=
   ( wa wo cf cc idr ax-iorl ax-eanl ax-iorr ax-eor ax-eanr jca ax-iim ) ABCEZFZ
   ABFZACFZEDTSDRGZHZAQSUBRDIZABDUAAGHHZAUBIZJABDUAQGHHZBCUFQUBIZKLMAQTUBUCACUDU
   EJACUFBCUFUGNLMOP $.
+
+orabs $p |- Ga => ( ( ph \/ ( ph /\ ps ) ) <-> ph ) $=
+  ( wa wo wi cf cc idr ax-eanl ax-eor ax-iim ax-iorl jca ax-ibi ) AABDZEZACAQFQ
+  AFCQACAPACQGZHZQCIASIABCRPGHHPSIJKLAQCAPCAGHACIMLNO $.
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
