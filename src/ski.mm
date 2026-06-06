@@ -215,3 +215,56 @@ eIMP $p |- ( ( IMP x ) y ) => ( ( OR ( NOT x ) ) y ) $=
   tI ) CADZBDEFGDZDEFHDZDRDZDZADZBDZGHADZDZBDZSUDBCUCAIJKUETADZUBADZDZBDZUHUDUK
   BTUBALKULGUJDZBDUHUKUMBUIGUJGAMKKUMUGBGUJUFUJUAADZRADZDUFUARALUNHUOAHAMANOPQK
   PPP $.
+
+$(
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+  AVIARY COMBINATORS
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+$)
+
+$c B $.
+
+$( Bluebird combinator $)
+tB $a term B $.
+df-B $a |- B := ( ( S ( K S ) ) K ) $.
+
+eB $p |- ( ( ( B f ) g ) x ) => ( f ( g x ) ) $=
+  ( tB tap tS tK df-B eqapl apl ax-S ax-K ax-bstr ) DAEZBEZCEFGFEZEGEZAEZBEZCEZ
+  ABCEZEZOSCNRBDQAHIJJTPAEZGAEZEZBEZCEZUBSUFCRUEBPGAKJJUGFUDEZBEZCEZUBUFUICUEUH
+  BUCFUDFALJJJUJUDCEZUAEUBUDBCKUKAUAACLJMMMM $.
+
+$(
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+  ARITHMETIC
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+$)
+
+$c 0 1 2 SUCC $.
+
+t0 $a term 0 $.
+df-0 $a |- 0 := ( K I ) $.
+
+e0 $p |- ( ( 0 f ) x ) => x $=
+  ( t0 tap tK tI df-0 eqapl apl ax-K ax-I ax-bstr ) CADZBDEFDZADZBDZBMOBCNAGHIP
+  FBDBOFBFAJIBKLL $.
+
+tSUCC $a term SUCC $.
+df-SUCC $a |- SUCC := ( S B ) $.
+
+eSUCC $p |- ( ( ( SUCC x ) f ) y ) => ( f ( ( x f ) y ) ) $=
+  ( tSUCC tap tS tB df-SUCC eqapl apl ax-S eB ax-bstr ) DBEZAEZCEFGEZBEZAEZCEZA
+  BAEZCEEZORCNQADPBHIJJSGAETEZCEUARUBCGBAKJATCLMM $.
+
+t1 $a term 1 $.
+df-1 $a |- 1 := ( SUCC 0 ) $.
+
+e1 $p |- ( ( 1 f ) x ) => ( f x ) $=
+  ( t1 tap tSUCC t0 df-1 eqapl apl eSUCC e0 apr ax-bstr ) CADZBDEFDZADZBDZABDZN
+  PBCOAGHIQAFADBDZDRAFBJASBABKLMM $.
+
+t2 $a term 2 $.
+df-2 $a |- 2 := ( SUCC 1 ) $.
+
+e2 $p |- ( ( 2 f ) x ) => ( f ( f x ) ) $=
+  ( t2 tap tSUCC t1 df-2 eqapl apl eSUCC e1 apr ax-bstr ) CADZBDEFDZADZBDZAABDZ
+  DZNPBCOAGHIQAFADBDZDSAFBJATRABKLMM $.
