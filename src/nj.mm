@@ -1,5 +1,8 @@
-$( NATURAL DEDUCTION SYSTEM FOR INTUITIONISTIC PROPOSITIONAL LOGIC $)
-$( This work by Victor SANNIER is released under the MIT License. $)
+$(
+  NATURAL DEDUCTION SYSTEM FOR INTUITIONISTIC PROPOSITIONAL LOGIC
+  This work by Victor SANNIER is released under the MIT License.
+  See also https://wiki.planetmath.org/cgi-bin/wiki.pl/Natural_deduction_based_metamath_system
+$)
 
 $(
 ###############################################################################
