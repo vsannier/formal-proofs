@@ -1,5 +1,7 @@
 #!/usr/bin/env lua
 
+--[[ This work by Victor Sannier is released under the MIT License. --]]
+
 -------------------------------------------------------------------------------
 -- Lua and shell utilities
 -------------------------------------------------------------------------------
