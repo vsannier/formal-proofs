@@ -230,11 +230,11 @@ $(
 $)
 
 $( Ex falso quodlibet sequitur $)
-efq $p |- F. =>  ps $=
+efq $p |- F. => ps $=
   ( wfal cf ax-id ax-efal ) ABCBDE $.
 
 $( Ex contradictione quodlibet sequitur $)
-ecq $p |- ph , ~ ph =>  ps $=
+ecq $p |- ph , ~ ph => ps $=
   ( cf wn cc ax-idl ax-idr ax-enot ax-efal ) BACZADZCZEZAMALFKJGHI $.
 
 $( Modus ponens $)
@@ -272,6 +272,14 @@ frege $p |- Ga => ( ( ph -> ( ps -> ch ) )
   -> ( ( ph -> ps ) -> ( ph -> ch ) ) ) $=
   ( wi cf cc ax-idc ax-idr ax-eim ax-iim ) ABCEZEZABEZACEZEDNODMFZGZACDPNFZGGZB
   CDPRAFZGZGGZALUBMDUAHASIZJABUBNQTHUCJJKKK $.
+
+biid $p |- Ga => ( ph <-> ph ) $=
+  ( wi wa ax-idr ax-iim ax-ian dup ax-ibi ) AABAACZJDBJJBBAABABEFZKGHI $.
+
+bicom $p |- Ga => ( ( ph <-> ps ) -> ( ps <-> ph ) ) $=
+  ( wb cf ax-idc ax-ebi ax-eanr ax-idr ax-eim ax-iim ax-eanl ax-ian ax-ibi dup
+  cc wi ) ABDZBADZCSCREZPZBACTUAPPBAQZABQZUAUABAUABACTBEZPPZUCUBUEABUERCUDFGHBU
+  AIJKABUAABCTAEZPPZUCUBUGABUGRCUFFGLAUAIJKMNOK $.
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
