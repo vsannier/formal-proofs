@@ -1,5 +1,6 @@
 $( SKI COMBINATOR CALCULUS $)
 $( This work by Victor SANNIER is released under the MIT License. $)
+$( See <https://dallaylaen.github.io/ski-interpreter/quest.html>. $)
 
 $(
 ###############################################################################
@@ -255,7 +256,7 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
-$c B C W T M Y $.
+$c B C W T V M Y $.
 
 $( Bluebird combinator (compose) $)
 tB $a term B $.
@@ -292,6 +293,15 @@ df-T $a |- T := ( C I ) $.
 eT $p |- ( ( T x ) f ) => ( f x ) $=
   ( tT tap tC tI df-T eqapll eC ax-I apl ax-bstr ) CBDADEFDZBDADZABDZCMBAGHNFAD
   ZBDOFBAIPABAJKLL $.
+
+$( Vireo combinator $)
+tV $a term V $.
+df-V $a |- V := ( ( B C ) ( C I ) ) $.
+
+eV $p |- ( ( ( V x ) y ) f ) => ( ( f x ) y ) $=
+  ( tV tap tB tC tI df-V eqaplll eB apll eC ax-I apl ax-bstr ) DBECEAEFGEGHEZEZ
+  BEZCEAEZABEZCEZDRBCAIJTGQBEZEZCEAEZUBSUDCAGQBKLUEUCAEZCEUBUCCAMUFUACUFHAEZBEU
+  AHBAMUGABANOPOPPP $.
 
 $( Mockingbord combinator (self-apply) $)
 tM $a term M $.
@@ -389,3 +399,47 @@ eISZERO $p |- ( ISZERO x ) => ( ( x ( K FALSE ) ) TRUE ) $=
 succne0 $p |- ( ISZERO ( SUCC x ) ) => FALSE $=
   ( tISZERO tSUCC tap tK tFALSE tTRUE eISZERO eSUCC ax-K ax-bstr ) BCADZDLEFDZD
   GDZFLHNMAMDGDZDFMAGIFOJKK $.
+
+$(
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+  PAIRS AND LISTS
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+$)
+
+$c NIL CONS FST SND ISEMPTY $.
+
+tNIL $a term NIL $.
+df-NIL $a |- NIL := ( K I ) $.
+
+eNIL $p |- ( ( NIL x ) y ) => y $=
+  ( tNIL tap tK tI df-NIL eqapll ax-K apl ax-I ax-bstr ) CADBDEFDZADZBDZBCMABGH
+  OFBDBNFBFAIJBKLL $.
+
+tCONS $a term CONS $.
+df-CONS $a |- CONS := V $.
+
+eCONS $p |- ( ( ( CONS x ) y ) f ) => ( ( f x ) y ) $=
+  ( tCONS tap tV df-CONS eqaplll eV ax-bstr ) DBECEAEFBECEAEABECEDFBCAGHABCIJ
+  $.
+
+tFST $a term FST $.
+df-FST $a |- FST := TRUE $.
+
+tSND $a term SND $.
+df-SND $a |- SND := FALSE $.
+
+tISEMPTY $a term ISEMPTY $.
+df-ISEMPTY $a |- ISEMPTY := ( ( B ( T TRUE ) ) ( T ( K ( K ( K FALSE ) ) ) ) ) $.
+
+eISEMPTY $p |- ( ISEMPTY x ) => ( ( x ( K ( K ( K FALSE ) ) ) ) TRUE ) $=
+  ( tISEMPTY tap tB tT tTRUE tK tFALSE df-ISEMPTY eqapl eB eT apl ax-bstr ) BAC
+  DEFCZCEGGGHCCCZCZCZACZAPCZFCZBRAIJSOQACZCZUAOQAKUCUBFCUAUBFLUBTFAPLMNNN $.
+
+nilempty $p |- ( ISEMPTY NIL ) => TRUE $=
+  ( tISEMPTY tNIL tap tK tFALSE tTRUE eISEMPTY eNIL ax-bstr ) ABCBDDDECCCZCFCFB
+  GJFHI $.
+
+consnempty $p |- ( ISEMPTY ( ( CONS x ) y ) ) => FALSE $=
+  ( tISEMPTY tCONS tap tK tFALSE tTRUE eISEMPTY eCONS apl ax-K apll ax-bstr ) C
+  DAEBEZEOFFFGEZEZEZEZHEZGOITRAEZBEZHEZGSUBHRABJKUCQBEZHEZGUAQBHQALMUEPHEGUDPHP
+  BLKGHLNNNN $.
