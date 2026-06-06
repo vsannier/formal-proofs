@@ -1361,6 +1361,86 @@ Proof.
   - solve_inv_struct IHhas_type Heqt_letbang StructGt.
   - solve_inv_struct IHhas_type Heqt_letbang StructLt.
 Qed.
+
+(** *** Renaming *)
+
+Definition is_injective (ξ : var -> var) : Prop :=
+  forall x y, ξ x = ξ y -> x = y.
+
+Definition is_pushforward (ξ : var -> var) (Γ Δ : prectx) : Prop :=
+  (forall x, Γ x = Δ (ξ x)) /\
+  (forall y, (forall x, ξ x <> y) -> Δ y = None).
+
+Require Import Classical.
+
+Lemma pushforward_inv (ξ : var -> var) Γ Δ y v :
+  is_injective ξ ->
+  is_pushforward ξ Γ Δ ->
+  Δ y = Some v ->
+  exists! x, ξ x = y /\ Γ x = Some v.
+Proof.
+  intros Hinj [Hpf_eq Hpf_none] Hy.
+  apply NNPP.
+  intro Hnot.
+  assert (Hempty : forall x, ξ x <> y).
+  - intros x Hx.
+    apply Hnot.
+    exists x; repeat split; auto.
+    + now rewrite Hpf_eq, Hx.
+    + intros x' Hx'.
+      apply Hinj.
+      destruct Hx'; congruence.
+  - apply Hpf_none in Hempty.
+    congruence.
+Qed.
+
+Lemma pushforward_comp (ξ : var -> var) Γ1 Γ2 Δ1 Δ2 :
+  is_injective ξ ->
+  is_pushforward ξ Γ1 Δ1 ->
+  is_pushforward ξ Γ2 Δ2 ->
+  prectx_comp Γ1 Γ2 ->
+  prectx_comp Δ1 Δ2.
+Proof.
+  intros Hinj Hpf1 Hpf2 Hcomp y s1 τ1 s2 τ2 HΔ1 HΔ2.
+  destruct (pushforward_inv ξ Γ1 Δ1 y (s1, τ1) Hinj Hpf1 HΔ1) as [x1 [Hx1 HΓ1]].
+  destruct (pushforward_inv ξ Γ2 Δ2 y (s2, τ2) Hinj Hpf2 HΔ2) as [x2 [Hx2 HΓ2]].
+  assert (x1 = x2); destruct Hx1, Hx2.
+  - apply Hinj; congruence.
+  - subst x2; eapply Hcomp; eauto.
+Qed.
+
+Lemma pushforward_scale (ξ : var -> var) (s : sens) (Γ Δ : prectx) :
+  is_pushforward ξ Γ Δ ->
+  is_pushforward ξ (prectx_scale s Γ) (prectx_scale s Δ).
+Proof.
+  intros [Heq Hnone]. split.
+  - intro x.
+    unfold prectx_scale.
+    now rewrite Heq.
+  - intros y Hy.
+    unfold prectx_scale.
+    now rewrite Hnone.
+Qed.
+
+Lemma pushforward_contr (ξ : var -> var) p Γ1 Γ2 Δ1 Δ2 :
+  is_pushforward ξ Γ1 Δ1 ->
+  is_pushforward ξ Γ2 Δ2 ->
+  is_pushforward ξ (prectx_contr p Γ1 Γ2) (prectx_contr p Δ1 Δ2).
+Proof.
+  intros [Hpf1_eq Hpf1_none] [Hpf2_eq Hpf2_none].
+  split; intros; unfold prectx_contr.
+  - now rewrite Hpf1_eq, Hpf2_eq. 
+  - now rewrite Hpf1_none, Hpf2_none.
+Qed.
+
+Lemma renaming (p : param) (Γ Δ : prectx) (t : term) (τ : type)
+  (ξ : var -> var) :
+  is_injective ξ ->
+  is_pushforward ξ Γ Δ ->
+  has_type (p, Γ) t τ ->
+  has_type (p, Δ) (t.[ren ξ]) τ.
+Admitted.
+
 (** *** Substitution *)
 
 Lemma substitution (p : param) (Γ Δ : prectx)
