@@ -235,6 +235,14 @@ andil $p |- T. => ( ( ph /\ ( ps \/ ch ) )
   cc ax-iim ) ABCDZEZABEZACEZDZFGZBCUBUCSGZPZARUESUCHZITUAUCUDBGZPZPSTUCUGABUEU
   HARUEUFJZBUDHKLMTUAUCUDCGZPZPSUAUCUJACUEUKUICUDHKLNOQ $.
 
+$( Left-distributivity of disjunction over conjunction $)
+ordil $p |- T. => ( ( ph \/ ( ps /\ ch ) )
+  -> ( ( ph \/ ps ) /\ ( ph \/ ch ) ) ) $=
+  ( wa wo wtru cf ax-idr ax-iorl ax-idl ax-ian ax-contr ax-eanl ax-iorr ax-eanr
+  cc ax-str ax-eor ax-iim ) ABCDZEZABEZACEZDZFGZATUDUEUAGZPZUAUEHUDUEUFAGZPPZAU
+  DUEUGPZUEUBUCUEUIPZUHUEPZABUKAUJHIACULAUEJIKLQUDUEUFTGZPPZTUDUJUEUBUCUEUNPZUM
+  UEPZABUOBCUOTUJHMNACUPBCUPTUEJONKLQRS $.
+
 curry $p |- T. => ( ( ( ph /\ ps ) -> ch ) -> ( ph -> ( ps -> ch ) ) ) $=
   ( wa wi wtru cf cc ax-idc ax-str ax-ian ax-eim ax-iim ) ABDZCEZABCEZEFGZAPQOG
   ZHZBCQRAGZHHZNCQRTBGZHZHHOQUCIABUAUBAUAAQSHQIJBUBBQQIJKLMMM $.
