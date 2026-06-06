@@ -131,6 +131,12 @@ ${
 $}
 
 ${
+  aplr.1 $e |- x => z $.
+  aplr $p |- ( ( f x ) y ) => ( ( f z ) y ) $=
+    ( tap apr apl ) ABFADFCABDEGH $.
+$}
+
+${
   eqapl.1 $e |- f := g $.
   eqapl $p |- ( f x ) => ( g x ) $=
     ( ax-eqbs apl ) ABCABDEF $.
@@ -249,9 +255,9 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
-$c B C W T $.
+$c B C W T M Y $.
 
-$( Bluebird combinator $)
+$( Bluebird combinator (compose) $)
 tB $a term B $.
 df-B $a |- B := ( ( S ( K S ) ) K ) $.
 
@@ -260,7 +266,7 @@ eB $p |- ( ( ( B f ) g ) x ) => ( f ( g x ) ) $=
   ECEZABCEZEZDPABCHIROAEZGAEZEZBECEZTQUCBCOGAJKUDFUBEZBECEZTUCUEBCUAFUBFALMKUFU
   BCEZSETUBBCJUGASACLMNNNN $.
 
-$( Cardinal combinator $)
+$( Cardinal combinator (flip) $)
 tC $a term C $.
 df-C $a |- C := ( ( S ( ( B B ) S ) ) ( K K ) ) $.
 
@@ -270,7 +276,7 @@ eC $p |- ( ( ( C f ) x ) y ) => ( ( f y ) x ) $=
   EZHEZBEZCEZUEUHULBCUFUKUGHGFAMHANOLUNUJHBEZEZCEZUEUMUPCUJHBMPUQUDUOCEZEUEAUOC
   KUDURBBCNQRRRRR $.
 
-$( Warbler combinator $)
+$( Warbler combinator (duplicate) $)
 tW $a term W $.
 df-W $a |- W := ( ( S S ) ( K I ) ) $.
 
@@ -286,6 +292,25 @@ df-T $a |- T := ( C I ) $.
 eT $p |- ( ( T x ) f ) => ( f x ) $=
   ( tT tap tC tI df-T eqapll eC ax-I apl ax-bstr ) CBDADEFDZBDADZABDZCMBAGHNFAD
   ZBDOFBAIPABAJKLL $.
+
+$( Mockingbord combinator (self-apply) $)
+tM $a term M $.
+df-M $a |- M := ( ( S I ) I ) $.
+
+eM $p |- ( M x ) => ( x x ) $=
+  ( tM tap tS tI df-M eqapl ax-S ax-I ax-ap ax-bstr ) BACDECECZACZAACZBLAFGMEAC
+  ZOCNEEAHOAOAAIZPJKK $.
+
+$( Why combinator $)
+tY $a term Y $.
+df-Y $a |- Y := ( ( B M ) ( ( C B ) M ) ) $.
+
+fix $p |- ( ( Y f ) x ) =><= ( ( f ( Y f ) ) x ) $=
+  ( tY tap tB tM tC df-Y eqapll eB apl eC aplr eM ax-bstr eqapl apr ax-ijn ) CA
+  DZBDZASDBDZAEADFDZUBDZDBDZTEFDGEDFDZDZADZBDZUDCUFABHIUHFUEADZDZBDZUDUGUJBFUEA
+  JZKUKFUBDZBDZUDFUIBUBEFALZMUNUCBDZUDUMUCBUBNZKUPAUMDZBDZUDUCURBAFUBJKAUMBUCUQ
+  MZOOOOOUAAUGDBDZUDASBUGCUFAHPMVAAUJDBDZUDAUGBUJULMVBUSUDAUJBUMFUIUBUOQMUTOOOR
+  $.
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
