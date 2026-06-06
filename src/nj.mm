@@ -308,6 +308,10 @@ con $p |- Ga => ( ( ph -> ps ) -> ( ~ ps -> ~ ph ) ) $=
   ( wi wn cf cc ax-idc idr ax-eim ax-enot ax-inot ax-iim ) ABDZBEZAEZDCOPCNFZGZ
   ACQOFZGGZBCQSAFZGZGGZABUCNCUBHATIJORUAHKLMM $.
 
+con2 $p |- Ga => ( ( ph -> ~ ps ) -> ( ps -> ~ ph ) ) $=
+  ( wn wi cf cc ax-idc idr ax-eim ax-enot ax-inot ax-iim ) ABDZEZBADZECBPCOFZGZ
+  ACQBFZGGZBCQSAFZGZGGZBRUAHANUCOCUBHATIJKLMM $.
+
 $( Double negation introduction $)
 inotnot $p |- Ga => ( ph -> ~ ~ ph ) $=
   ( wn cf cc ax-idc idr ax-enot ax-inot ax-iim ) AACZCBKBADZEZABLKDZEEABNFKMGHI
