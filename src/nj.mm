@@ -308,6 +308,14 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
+nottru $p |- Ga => ( ~ T. <-> F. ) $=
+  ( wtru wn wfal wi wa cf ax-itru idr ax-enot ax-iim ax-efal ax-ian dup ax-ibi
+  cc ) BCZDAQDEZDQEZFARSAAQDABAQGPZTHQAIJKDQAQADGPDAILKMNO $.
+
+notfal $p |- Ga => ( ~ F. <-> T. ) $=
+  ( wfal wn wtru wi wa cf cc ax-itru ax-iim idr ax-inot ax-ian dup ax-ibi ) BCZ
+  DAPDEZDPEZFAQRAAPDAAPGHIJDPABADGHZBSKLJMNO $.
+
 $( Law of non-contradiction $)
 lnc $p |- Ga => ~ ( ph /\ ~ ph ) $=
   ( wn wa cf cc idr ax-eanl ax-eanr ax-enot ax-inot ) AACZDZBABMEFZALNMBGZHALNO
