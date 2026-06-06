@@ -97,27 +97,29 @@ end
 function minimize_proofs(filepath)
    local theorems = get_theorems(filepath)
 
-   local commands = ""
+   -- Create a temporary file to hold the commands
+   local tmp_filepath = os.tmpname()
+   local tmp_handle = io.open(tmp_filepath, "w")
    for _, label in pairs(theorems) do
-      commands = commands
-         .. string.format("  'prove %s'", label)
-	 .. "  'minimize_with */allow_new_axioms *'"
-         .. "  'save new_proof/compressed'"
-         .. "  'exit/force'"
+      tmp_handle:write(string.format("prove %s/override\n", label))
+      tmp_handle:write("minimize_with */allow_new_axioms *\n")
+      tmp_handle:write("save new_proof/compressed\n")
+      tmp_handle:write("exit/force\n")
    end
+   tmp_handle:close() -- Close the file to save the contents
 
    local handle = io.popen(
      "metamath"
      .. string.format(" 'read \"%s\"'", filepath)
-     .. commands
+     .. string.format(" 'submit \"%s\"'", tmp_filepath)
      .. string.format("  'write source \"%s.min\"/format/rewrap'", filepath)
      .. "  'quit'"
    )
 
-   content = handle:read("*all")
-   print(content)
+   for line in handle:lines() do print(line) end
 
    handle:close()
+   os.remove(tmp_filepath)
 end
 
 -------------------------------------------------------------------------------
