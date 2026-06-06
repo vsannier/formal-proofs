@@ -256,7 +256,7 @@ lnc $p |- Ga => ~ ( ph /\ ~ ph ) $=
   LNOIJK $.
 
 $( Law of contraposition $)
-trans $p |- Ga => ( ( ph -> ps ) -> ( ~ ps -> ~ ph ) ) $=
+con $p |- Ga => ( ( ph -> ps ) -> ( ~ ps -> ~ ph ) ) $=
   ( wi wn cf cc ax-idc ax-idr ax-eim ax-enot ax-inot ax-iim ) ABDZBEZAEZDCOPCNF
   ZGZACQOFZGGZBCQSAFZGZGGZABUCNCUBHATIJORUAHKLMM $.
 
@@ -288,6 +288,11 @@ anass $p |- Ga => ( ( ( ph /\ ps ) /\ ch ) <-> ( ph /\ ( ps /\ ch ) ) ) $=
   FDPRDQADPGHZABSOCSPDIZJZJCBSABSUAKOCSTKLLMRPDCODRGHZBAUBAQUBRDIZJBCUBAQUBUCKZ
   JLBCUBUDKLMLN $.
 
+$( Conjunction is monotonic with respect to implication. $)
+anmonl $p |- Ga => ( ( ph -> ps ) -> ( ( ph /\ ch ) -> ( ps /\ ch ) ) ) $=
+  ( wi wa cf cc ax-idc ax-idr ax-eanl ax-eim ax-eanr jca ax-iim ) ABEZACFZBCFZE
+  DQRDPGZHZCBDSQGZHHZABUBPDUAIACUBQTJZKLACUBUCMNOO $.
+
 curry $p |- Ga => ( ( ( ph /\ ps ) -> ch ) -> ( ph -> ( ps -> ch ) ) ) $=
   ( wa wi cf cc ax-idc ax-idr ax-id ax-ian ax-eim ax-iim ) ABEZCFZABCFZFDAQDPGZ
   HZBCDRAGZHHZOCDRTBGZHZHHPDUCIABUAUBASJBKLMNNN $.
@@ -307,6 +312,10 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
+truorfal $p |- Ga => ( ( T. \/ F. ) <-> T. ) $=
+  ( wtru wfal wo wi cf cc ax-idr ax-strr ax-iim ax-iorl jca ax-ibi ) BCDZBABNEN
+  BEANBABANFGZBOHIJBNABCABFGBAHKJLM $.
+
 $( Disjunction is idempotent. $)
 oridm $p |- Ga => ( ( ph \/ ph ) <-> ph ) $=
   ( wo wi wa cf cc ax-idr ax-eor ax-iim ax-iorl ax-ian ax-dup ax-ibi ) AACZABOA
@@ -317,15 +326,20 @@ orcom $p |- Ga => ( ( ph \/ ps ) -> ( ps \/ ph ) ) $=
   ( wo cf cc ax-idr ax-iorr ax-iorl ax-eor ax-iim ) ABDZBADZCABMCLEZFZLCGBACNAE
   FFAOGHBACNBEFFBOGIJK $.
 
-$( Conjunction implies disjunction. $)
-animor $p |- Ga => ( ( ph /\ ps ) -> ( ps \/ ph ) ) $=
-  ( wa wo cf cc ax-idr ax-eanr ax-iorl ax-iim ) ABDZBAECBACLFGZABMLCHIJK $.
+$( Disjunction is monotonic with respect to implication. $)
+ormonl $p |- Ga => ( ( ph -> ps ) -> ( ( ph \/ ch ) -> ( ps \/ ch ) ) ) $=
+  ( wi wo cf cc ax-idr ax-idc ax-eim ax-iorl ax-iorr ax-eor ax-iim ) ABEZACFZBC
+  FZEDQRDPGZHZACRDSQGZHHZQTIBCDSUAAGHZHHZABUDPDUCJAUBIKLBCDSUACGHHHCUBIMNOO $.
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
   COMPLEX PROPERTIES
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
+
+$( Conjunction implies disjunction. $)
+animor $p |- Ga => ( ( ph /\ ps ) -> ( ps \/ ph ) ) $=
+  ( wa wo cf cc ax-idr ax-eanr ax-iorl ax-iim ) ABDZBAECBACLFGZABMLCHIJK $.
 
 $( Left-distributivity of conjunction over disjunction $)
 andil $p |- Ga => ( ( ph /\ ( ps \/ ch ) )
