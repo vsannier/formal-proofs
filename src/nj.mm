@@ -424,11 +424,26 @@ ormonl $p |- Ga => ( ( ph -> ps ) -> ( ( ph \/ ch ) -> ( ps \/ ch ) ) ) $=
   ( wi wo cf cc idr ax-idc ax-eim ax-iorl ax-iorr ax-eor ax-iim ) ABEZACFZBCFZE
   DQRDPGZHZACRDSQGZHHZQTIBCDSUAAGHZHHZABUDPDUCJAUBIKLBCDSUACGHHHCUBIMNOO $.
 
+$( Reasoning by cases $)
+cases $p |- Ga => ( ( ( ph -> ch ) /\ ( ps -> ch ) )
+  <-> ( ( ph \/ ps ) -> ch ) ) $=
+  ( wi wa wo cf idr ax-idc ax-eanl ax-eim ax-eanr ax-eor ax-iim ax-iorl ax-iorr
+  cc jca ax-ibi ) ACEZBCEZFZABGZCEZDUEUCEUCUEEDUCUEDUDCDUCHZRZABCDUFUDHZRRZUDUG
+  IACDUFUHAHZRZRRZUAUBULUCDUKJKAUIILBCDUFUHBHZRZRRZUAUBUOUCDUNJMBUIILNOOUEUCDUB
+  UADUEHZRZACUQUDCDUPUJRRZUEDUJJABURAUQIPLOBCUQUDCDUPUMRRZUEDUMJABUSBUQIQLOSOST
+  $.
+
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
   COMPLEX TAUTOLOGIES
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
+
+$( Permutation of antecedents $)
+imcom $p |- Ga => ( ( ph -> ( ps -> ch ) ) <-> ( ps -> ( ph -> ch ) ) ) $=
+  ( wi cf cc ax-idc idr ax-eim ax-iim jca ax-ibi ) ABCEZEZBACEZEZDQOEOQEDOQDBPD
+  OFZGZACDRBFZGGZBCDRTAFZGZGGZANUDODUCHAUAIJBSUBHJKKKQODANDQFZGZBCDUEUBGGZACDUE
+  UBTGZGGZBPUIQDUHHBUGIJAUFTHJKKKLM $.
 
 imor $p |- Ga => ( ( ~ ph \/ ps ) -> ( ph -> ps ) ) $=
   ( wn wo wi cf cc ax-idc idr ax-enot ax-efal ax-eor ax-iim ) ADZBEZABFCABCPGZH
