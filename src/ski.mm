@@ -79,6 +79,16 @@ ${
   ax-ijn $a |- x =><= y $.
 $}
 
+${
+  ax-ejnl.1 $e |- x =><= y $.
+  ax-ejnl $a |- x => y $.
+$}
+
+${
+  ax-ejnr.1 $e |- x =><= y $.
+  ax-ejnr $a |- y => x $.
+$}
+
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
   BASE COMBINATORS
@@ -169,6 +179,25 @@ ${
   jneq.1 $e |- x := y $.
   jneq $p |- x =><= y $=
     ( ax-bseq bsid ax-ijn ) ABBABCDBEF $.
+$}
+
+${
+  jntr.1 $e |- x =><= y $.
+  jntr.2 $e |- y =><= z $.
+  jntr $p |- x =><= z $=
+    ( ax-ejnl ax-ejnr ax-ijn ) ACBABDFBCEGH $.
+$}
+
+${
+  jnsym.1 $e |- x =><= y $.
+  jnsym $p |- y =><= x $=
+    ( bsid ax-ejnl ax-ijn ) BABBDABCEF $.
+$}
+
+${
+  jnbs.1 $e |- x => y $.
+  jnbs $p |- x =><= y $=
+    ( bsid ax-ijn ) ABBCBDE $.
 $}
 
 $(
