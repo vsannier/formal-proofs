@@ -449,6 +449,10 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
+dfnot $p |- Ga => ( ~ ph <-> ( ph -> F. ) ) $=
+  ( wn wfal wi cf cc idr ax-idc ax-enot ax-iim ax-eim ax-inot jca ax-ibi ) ACZA
+  DEZBQPEPQEBPQBADBPFZGZABRAFZGGASHPBTIJKKQPBABQFZGZADBUATGGQBTIAUBHLMKNO $.
+
 $( Permutation of antecedents $)
 imcom $p |- Ga => ( ( ph -> ( ps -> ch ) ) <-> ( ps -> ( ph -> ch ) ) ) $=
   ( wi cf cc ax-idc idr ax-eim ax-iim jca ax-ibi ) ABCEZEZBACEZEZDQOEOQEDOQDBPD
