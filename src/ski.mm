@@ -140,7 +140,7 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
-$c F T NOT OR $.
+$c F T NOT OR AND $.
 
 tT $a term T $.
 df-T $a |- T = K $.
@@ -158,25 +158,40 @@ efal $p |- ( ( F x ) y ) => y $=
 tNOT $a term NOT $.
 df-NOT $a |- NOT = ( ( S ( ( S I ) ( K F ) ) ) ( K T ) ) $.
 
+eNOT $p |- ( NOT x ) => ( ( x F ) T ) $=
+  ( tNOT tap tS tI tK tF tT df-NOT eqapl ax-S apl ax-I ax-K ax-ap ax-bstr ) BAC
+  DDECFGCZCZCFHCZCZACZAGCZHCZBTAIJUARACZSACZCZUCRSAKUFEACZQACZCZUECUCUDUIUEEQAK
+  LUIUBUEHUGAUHGAMGANOHANOPPP $.
+
 nottru $p |- ( NOT T ) => F $=
-  ( tNOT tT tap tS tI tK tF df-NOT eqapl ax-S ax-K ax-ap ax-I apl etru ax-bstr
-  ) ABCDDECFGCZCZCFBCZCZBCZGATBHIUARBCZSBCZCZGRSBJUDEBCZQBCZCZBCZGUBUGUCBEQBJBB
-  KLUHBUFCZBCZGUGUIBUEBUFBMNNUJUFGUFBOGBKPPPPP $.
+  ( tNOT tT tap tF eNOT etru ax-bstr ) ABCBDCBCDBEDBFG $.
 
 notfal $p |- ( NOT F ) => T $=
-  ( tNOT tF tap tS tI tK tT df-NOT eqapl ax-S ax-K ax-ap ax-I apl efal ax-bstr
-  ) ABCDDECFBCZCZCFGCZCZBCZGATBHIUARBCZSBCZCZGRSBJUDEBCZQBCZCZGCZGUBUGUCGEQBJGB
-  KLUHBBCZGCGUGUIGUEBUFBBMBBKLNBGOPPPP $.
+  ( tNOT tF tap tT eNOT efal ax-bstr ) ABCBBCDCDBEBDFG $.
 
 tOR $a term OR $.
 df-OR $a |- OR = ( ( S I ) ( K T ) ) $.
 
+eOR $p |- ( ( OR x ) y ) => ( ( x T ) y ) $=
+  ( tOR tap tS tI tK tT df-OR eqapl apl ax-S ax-I ax-K ax-ap ax-bstr ) CADZBDEF
+  DGHDZDZADZBDZAHDZBDZQTBCSAIJKUAFADZRADZDZBDUCTUFBFRALKUFUBBUDAUEHAMHANOKPP $.
+
 ortru $p |- ( ( OR T ) y ) => T $=
-  ( tOR tT tap tS tI tK df-OR eqapl apl ax-S ax-I ax-K ax-ap etru ax-bstr ) BCD
-  ZADEFDGCDZDZCDZADZCQTABSCHIJUAFCDZRCDZDZADZCTUDAFRCKJUECCDZADCUDUFAUBCUCCCLCC
-  MNJCAOPPP $.
+  ( tOR tT tap eOR etru ax-bstr ) BCDADCCDADCCAECAFG $.
 
 orfal $p |- ( ( OR F ) y ) => y $=
-  ( tOR tF tap tS tI tK tT df-OR eqapl apl ax-S ax-I ax-K ax-ap efal ax-bstr )
-  BCDZADEFDGHDZDZCDZADZARUAABTCIJKUBFCDZSCDZDZADZAUAUEAFSCLKUFCHDZADAUEUGAUCCUD
-  HCMHCNOKHAPQQQ $.
+  ( tOR tF tap tT eOR efal ax-bstr ) BCDADCEDADACAFEAGH $.
+
+tAND $a term AND $.
+df-AND $a |- AND = ( ( S S ) ( K ( K F ) ) ) $.
+
+eAND $p |- ( ( AND x ) y ) => ( ( x y ) F ) $=
+  ( tAND tap tS tK tF df-AND eqapl apl ax-S ax-K ax-bstr apr ) CADZBDEEDFFGDZDZ
+  DZADZBDZABDZGDZOSBCRAHIJTEADQADZDZBDZUBSUDBEQAKJUEUAUCBDZDUBAUCBKUAUFGUFPBDGU
+  CPBPALJGBLMNMMM $.
+
+antru $p |- ( ( AND T ) y ) => y $=
+  ( tAND tT tap tF eAND etru ax-bstr ) BCDADCADEDACAFAEGH $.
+
+anfal $p |- ( ( AND F ) y ) => F $=
+  ( tAND tF tap eAND efal ax-bstr ) BCDADCADCDCCAEACFG $.
