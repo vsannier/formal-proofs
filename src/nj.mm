@@ -62,9 +62,13 @@ $)
 $c |- $.
 
 ${
-  ax-weak.1 $e |- Ga , De => ps $.
-  $( Weakening rule $)
-  ax-weak $e |- Ga , ph , De => ps $.
+  ax-weakl.1 $e |- Ga => ps $.
+  ax-weakl $a |- ph , Ga => ps $.
+$}
+
+${
+  ax-weakr.1 $e |- Ga => ps $.
+  ax-weakr $a |- Ga , ph => ps $.
 $}
 
 ${
@@ -157,7 +161,7 @@ $}
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-  DERIVED AXIOMS
+  DERIVED AXIOMS AND DEFINITIONS
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
@@ -169,6 +173,19 @@ ax-idl $p |- ps , Ga => ps $=
 
 ax-idr $p |- Ga , ps => ps $=
   ( cf cc wtru ax-idc ax-str ) ABACDAECZBDHFG $.
+
+$c <-> $.
+wb $a wff ( ph <-> ps ) $.
+
+${
+  ax-ibi.1 $e |- Ga => ( ( ph -> ps ) /\ ( ps -> ph ) ) $.
+  ax-ibi $a |- Ga => ( ph <-> ps ) $.
+$}
+
+${
+  ax-ebi.1 $e |- Ga => ( ph <-> ps ) $.
+  ax-ebi $a |- Ga => ( ( ph -> ps ) /\ ( ps -> ph ) ) $.
+$}
 
 $(
 ###############################################################################
@@ -219,11 +236,23 @@ ancom $p |- T. => ( ( ph /\ ps ) -> ( ps /\ ph ) ) $=
   ( wa wtru cf cc ax-idc ax-str ax-eanr ax-eanl ax-ian ax-contr ax-iim ) ABCZBA
   CZDEZOPNEZFZNOPPFZPBAPRFZQPFZABTNTNPSFPGHIABUANUANPSGHJKLHM $.
 
+$( Conjunction is idempotent. $)
+anip $p |- T. => ( ( ph /\ ph ) <-> ph ) $=
+  ( wa wtru cf wi cc ax-idr ax-eanl ax-iim ax-idl ax-ian ax-contr ax-str ax-ibi
+  ) AABZACDZOAEZAOEZBPQRPPPFZOAPAAPODFOPGHIAOSOPPADZFFZAOPSFZPAAPUAFTPFAUBGAPJK
+  LMIKMN $.
+
 $( Disjunction is commutative. $)
 orcom $p |- T. => ( ( ph \/ ps ) -> ( ps \/ ph ) ) $=
   ( wo wtru cf cc ax-idr ax-iorr ax-iorl ax-eor ax-iim ) ABCZBACZDEZABMNLEZFZLN
   GBANOAEFFAPGHBANOBEFFBPGIJK $.
 
+$( Disjunction is idempotent. $)
+orip $p |- T. => ( ( ph \/ ph ) <-> ph ) $=
+  ( wo wtru cf wi wa cc ax-idr ax-eor ax-iim ax-iorl ax-ian ax-str ax-ibi ) AAB
+  ZACDZOAEZAOEZFPQRPPPGZOAPAAAPODGZOPHATHZUAIJAOSAAPPADGGASHKJLMN $.
+
+$( Conjunction implies disjunction. $)
 animor $p |- T. => ( ( ph /\ ps ) -> ( ps \/ ph ) ) $=
   ( wa wo wtru cf cc ax-idr ax-eanr ax-iorl ax-iim ) ABCZBADEFZBAMLFGZABNLMHIJK
   $.
@@ -246,6 +275,10 @@ ordil $p |- T. => ( ( ph \/ ( ps /\ ch ) )
 curry $p |- T. => ( ( ( ph /\ ps ) -> ch ) -> ( ph -> ( ps -> ch ) ) ) $=
   ( wa wi wtru cf cc ax-idc ax-str ax-ian ax-eim ax-iim ) ABDZCEZABCEZEFGZAPQOG
   ZHZBCQRAGZHHZNCQRTBGZHZHHOQUCIABUAUBAUAAQSHQIJBUBBQQIJKLMMM $.
+
+uncurry $p |- T. => ( ( ph -> ( ps -> ch ) ) -> ( ( ph /\ ps ) -> ch ) ) $=
+  ( wi wa wtru cf cc ax-idc ax-idr ax-eanl ax-eim ax-eanr ax-iim ) ABCDZDZABEZC
+  DFGZQCRPGZHZBCRSQGZHHZAOUBPRUAIABUBQTJZKLABUBUCMLNN $.
 
 $(
 ###############################################################################
