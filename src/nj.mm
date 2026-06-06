@@ -343,6 +343,13 @@ orcom $p |- Ga => ( ( ph \/ ps ) -> ( ps \/ ph ) ) $=
   ( wo cf cc ax-idr ax-iorr ax-iorl ax-eor ax-iim ) ABDZBADZCABMCLEZFZLCGBACNAE
   FFAOGHBACNBEFFBOGIJK $.
 
+$( Disjunction is associative. $)
+orass $p |- Ga => ( ( ( ph \/ ps ) \/ ch ) <-> ( ph \/ ( ps \/ ch ) ) ) $=
+  ( wo wi cf cc ax-idr ax-iorl ax-iorr ax-eor ax-iim jca ax-ibi ) ABEZCEZABCEZE
+  ZDSQFQSFDQSDPCSDQGZHZQDIABSDTPGZHHZPUAIARDTUBAGZHHHAUCIJARDTUBBGZHHHZBCUFBUCI
+  JKLARDTCGZHHZBCUHCUAIKKLMSQDARQDSGZHZSDIPCDUIUDHHZABUKAUJIJJBCQDUIRGZHHZRUJIP
+  CDUIULUEHHHZABUNBUMIKJPCDUIULUGHHHCUMIKLLMNO $.
+
 $( Disjunction is monotonic with respect to implication. $)
 ormonl $p |- Ga => ( ( ph -> ps ) -> ( ( ph \/ ch ) -> ( ps \/ ch ) ) ) $=
   ( wi wo cf cc ax-idr ax-idc ax-eim ax-iorl ax-iorr ax-eor ax-iim ) ABEZACFZBC
