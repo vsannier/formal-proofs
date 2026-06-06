@@ -462,6 +462,13 @@ ${
     ( wi jca ax-ibi ) BACABFBAFCEDGH $.
 $}
 
+$( Congruence of biconditional with negation $)
+notbi $p |- Ga => ( ( ph <-> ps ) -> ( ~ ph <-> ~ ps ) ) $=
+  ( wb wn cf cc ax-idc ax-ebi ax-eanl idr ax-eim ax-enot ax-inot ax-iim ax-eanr
+  wi impbi ) ABDZAEZBEZDCUATCSFZGZUATUCACUBUAFZGGZBCUBUDAFZGZGGZABUHABQZBAQZUHA
+  BUHSCUGHIJAUEKLUAUCUFHMNOTUAUCBCUBTFZGGZACUBUKBFZGZGGZBAUOUIUJUOABUOSCUNHIPBU
+  LKLTUCUMHMNORO $.
+
 dfnot $p |- Ga => ( ~ ph <-> ( ph -> F. ) ) $=
   ( wn wfal wi cf cc idr ax-idc ax-enot ax-iim ax-eim ax-inot jca ax-ibi ) ACZA
   DEZBQPEPQEBPQBADBPFZGZABRAFZGGASHPBTIJKKQPBABQFZGZADBUATGGQBTIAUBHLMKNO $.
