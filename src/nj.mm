@@ -268,6 +268,10 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
+$( Positive paradox $)
+simp $p |- Ga => ( ph -> ( ps -> ph ) ) $=
+  ( wi cf cc ax-idc ax-iim ) ABADCBACAEFACBEGHH $.
+
 $( Frege's theorem $)
 frege $p |- Ga => ( ( ph -> ( ps -> ch ) )
   -> ( ( ph -> ps ) -> ( ph -> ch ) ) ) $=
@@ -281,6 +285,12 @@ bicom $p |- Ga => ( ( ph <-> ps ) -> ( ps <-> ph ) ) $=
   ( wb cf ax-idc ax-ebi ax-eanr ax-idr ax-eim ax-iim ax-eanl ax-ian ax-ibi dup
   cc wi ) ABDZBADZCSCREZPZBACTUAPPBAQZABQZUAUABAUABACTBEZPPZUCUBUEABUERCUDFGHBU
   AIJKABUAABCTAEZPPZUCUBUGABUGRCUFFGLAUAIJKMNOK $.
+
+bitr $p |- Ga => ( ( ph <-> ps ) -> ( ( ps <-> ch ) -> ( ph <-> ch ) ) ) $=
+  ( wb wi cf cc wa ax-idc ax-ebi ax-eanl ax-idr ax-eim ax-iim ax-ian dup ax-ibi
+  ax-eanr ) ABEZBCEZACEZFDUAUBDTGZHZACDUCUAGZHHZACFZCAFZIUFUGUHUFUFACUFBCDUCUEA
+  GZHZHHZBCFZCBFZUKBCUKUAUDUIJKLABUKABFZBAFZUKABUKTDUJJKLAUFMNNOCAUFBADUCUECGZH
+  ZHHZUNUOURABURTDUQJKSCBURULUMURBCURUAUDUPJKSCUFMNNOPQROO $.
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
