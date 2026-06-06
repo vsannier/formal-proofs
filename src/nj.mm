@@ -63,33 +63,36 @@ $)
 
 $c |- $.
 
+$( Identity (center) $)
 ax-idc $a |- Ga , ps , De => ps $.
 
 ${
   ax-strl.1 $e |- T. , Ga => ph $.
-  $( Truth-strengthening (left) $)
+  $( Truth-strengthening rule (left) $)
   ax-strl $a |- Ga => ph $.
 $}
 
 ${
   ax-strc.1 $e |- Ga , T. , De => ph $.
-  $( Truth-strengthening (center) $)
+  $( Truth-strengthening rule (center) $)
   ax-strc $a |- Ga , De => ph $.
 $}
 
 ${
   ax-strr.1 $e |- Ga , T. => ph $.
-  $( Truth-strengthening (right) $)
+  $( Truth-strengthening rule (right) $)
   ax-strr $a |- Ga => ph $.
 $}
 
 ${
   ax-weakl.1 $e |- Ga => ps $.
+  $( Context weakening rule (left) $)
   ax-weakl $a |- De , Ga => ps $.
 $}
 
 ${
   ax-weakr.1 $e |- Ga => ps $.
+  $( Context weakening rule (right) $)
   ax-weakr $a |- Ga , De => ps $.
 $}
 
@@ -113,38 +116,45 @@ $)
 
 ${
   ax-iim.1 $e |- Ga , ph => ps $.
+  $( Implication introduction rule $)
   ax-iim $a |- Ga => ( ph -> ps ) $.
 $}
 
 ${
   ax-eim.1 $e |- Ga => ( ph -> ps ) $.
   ax-eim.2 $e |- Ga => ph $.
+  $( Implication elimination rule $)
   ax-eim $a |- Ga => ps $.
 $}
 
 ${
   ax-ian.1 $e |- Ga => ph $.
   ax-ian.2 $e |- De => ps $.
+  $( Conjunction introduction rule $)
   ax-ian $a |- Ga , De => ( ph /\ ps ) $.
 $}
 
 ${
   ax-eanl.1 $e |- Ga => ( ph /\ ps ) $.
+  $( Conjunction elimination rule (left) $)
   ax-eanl $a |- Ga => ph $.
 $}
 
 ${
   ax-eanr.1 $e |- Ga => ( ph /\ ps ) $.
+  $( Conjunction elimination rule (right) $)
   ax-eanr $a |- Ga => ps $.
 $}
 
 ${
   ax-iorl.1 $e |- Ga => ph $.
+  $( Disjunction introduction rule (left) $)
   ax-iorl $a |- Ga => ( ph \/ ps ) $.
 $}
 
 ${
   ax-iorr.1 $e |- Ga => ps $.
+  $( Disjunction introduction rule (right) $)
   ax-iorr $a |- Ga => ( ph \/ ps ) $.
 $}
 
@@ -152,25 +162,29 @@ ${
   ax-eor.1 $e |- Ga => ( ph \/ ps ) $.
   ax-eor.2 $e |- Ga , ph => ch $.
   ax-eor.3 $e |- Ga , ps => ch $.
+  $( Disjunction elimination rule $)
   ax-eor $a |- Ga => ch $.
 $}
 
+$( Verum introduction rule $)
 ax-itru $a |- Ga => T. $.
 
 ${
   ax-efal.1 $e |- Ga => F. $.
-  $( Ex falso quodlibet sequitur $)
+  $( Falsum elimination rule $)
   ax-efal $a |- Ga => ph $.
 $}
 
 ${
   ax-inot.1 $e |- Ga , ph => F. $.
+  $( Negation introduction rule $)
   ax-inot $a |- Ga => ~ ph $.
 $}
 
 ${
   ax-enot.1 $e |- Ga => ph $.
   ax-enot.2 $e |- Ga => ~ ph $.
+  $( Negation elimination rule $)
   ax-enot $a |- Ga => F. $.
 $}
 
