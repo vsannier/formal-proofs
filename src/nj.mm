@@ -280,6 +280,11 @@ uncurry $p |- T. => ( ( ph -> ( ps -> ch ) ) -> ( ( ph /\ ps ) -> ch ) ) $=
   ( wi wa wtru cf cc ax-idc ax-idr ax-eanl ax-eim ax-eanr ax-iim ) ABCDZDZABEZC
   DFGZQCRPGZHZBCRSQGZHHZAOUBPRUAIABUBQTJZKLABUBUCMLNN $.
 
+$( Law of exportation $)
+export $p |- T. => ( ( ph -> ( ps -> ch ) ) <-> ( ( ph /\ ps ) -> ch ) ) $=
+  ( wi wa wtru cf cc uncurry curry ax-ian ax-weakl ax-str ax-ibi ) ABCDDZABECDZ
+  FGZOPDZPODZEZQFTQQHRSQQABCIABCJKLMN $.
+
 $(
 ###############################################################################
   TYPESETTING
