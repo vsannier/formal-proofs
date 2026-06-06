@@ -3,10 +3,11 @@
 This repository contains
 the following [Metamath](https://us.metamath.org/) databases:
 
-| Logic/Theory           | File         |
-|------------------------|--------------|
-| Natural deduction (NJ) | `nj.mm`      |
-| Four-term analogies    | `analogy.mm` |
+| Logic/Theory            | File         |
+|-------------------------|--------------|
+| Natural deduction (NJ)  | `nj.mm`      |
+| SKI combinator calculus | `ski.mm`     |
+| Four-term analogies     | `analogy.mm` |
 
 (Please note that they have *not* been used extensively,
 and may therefore be incomplete or even unsound implementations
