@@ -460,6 +460,14 @@ andil $p |- Ga => ( ( ph /\ ( ps \/ ch ) )
   BCEZFZABFZACFZEZDBCUBDSGZHZARUDSDIZJTUADUCBGZHHABUDUFARUDUEKZBLMNTUADUCCGZHHA
   CUDUHUGCLMOPQ $.
 
+$( Right-distributivity of conjunction over disjunction $)
+andir $p |- Ga => ( ( ( ps \/ ch ) /\ ph )
+  -> ( ( ps /\ ph ) \/ ( ch /\ ph ) ) ) $=
+  ( wo wa cf cc idr ax-eanl wtru ax-eanr ax-ian ax-exch ax-strr ax-iorl ax-iorr
+  idl ax-eor ax-iim ) BCEZAFZBAFZCAFZEZDBCUEDUBGZHZUAAUGUBDIJUCUDDUFBGZHHZUCUIU
+  CDKGZUHUFBADUHHUFUJHZBDIUAAUKUBUJRLZMNOPUCUDDUFCGZHHZUDUNUDDUJUMUFCADUMHUKCDI
+  ULMNOQST $.
+
 anabs $p |- Ga => ( ( ph /\ ( ph \/ ps ) ) <-> ph ) $=
   ( wo wa wi cf cc idr ax-eanl ax-iim ax-iorl jca ax-ibi ) AABDZEZACAPFPAFCPACA
   OCPGHPCIJKAPCOACAGHZACIZABQRLMKMN $.
@@ -470,6 +478,13 @@ ordil $p |- Ga => ( ( ph \/ ( ps /\ ch ) )
   ( wa wo cf cc idr ax-iorl ax-eanl ax-iorr ax-eor ax-eanr jca ax-iim ) ABCEZFZ
   ABFZACFZEDTSDRGZHZAQSUBRDIZABDUAAGHHZAUBIZJABDUAQGHHZBCUFQUBIZKLMAQTUBUCACUDU
   EJACUFBCUFUGNLMOP $.
+
+$( Right-distributivity of disjunction over conjunction $)
+ordir $p |- Ga => ( ( ( ps /\ ch ) \/ ph )
+  -> ( ( ps \/ ph ) /\ ( ch \/ ph ) ) ) $=
+  ( wa wo cf cc idr ax-eanl ax-iorl ax-iorr ax-eor ax-eanr jca ax-iim ) BCEZAFZ
+  BAFZCAFZEDTSDRGZHZQASUBRDIZBADUAQGHHZBCUDQUBIZJKBADUAAGHHZAUBIZLMQATUBUCCAUDB
+  CUDUENKCAUFUGLMOP $.
 
 orabs $p |- Ga => ( ( ph \/ ( ph /\ ps ) ) <-> ph ) $=
   ( wa wo wi cf cc idr ax-eanl ax-eor ax-iim ax-iorl jca ax-ibi ) AABDZEZACAQFQ
