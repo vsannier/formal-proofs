@@ -124,6 +124,12 @@ ${
 $}
 
 ${
+  eqapll.1 $e |- f := g $.
+  eqapll $p |- ( ( f x ) y ) => ( ( g x ) y ) $=
+  ( tap eqapl apl ) ACFBCFDABCEGH $.
+$}
+
+${
   eqapr.1 $e |- x := y $.
   eqapr $p |- ( f x ) => ( f y ) $= ( bsid ax-eqbs ax-ap ) AABCAEBCDFG $.
 $}
@@ -239,7 +245,7 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
-$c 0 1 2 SUCC $.
+$c 0 1 2 SUCC ADD $.
 
 t0 $a term 0 $.
 df-0 $a |- 0 := ( K I ) $.
@@ -268,3 +274,15 @@ df-2 $a |- 2 := ( SUCC 1 ) $.
 e2 $p |- ( ( 2 f ) x ) => ( f ( f x ) ) $=
   ( t2 tap tSUCC t1 df-2 eqapl apl eSUCC e1 apr ax-bstr ) CADZBDEFDZADZBDZAABDZ
   DZNPBCOAGHIQAFADBDZDSAFBJATRABKLMM $.
+
+tADD $a term ADD $.
+df-ADD $a |- ADD := ( ( S I ) ( K SUCC ) ) $.
+
+eADD $p |- ( ( ADD x ) y ) => ( ( x SUCC ) y ) $=
+  ( tADD tap tS tI tK tSUCC df-ADD eqapl apl ax-S ax-I ax-K ax-ap ax-bstr ) CAD
+  ZBDEFDGHDZDZADZBDZAHDZBDZQTBCSAIJKUAFADZRADZDZBDUCTUFBFRALKUFUBBUDAUEHAMHANOK
+  PP $.
+
+1p1 $p |- ( ( ADD 1 ) 1 ) =><= 2 $=
+  ( tADD t1 tap t2 tSUCC eADD e1 ax-bstr df-2 ax-eqbs ax-ijn ) ABCBCZDEBCZLBECB
+  CMBBFEBGHDMIJK $.
