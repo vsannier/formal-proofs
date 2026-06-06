@@ -9,7 +9,7 @@ and [Dedukti](https://github.com/Deducteam/Dedukti/) theories:
 | Four-term analogies     | [`analogy.mm`](src/analogy.mm) | $\vdash a \mathbin{:} a \mathrel{::} b \mathbin{:} b$ (`id`)      |
 
 and a partial formalisation of Patrick Baillot and I's FSCD 2024 paper,
-see [`PlurimetricFuzz.v`](src/Plurimetric Fuzz/PlurimetricFuzz.v).
+see [`PlurimetricFuzz.v`](src/Plurimetric%20Fuzz/PlurimetricFuzz.v).
 
 (Please note that these theories have *not* been used extensively,
 and may therefore be incomplete or even unsound implementations

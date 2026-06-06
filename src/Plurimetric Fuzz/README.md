@@ -1,6 +1,6 @@
 # Plurimetric Fuzz
 
-The file `PlurimetricFuzz.glob` contains a partial mechanisation
+The file `PlurimetricFuzz.v` contains a partial mechanisation
 of the metatheory of Plurimetric Fuzz, a type system we presented
 in a paper published at the FSCD 2024 conference;
 see <https://doi.org/10.4230/LIPIcs.FSCD.2024.12>.
