@@ -395,6 +395,10 @@ antru $p |- Ga => ( ( ph /\ T. ) <-> ph ) $=
   ( wtru wa wi cf cc idr ax-eanl ax-iim ax-itru jca ax-ibi ) ACDZABANENAEBNABAC
   BNFGNBHIJANBCABAFGZABHOKLJLM $.
 
+anfal $p |- Ga => ( ( ph /\ F. ) <-> F. ) $=
+  ( wfal wa wi cf cc idr ax-eanr ax-iim ax-efal jca ax-ibi ) ACDZCBCNENCEBNCBAC
+  BNFGNBHIJCNBNBCFGCBHKJLM $.
+
 $( Conjunction is idempotent. $)
 anidm $p |- Ga => ( ( ph /\ ph ) <-> ph ) $=
   ( wa wi cf cc idr ax-eanl ax-iim jca ax-ibi ) AACZABALDLADBLABAABLEFLBGHIALBA
@@ -432,6 +436,10 @@ $(
   PROPERTIES OF DISJUNCTION
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
+
+ortru $p |- Ga => ( ( ph \/ T. ) <-> T. ) $=
+  ( wtru wo wi cf cc ax-itru ax-iim idr ax-iorr jca ax-ibi ) ACDZCBCNENCEBNCBBN
+  FGHICNBACBCFGCBJKILM $.
 
 orfal $p |- Ga => ( ( ph \/ F. ) <-> ph ) $=
   ( wfal wo wi cf cc idr ax-efal ax-eor ax-iim ax-iorl jca ax-ibi ) ACDZABAOEOA
