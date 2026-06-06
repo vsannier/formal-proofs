@@ -38,7 +38,7 @@ Other Metamath databases include:
   for matching logic by Xiaohong Chen et al.,
 * [dtt.mm](https://github.com/digama0/dtt.mm)
   for dependent type theory
-  and [hol.mm](https://github.com/metamath/set.mm/blob/develop/ql.mm)
+  and [hol.mm](https://github.com/metamath/set.mm/blob/develop/hol.mm)
   for Simple Type Theory (STT)
   by Mario Carneiro,
 * [set.mm](https://github.com/metamath/set.mm/blob/develop/set.mm),
