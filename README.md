@@ -3,11 +3,11 @@
 This repository contains
 the following [Metamath](https://us.metamath.org/) databases:
 
-| Logic/Theory            | File         |
-|-------------------------|--------------|
-| Natural deduction (NJ)  | `nj.mm`      |
-| SKI combinator calculus | `ski.mm`     |
-| Four-term analogies     | `analogy.mm` |
+| Logic/Theory            | File         | Example theorem                                                  |
+|-------------------------|--------------|-------------------------------------------------------------------|
+| Natural deduction (NJ)  | `nj.mm`      | $\Gamma \vdash (\phi \land \psi) \to (\phi \lor \phi)$ (`animor`) |
+| SKI combinator calculus | `ski.mm`     | $\vdash \mathrm{Y}(f) \downarrow f(\mathrm{Y}(f))$ (`fix`)        |
+| Four-term analogies     | `analogy.mm` | $\vdash a \mathbin{:} a \mathrel{::} b \mathbin{:} b$ (`id`)      |
 
 (Please note that they have *not* been used extensively,
 and may therefore be incomplete or even unsound implementations
