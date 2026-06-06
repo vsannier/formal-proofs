@@ -85,12 +85,15 @@ $)
 
 $c S K I $.
 
+$( Starling combinator $)
 tS $a term S $.
 ax-S $a |- ( ( ( S x ) y ) z ) => ( ( x z ) ( y z ) ) $.
 
+$( Kestrel combinator $)
 tK $a term K $.
 ax-K $a |- ( ( K x ) y ) => x $.
 
+$( Identity combinator $)
 tI $a term I $.
 ax-I $a |- ( I x ) => x $.
 
@@ -246,7 +249,7 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
-$c B $.
+$c B C W $.
 
 $( Bluebird combinator $)
 tB $a term B $.
@@ -256,6 +259,25 @@ eB $p |- ( ( ( B f ) g ) x ) => ( f ( g x ) ) $=
   ( tB tap tS tK df-B eqaplll ax-S apll ax-K apl ax-bstr ) DAEBECEFGFEZEGEZAEZB
   ECEZABCEZEZDPABCHIROAEZGAEZEZBECEZTQUCBCOGAJKUDFUBEZBECEZTUCUEBCUAFUBFALMKUFU
   BCEZSETUBBCJUGASACLMNNNN $.
+
+$( Cardinal combinator $)
+tC $a term C $.
+df-C $a |- C := ( ( S ( ( B B ) S ) ) ( K K ) ) $.
+
+eC $p |- ( ( ( C f ) x ) y ) => ( ( f y ) x ) $=
+  ( tC tap tS tB tK df-C eqaplll ax-S apll eB ax-K ax-ap apl apr ax-bstr ) DAEB
+  ECEFGGEFEZEHHEZEZAEZBECEZACEZBEZDUAABCIJUCSAEZTAEZEZBECEZUEUBUHBCSTAKLUIGFAEZ
+  EZHEZBEZCEZUEUHULBCUFUKUGHGFAMHANOLUNUJHBEZEZCEZUEUMUPCUJHBMPUQUDUOCEZEUEAUOC
+  KUDURBBCNQRRRRR $.
+
+$( Warbler combinator $)
+tW $a term W $.
+df-W $a |- W := ( ( S S ) ( K I ) ) $.
+
+eW $p |- ( ( W f ) x )  => ( ( f x ) x ) $=
+  ( tW tap tS tK tI df-W eqapll ax-S apl ax-K ax-I ax-bstr apr ) CADBDEEDFGDZDZ
+  ADZBDZABDZBDZCQABHISEADPADZDZBDZUARUCBEPAJKUDTUBBDZDUAAUBBJTUEBUEGBDBUBGBGALK
+  BMNONNN $.
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
