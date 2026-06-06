@@ -247,6 +247,16 @@ mtp $p |- ( ph \/ ps ) , ~ ph => ps $=
   ( wo cf wn cc idl idr ax-idc ax-enot ax-efal ax-eor ) ABBABCZDZAEZDZFZMPGBNPA
   DZFFZASAQHONRIJKBQHL $.
 
+$( Modus tollendo tollens $)
+mtt $p |- ( ph -> ps ) , ~ ps => ~ ph $=
+  ( wi cf wn cc idl idr ax-eim ax-idc ax-enot ax-inot ) AABCZDZBEZDZFZBNPADZFZF
+  ZABTMSGAQHIONRJKL $.
+
+$( Modus ponendo tollens $)
+mpt $p |- ~ ( ph /\ ps ) , ph => ~ ps $=
+  ( wa wn cf cc idr id ax-ian idl ax-enot ax-inot ) BABCZDZEZAEZFZMOPBEZFZFABQR
+  AOGBHINSJKL $.
+
 $( Hypothetical syllogism $)
 syl $p |- ( ph -> ps ) , ( ps -> ch ) => ( ph -> ch ) $=
   ( wi cf cc ax-idc idl idr ax-eim ax-iim ) ACABDZEZBCDZEZFZBCMOAEZFZFZNMQGABSL
