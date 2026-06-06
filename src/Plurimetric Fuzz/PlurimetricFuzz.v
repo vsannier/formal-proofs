@@ -1132,6 +1132,235 @@ Proof.
   all: now apply (weakening_prectx (p, Γ)).
 Qed.
 
+(** *** Inversion *)
+
+Inductive ctx_struct : ctx -> ctx -> Prop :=
+  | StructRefl pΓ :
+      ctx_struct pΓ pΓ
+  | StructGt p q Γ :
+      param_lt q p -> ctx_struct (p, Γ) (q, Γ)
+  | StructLt p q Γ :
+      param_lt p q -> ctx_struct (p, Γ) (q, prectx_scale (sens_pnorm_c p q) Γ)
+  | StructTrans pΓ1 pΓ2 pΓ3 :
+      ctx_struct pΓ1 pΓ2 -> ctx_struct pΓ2 pΓ3 -> ctx_struct pΓ1 pΓ3.
+
+Lemma has_type_struct pΓ1 pΓ2 t τ :
+  ctx_struct pΓ1 pΓ2 -> has_type pΓ1 t τ -> has_type pΓ2 t τ.
+Proof.
+  intros Hstep; revert t τ.
+  induction Hstep; intros t τ Htype; eauto using TWeakGt, TWeakLt.
+Qed.
+
+Ltac solve_inv_struct IH Heq Rule :=
+  specialize (IH Heq);
+  repeat match type of IH with
+  | exists _, _ => destruct IH as [? IH]
+  | _ /\ _ => destruct IH as [? IH]
+  end;
+  subst;
+  repeat eexists; repeat split; eauto;
+  eapply StructTrans; [ exact IH | apply Rule; assumption ].
+
+Lemma inversion_TmBase pΓ b τ :
+  has_type pΓ (TmBase b) τ ->
+  match b with
+  | ValUnit => τ = TyBase TyUnit
+  | ValNat _ => τ = TyBase TyNat
+  end.
+Proof.
+  intros H; remember (TmBase b) as t_base.
+  induction H; try discriminate Heqt_base.
+  - injection Heqt_base as [= <-]. reflexivity.
+  - injection Heqt_base as [= <-]. reflexivity.
+  - now apply IHhas_type.
+  - now apply IHhas_type.
+Qed.
+
+Lemma inversion_TmUnit pΓ τ :
+  has_type pΓ TmUnit τ ->
+  τ = TyBase TyUnit.
+Proof.
+  apply inversion_TmBase.
+Qed.
+
+Lemma inversion_TmNat pΓ n τ :
+  has_type pΓ (TmNat n) τ ->
+  τ = TyBase TyNat.
+Proof.
+  apply inversion_TmBase.
+Qed.
+
+Lemma inversion_TmVar pΓ x τ :
+  has_type pΓ (TmVar x) τ ->
+  exists p' Γ' s',
+    Γ' x = Some (s', τ) /\
+    sens_le sens_1 s' /\
+    ctx_struct (p', Γ') pΓ.
+Proof.
+  intros H; remember (TmVar x) as t_var.
+  induction H; try discriminate Heqt_var.
+  - injection Heqt_var as [= ->].
+    repeat eexists; repeat split; eauto.
+    apply StructRefl.
+  - solve_inv_struct IHhas_type Heqt_var StructGt.
+  - solve_inv_struct IHhas_type Heqt_var StructLt.
+Qed.
+
+Lemma inversion_TmAbs pΓ t τ :
+  has_type pΓ (TmAbs t) τ ->
+  exists p' Γ' σ' τ',
+    τ = TyArrow p' σ' τ' /\
+    has_type (p', Some (sens_1, σ') .: Γ') t τ' /\
+    ctx_struct (p', Γ') pΓ.
+Proof.
+  intros H; remember (TmAbs t) as t_abs.
+  induction H; try discriminate Heqt_abs.
+  - injection Heqt_abs as [= ->].
+    repeat eexists; repeat split; eauto.
+    apply StructRefl.
+  - solve_inv_struct IHhas_type Heqt_abs StructGt.
+  - solve_inv_struct IHhas_type Heqt_abs StructLt.
+Qed.
+
+Lemma inversion_TmApp pΓ f t τ :
+  has_type pΓ (TmApp f t) τ ->
+  exists p' Γ' Δ' σ',
+    prectx_comp Γ' Δ' /\
+    has_type (p', Γ') f (TyArrow p' σ' τ) /\
+    has_type (p', Δ') t σ' /\
+    ctx_struct (p', prectx_contr p' Γ' Δ') pΓ.
+Proof.
+  intros H; remember (TmApp f t) as t_app.
+  induction H; try discriminate Heqt_app.
+  - injection Heqt_app as [= -> ->].
+    repeat eexists; repeat split; eauto.
+    apply StructRefl.
+  - solve_inv_struct IHhas_type Heqt_app StructGt.
+  - solve_inv_struct IHhas_type Heqt_app StructLt.
+Qed.
+
+Lemma inversion_TmPair pΓ t1 t2 τ :
+  has_type pΓ (TmPair t1 t2) τ ->
+  exists p' Γ' Δ' τ1' τ2',
+    τ = TyPair p' τ1' τ2' /\
+    prectx_comp Γ' Δ' /\
+    has_type (p', Γ') t1 τ1' /\
+    has_type (p', Δ') t2 τ2' /\
+    ctx_struct (p', prectx_contr p' Γ' Δ') pΓ.
+Proof.
+  intros H; remember (TmPair t1 t2) as t_pair.
+  induction H; try discriminate Heqt_pair.
+  - injection Heqt_pair as [= -> ->].
+    repeat eexists; repeat split; eauto.
+    apply StructRefl.
+  - solve_inv_struct IHhas_type Heqt_pair StructGt.
+  - solve_inv_struct IHhas_type Heqt_pair StructLt.
+Qed.
+
+Lemma inversion_TmLetPair pΓ tpair t τ :
+  has_type pΓ (TmLetPair tpair t) τ ->
+  exists p' Γ' Δ' s' τ1' τ2',
+    prectx_comp Γ' Δ' /\
+    has_type (p', Γ') tpair (TyPair p' τ1' τ2') /\
+    has_type (p', Some (s', τ2') .: Some (s', τ1') .: Δ') t τ /\
+    ctx_struct (p', prectx_contr p' (prectx_scale s' Γ') Δ') pΓ.
+Proof.
+  intros H; remember (TmLetPair tpair t) as t_letpair.
+  induction H; try discriminate Heqt_letpair.
+  - injection Heqt_letpair as [= -> ->].
+    repeat eexists; repeat split; eauto.
+    apply StructRefl.
+  - solve_inv_struct IHhas_type Heqt_letpair StructGt.
+  - solve_inv_struct IHhas_type Heqt_letpair StructLt.
+Qed.
+
+Lemma inversion_TmInjL pΓ t τ :
+  has_type pΓ (TmInjL t) τ ->
+  exists τ1' τ2',
+    τ = TyPlus τ1' τ2' /\
+    has_type pΓ t τ1'.
+Proof.
+  intros H; remember (TmInjL t) as t_injl.
+  induction H; try discriminate Heqt_injl.
+  - injection Heqt_injl as [= ->].
+    repeat eexists; eauto.
+  - destruct (IHhas_type Heqt_injl) as [τ1' [τ2' [-> Htype]]].
+    eexists; eexists; split; eauto.
+    eapply TWeakGt; eauto.
+  - destruct (IHhas_type Heqt_injl) as [τ1' [τ2' [-> Htype]]].
+    eexists; eexists; split; eauto.
+    eapply TWeakLt; eauto.
+Qed.
+
+Lemma inversion_TmInjR pΓ t τ :
+  has_type pΓ (TmInjR t) τ ->
+  exists τ1' τ2',
+    τ = TyPlus τ1' τ2' /\
+    has_type pΓ t τ2'.
+Proof.
+  intros H; remember (TmInjR t) as t_injr.
+  induction H; try discriminate Heqt_injr.
+  - injection Heqt_injr as [= ->].
+    repeat eexists; eauto.
+  - destruct (IHhas_type Heqt_injr) as [τ1' [τ2' [-> Htype]]].
+    eexists; eexists; split; eauto.
+    eapply TWeakGt; eauto.
+  - destruct (IHhas_type Heqt_injr) as [τ1' [τ2' [-> Htype]]].
+    eexists; eexists; split; eauto.
+    eapply TWeakLt; eauto.
+Qed.
+
+Lemma inversion_TmCase pΓ t tl tr τ :
+  has_type pΓ (TmCase t tl tr) τ ->
+  exists p' Γ' Δ' s' τ1' τ2',
+    prectx_comp Γ' Δ' /\
+    has_type (p', Γ') t (TyPlus τ1' τ2') /\
+    has_type (p', Some (s', τ1') .: Δ') tl τ /\
+    has_type (p', Some (s', τ2') .: Δ') tr τ /\
+    ctx_struct (p', prectx_contr p' (prectx_scale s' Γ') Δ') pΓ.
+Proof.
+  intros H; remember (TmCase t tl tr) as t_case.
+  induction H; try discriminate Heqt_case.
+  - injection Heqt_case as [= -> -> ->].
+    repeat eexists; repeat split; eauto.
+    apply StructRefl.
+  - solve_inv_struct IHhas_type Heqt_case StructGt.
+  - solve_inv_struct IHhas_type Heqt_case StructLt.
+Qed.
+
+Lemma inversion_TmBang pΓ t τ :
+  has_type pΓ (TmBang t) τ ->
+  exists p' Γ' Δ' τ' s',
+    τ = TyBang s' τ' /\
+    prectx_comp Γ' Δ' /\
+    has_type (p', Γ') t τ' /\
+    ctx_struct (p', prectx_contr p' (prectx_scale s' Γ') Δ') pΓ.
+Proof.
+  intros H; remember (TmBang t) as t_bang.
+  induction H; try discriminate Heqt_bang.
+  - injection Heqt_bang as [= ->].
+    repeat eexists; repeat split; eauto.
+    apply StructRefl.
+  - solve_inv_struct IHhas_type Heqt_bang StructGt.
+  - solve_inv_struct IHhas_type Heqt_bang StructLt.
+Qed.
+
+Lemma inversion_TmLetBang pΓ t1 t2 τ :
+  has_type pΓ (TmLetBang t1 t2) τ ->
+  exists p' Γ' Δ' τ1' r' s',
+    prectx_comp Γ' Δ' /\
+    has_type (p', Γ') t1 (TyBang r' τ1') /\
+    has_type (p', Some (sens_mult r' s', τ1') .: Δ') t2 τ /\
+    ctx_struct (p', prectx_contr p' (prectx_scale s' Γ') Δ') pΓ.
+Proof.
+  intros H; remember (TmLetBang t1 t2) as t_letbang.
+  induction H; try discriminate Heqt_letbang.
+  - injection Heqt_letbang as [= -> ->].
+    repeat eexists; repeat split; eauto.
+    apply StructRefl.
+  - solve_inv_struct IHhas_type Heqt_letbang StructGt.
+  - solve_inv_struct IHhas_type Heqt_letbang StructLt.
+Qed.
 (** *** Substitution *)
 
 Lemma substitution (p : param) (Γ Δ : prectx)
