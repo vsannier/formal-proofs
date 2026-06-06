@@ -985,6 +985,12 @@ Proof.
   repeat step_eval.
 Qed.
 
+Lemma evals_to_is_value t v : evals_to t v -> is_value v.
+Proof.
+  intros H; induction H.
+  all: eauto using is_value.
+Qed.
+
 (** ** Metatheory *)
 
 (** *** Weakening *)
