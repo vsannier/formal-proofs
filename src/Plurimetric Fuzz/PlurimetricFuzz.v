@@ -177,6 +177,26 @@ Proof.
   apply sens_mult_1_l.
 Qed.
 
+Lemma sens_mult_le (s r : sens) :
+  sens_le sens_1 s ->
+  sens_le r (sens_mult s r).
+Proof.
+  intro H.
+  destruct s as [s |], r as [r |].
+  - destruct H.
+    + left.
+      unfold sens_lt in *; simpl in *.
+      replace r with (1 * r) at 1; [| lra].
+      apply Rmult_lt_compat_r; lra.
+    + right.
+      unfold sens_mult; apply sens_eq_real.
+      apply sens_eq_real in H; rewrite <- H.
+      lra.
+  - now right.
+  - now left.
+  - now right.
+Qed.
+
 Lemma sens_mult_le_inv (s1 : R) (H1 : s1 > 0) (s2 r : sens) :
   sens_le (sens_mult (sens_real s1 H1) s2) r ->
   sens_le s2 (sens_mult (sens_inv s1 H1) r).
@@ -451,6 +471,18 @@ Proof.
   all: lra.
 Qed.
 
+Lemma sens_pnorm_c_ge_1 (p q : param) :
+  sens_le sens_1 (sens_pnorm_c p q).
+Proof.
+  unfold sens_pnorm_c, real_pnorm_c.
+  destruct p as [p |], q as [q |]; apply sens_le_real.
+  all: replace 1 with (Rpower 2 0); [apply Rle_Rpower | apply Rpower_O].
+  all: try lra.
+  - apply Rabs_pos.
+  - left; apply Rinv_0_lt_compat; lra.
+  - left; apply Rinv_0_lt_compat; lra.
+Qed.
+
 (** * Plurimetric Fuzz *)
 
 (** ** Syntax *)
@@ -526,6 +558,17 @@ Proof.
   - apply sens_le_refl.
 Qed.
 
+Lemma prectx_le_trans (Γ1 Γ2 Γ3 : prectx) :
+  prectx_le Γ1 Γ2 -> prectx_le Γ2 Γ3 -> prectx_le Γ1 Γ3.
+Proof.
+  intros H12 H23.
+  intros x s1 τ Hx.
+  destruct (H12 x s1 τ Hx) as [s2 [Hx2 Hle12]].
+  destruct (H23 x s2 τ Hx2) as [s3 [Hx3 Hle23]].
+  exists s3; split; auto.
+  eapply sens_le_trans; eauto.
+Qed.
+
 (** If [Γ] is smaller than or equal to [Δ],
     then they are pointwise compatible. *)
 Lemma prectx_le_type_eq Γ Δ x s1 τ1 s2 τ2 : prectx_le Γ Δ ->
@@ -574,6 +617,19 @@ Proof.
   - repeat f_equal.
     apply sens_mult_1_l.
   - reflexivity.
+Qed.
+
+Lemma prectx_scale_le (s : sens) (Γ : prectx) :
+  sens_le sens_1 s ->
+  prectx_le Γ (prectx_scale s Γ).
+Proof.
+  intro H.
+  intros x sΓ τΓ HΓ.
+  exists (sens_mult s sΓ).
+  split.
+  - unfold prectx_scale.
+    now rewrite HΓ.
+  - now apply sens_mult_le.
 Qed.
 
 Lemma prectx_scale_inv (s : R) (Hs : 0 < s) Γ :
