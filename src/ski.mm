@@ -7,7 +7,7 @@ $(
 ###############################################################################
 $)
 
-$c S K I ( ) term -> = wff |- $.
+$c S K I ( ) term => = wff |- $.
 
 $v f g h x y z $.
 tf $f term f $.
@@ -23,7 +23,7 @@ tI $a term I $.
 
 tap $a term ( f x ) $.
 
-wss $a wff x -> y $.
+wss $a wff x => y $.
 weq $a wff x = y $.
 
 $(
@@ -65,19 +65,19 @@ $)
 
 ${
   ax-eqbs.1 $e |- x = y $.
-  ax-eqbs $a |- x -> y $.
+  ax-eqbs $a |- x => y $.
 $}
 
 ${
-  ax-bstr.1 $e |- x -> y $.
-  ax-bstr.2 $e |- y -> z $.
-  ax-bstr $a |- x -> z $.
+  ax-bstr.1 $e |- x => y $.
+  ax-bstr.2 $e |- y => z $.
+  ax-bstr $a |- x => z $.
 $}
 
 ${
-  ax-ap.1 $e |- f -> g $.
-  ax-ap.2 $e |- x -> y $.
-  ax-ap $a |- ( f x ) -> ( g y ) $.
+  ax-ap.1 $e |- f => g $.
+  ax-ap.2 $e |- x => y $.
+  ax-ap $a |- ( f x ) => ( g y ) $.
 $}
 
 $(
@@ -86,9 +86,9 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
-ax-S $a |- ( ( ( S x ) y ) z ) -> ( ( x z ) ( y z ) ) $.
-ax-K $a |- ( ( K x ) y ) -> x $.
-ax-I $a |- ( I x ) -> x $.
+ax-S $a |- ( ( ( S x ) y ) z ) => ( ( x z ) ( y z ) ) $.
+ax-K $a |- ( ( K x ) y ) => x $.
+ax-I $a |- ( I x ) => x $.
 
 $(
 ###############################################################################
@@ -102,26 +102,26 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
-bsid $p |- x -> x $= ( ax-eqid ax-eqbs ) AAABC $.
+bsid $p |- x => x $= ( ax-eqid ax-eqbs ) AAABC $.
 
 ${
-  apl.1 $e |- f -> g $.
-  apl $p |- ( f x ) -> ( g x ) $= ( bsid ax-ap ) ABCCDCEF $.
+  apl.1 $e |- f => g $.
+  apl $p |- ( f x ) => ( g x ) $= ( bsid ax-ap ) ABCCDCEF $.
 $}
 
 ${
-  apr.1 $e |- x -> y $.
-  apr $p |- ( f x ) -> ( f y ) $= ( bsid ax-ap ) AABCAEDF $.
+  apr.1 $e |- x => y $.
+  apr $p |- ( f x ) => ( f y ) $= ( bsid ax-ap ) AABCAEDF $.
 $}
 
 ${
   eqapl.1 $e |- f = g $.
-  eqapl $p |- ( f x ) -> ( g x ) $= ( ax-eqbs bsid ax-ap ) ABCCABDECFG $.
+  eqapl $p |- ( f x ) => ( g x ) $= ( ax-eqbs bsid ax-ap ) ABCCABDECFG $.
 $}
 
 ${
   eqapr.1 $e |- x = y $.
-  eqapr $p |- ( f x ) -> ( f y ) $= ( bsid ax-eqbs ax-ap ) AABCAEBCDFG $.
+  eqapr $p |- ( f x ) => ( f y ) $= ( bsid ax-eqbs ax-ap ) AABCAEBCDFG $.
 $}
 
 $(
@@ -135,19 +135,25 @@ $c F T NOT $.
 tT $a term T $.
 df-T $a |- T = K $.
 
+etru $p |- ( ( T x ) y ) => x $=
+  ( tT tap tK df-T eqapl apl ax-K ax-bstr ) CADZBDEADZBDAKLBCEAFGHABIJ $.
+
 tF $a term F $.
 df-F $a |- F = ( S K ) $.
+
+efal $p |- ( ( F x ) y ) => y $=
+  ( tF tap tS tK df-F eqapl apl ax-S ax-K ax-bstr ) CADZBDEFDZADZBDZBMOBCNAGHIP
+  FBDABDZDBFABJBQKLL $.
 
 tNOT $a term NOT $.
 df-NOT $a |- NOT = ( ( S ( ( S I ) ( K F ) ) ) ( K T ) ) $.
 
-nottru $p |- ( NOT T ) -> F $=
-  ( tNOT tT tap tS tI tK df-NOT eqapl ax-S ax-K ax-ap ax-I df-T ax-eqbs ax-bstr
-  tF apl ) ABCDDECFPCZCZCFBCZCZBCZPAUABGHUBSBCZTBCZCZPSTBIUEEBCZRBCZCZBCZPUCUHU
-  DBERBIBBJKUIBUGCZBCZPUHUJBUFBUGBLQQUKUGPUJRBBFUGPBFMNPBJZKQULOOOOO $.
+nottru $p |- ( NOT T ) => F $=
+  ( tNOT tT tap tS tI tK tF df-NOT eqapl ax-S ax-K ax-ap ax-I apl etru ax-bstr
+  ) ABCDDECFGCZCZCFBCZCZBCZGATBHIUARBCZSBCZCZGRSBJUDEBCZQBCZCZBCZGUBUGUCBEQBJBB
+  KLUHBUFCZBCZGUGUIBUEBUFBMNNUJUFGUFBOGBKPPPPP $.
 
-notfal $p |- ( NOT F ) -> T $=
-  ( tNOT tF tap tS tI tK tT df-NOT eqapl ax-S ax-K ax-ap ax-I apl df-F ax-bstr
+notfal $p |- ( NOT F ) => T $=
+  ( tNOT tF tap tS tI tK tT df-NOT eqapl ax-S ax-K ax-ap ax-I apl efal ax-bstr
   ) ABCDDECFBCZCZCFGCZCZBCZGATBHIUARBCZSBCZCZGRSBJUDEBCZQBCZCZGCZGUBUGUCGEQBJGB
-  KLUHBBCZGCZGUGUIGUEBUFBBMBBKLNUJDFCZBCZGCZGUIULGBUKBOINUMSBGCZCGFBGJGUNKPPPPP
-  P $.
+  KLUHBBCZGCGUGUIGUEBUFBBMBBKLNBGOPPPP $.
