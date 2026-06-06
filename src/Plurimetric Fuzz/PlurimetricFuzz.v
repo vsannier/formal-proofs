@@ -1367,9 +1367,37 @@ Qed.
 Definition is_injective (ξ : var -> var) : Prop :=
   forall x y, ξ x = ξ y -> x = y.
 
+Lemma is_injective_up (ξ : var -> var) :
+  is_injective ξ -> is_injective (0%nat .: ξ >>> (+1%nat)).
+Proof.
+  intros Hinj [|x] [|y] Heq; asimpl in Heq.
+  - reflexivity.
+  - discriminate.
+  - discriminate.
+  - f_equal.
+    apply Hinj.
+    now injection Heq.
+Qed.
+
 Definition is_pushforward (ξ : var -> var) (Γ Δ : prectx) : Prop :=
   (forall x, Γ x = Δ (ξ x)) /\
   (forall y, (forall x, ξ x <> y) -> Δ y = None).
+
+Lemma is_pushforward_up (ξ : var -> var) Γ Δ v :
+  is_pushforward ξ Γ Δ ->
+  is_pushforward (0%nat .: ξ >>> (+1%nat)) (v .: Γ) (v .: Δ).
+Proof.
+  intros [Heq Hnone]. split.
+  - intros [|x]; now asimpl.
+  - intros [|y] Hy; asimpl.
+    + exfalso.
+      now apply (Hy 0%nat).
+    + apply Hnone.
+      intros x Hx.
+      apply (Hy (S x)).
+      asimpl.
+      now f_equal.
+Qed.
 
 Require Import Classical.
 
