@@ -1,4 +1,4 @@
 src/set.mm
 src/*.min
 scripts/*
-!scripts/metalsmith
+!scripts/mmtool.lua
