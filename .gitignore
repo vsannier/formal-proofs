@@ -1,4 +1,3 @@
 misc/set.mm
 src/*.min
-scripts/*
-!scripts/mmtool.lua
+scripts/check-braces
