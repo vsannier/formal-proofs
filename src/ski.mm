@@ -8,11 +8,12 @@ $(
 $)
 
 $c S K I ( ) term => = wff |- $.
-
 $v f g h x y z $.
+
 tf $f term f $.
 tg $f term g $.
 th $f term h $.
+
 tx $f term x $.
 ty $f term y $.
 tz $f term z $.
@@ -139,7 +140,7 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
-$c F T NOT $.
+$c F T NOT OR $.
 
 tT $a term T $.
 df-T $a |- T = K $.
@@ -166,3 +167,16 @@ notfal $p |- ( NOT F ) => T $=
   ( tNOT tF tap tS tI tK tT df-NOT eqapl ax-S ax-K ax-ap ax-I apl efal ax-bstr
   ) ABCDDECFBCZCZCFGCZCZBCZGATBHIUARBCZSBCZCZGRSBJUDEBCZQBCZCZGCZGUBUGUCGEQBJGB
   KLUHBBCZGCGUGUIGUEBUFBBMBBKLNBGOPPPP $.
+
+tOR $a term OR $.
+df-OR $a |- OR = ( ( S I ) ( K T ) ) $.
+
+ortru $p |- ( ( OR T ) y ) => T $=
+  ( tOR tT tap tS tI tK df-OR eqapl apl ax-S ax-I ax-K ax-ap etru ax-bstr ) BCD
+  ZADEFDGCDZDZCDZADZCQTABSCHIJUAFCDZRCDZDZADZCTUDAFRCKJUECCDZADCUDUFAUBCUCCCLCC
+  MNJCAOPPP $.
+
+orfal $p |- ( ( OR F ) y ) => y $=
+  ( tOR tF tap tS tI tK tT df-OR eqapl apl ax-S ax-I ax-K ax-ap efal ax-bstr )
+  BCDZADEFDGHDZDZCDZADZARUAABTCIJKUBFCDZSCDZDZADZAUAUEAFSCLKUFCHDZADAUEUGAUCCUD
+  HCMHCNOKHAPQQQ $.
