@@ -188,6 +188,11 @@ $( Modus ponens $)
 mp $p |- ( ph -> ps ) , ph => ps $=
   ( wi cf cc wtru ax-id ax-str ax-eim ) ABABCZDZADZEZJMJFDZLNEGHAMANKENGHI $.
 
+$( Modus tollendo ponens $)
+mtp $p |- ( ph \/ ps ) , ~ ph => ps $=
+  ( wo cf wn cc wtru ax-id ax-str ax-enot ax-efal ax-eor )
+  ABBABCZDZAEZDZFZMQMGDZPRFHIBNPADZFFZATATARQFZRHIONSHJKBNPBDFFBUARHIL $.
+
 $( Hypothetical syllogism $)
 syl $p |- ( ph -> ps ) , ( ps -> ch ) => ( ph -> ch ) $=
   ( wi cf cc ax-id wtru ax-str ax-eim ax-iim )
