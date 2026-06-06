@@ -211,6 +211,25 @@ idl $p |- ps , Ga => ps $=
 idr $p |- Ga , ps => ps $=
   ( cf cc ax-idc dup ) ABACDZABGEF $.
 
+${
+  exchl.1 $e |- Si , Pi , De => ch $.
+  exchl $p |- Pi , Si , De => ch $=
+    ( cc wtru cf ax-weakl ax-exch ax-strl ) ADCBFFAGHZBCDACDBFFLEIJK $.
+$}
+
+${
+  exchr.1 $e |- Ga , Si , Pi => ch $.
+  exchr $p |- Ga , Pi , Si => ch $=
+    ( cc wtru cf ax-weakr ax-exch ax-strr ) ABDCFFABGHZCDABCDFFLEIJK $.
+$}
+
+${
+  exch2.1 $e |- Ga , De => ch $.
+  exch2 $p |- De , Ga => ch $=
+    ( cc wtru cf ax-weakr ax-weakl ax-exch ax-strr ax-strl ) ACBEZAFGZMEANNBCAB
+    CNEENABCENDHIJKL $.
+$}
+
 $c <-> $.
 wb $a wff ( ph <-> ps ) $.
 
@@ -339,8 +358,8 @@ lnc $p |- Ga => ~ ( ph /\ ~ ph ) $=
 
 $( Law of contraposition $)
 con $p |- Ga => ( ( ph -> ps ) -> ( ~ ps -> ~ ph ) ) $=
-  ( wi wn cf cc ax-idc idr ax-eim ax-enot ax-inot ax-iim ) ABDZBEZAEZDCOPCNFZGZ
-  ACQOFZGGZBCQSAFZGZGGZABUCNCUBHATIJORUAHKLMM $.
+  ( wi wn cf cc ax-idc idr ax-eim ax-enot ax-inot iim2 ) ABDZBEZAECACNFZOFZGGZB
+  CPQAFZGZGGZABUANCTHARIJOCPGSHKLM $.
 
 con2 $p |- Ga => ( ( ph -> ~ ps ) -> ( ps -> ~ ph ) ) $=
   ( wn wi cf cc ax-idc idr ax-eim ax-enot ax-inot iim2 ) ABDZEZBADCACOFZBFZGGZB
@@ -437,21 +456,21 @@ orass $p |- Ga => ( ( ( ph \/ ps ) \/ ch ) <-> ( ph \/ ( ps \/ ch ) ) ) $=
 
 $( Disjunction is monotonic with respect to implication. $)
 ormonl $p |- Ga => ( ( ph -> ps ) -> ( ( ph \/ ch ) -> ( ps \/ ch ) ) ) $=
-  ( wi wo cf cc idr ax-idc ax-eim ax-iorl ax-iorr ax-eor ax-iim ) ABEZACFZBCFZE
-  DQRDPGZHZACRDSQGZHHZQTIBCDSUAAGHZHHZABUDPDUCJAUBIKLBCDSUACGHHHCUBIMNOO $.
+  ( wi wo cf cc idr ax-idc ax-eim ax-iorl ax-iorr ax-eor iim2 ) ABEZACFZBCFZDAC
+  RDPGZQGZHHZQDSHIBCDSTAGHZHHZABUCPDUBJAUAIKLBCDSTCGHHHCUAIMNO $.
 
 $( Reasoning by cases $)
 cases $p |- Ga => ( ( ( ph -> ch ) /\ ( ps -> ch ) )
   <-> ( ( ph \/ ps ) -> ch ) ) $=
-  ( wi wa wo cf idr ax-idc ax-eanl ax-eim ax-eanr ax-eor ax-iim ax-iorl ax-iorr
-  cc jca ax-ibi ) ACEZBCEZFZABGZCEZDUEUCEUCUEEDUCUEDUDCDUCHZRZABCDUFUDHZRRZUDUG
-  IACDUFUHAHZRZRRZUAUBULUCDUKJKAUIILBCDUFUHBHZRZRRZUAUBUOUCDUNJMBUIILNOOUEUCDUB
-  UADUEHZRZACUQUDCDUPUJRRZUEDUJJABURAUQIPLOBCUQUDCDUPUMRRZUEDUMJABUSBUQIQLOSOST
+  ( wi wa wo cf cc idr ax-idc ax-eanl ax-eim ax-eanr ax-eor iim2 ax-iorl ax-iim
+  ax-iorr jca ax-ibi ) ACEZBCEZFZABGZCEZDUFUDEUDUFEDUDUECDABCDUDHZUEHZIIZUEDUGI
+  JACDUGUHAHZIZIIZUBUCULUDDUKKLAUIJMBCDUGUHBHZIZIIZUBUCUOUDDUNKNBUIJMOPUFUDDUCU
+  BDUFHZIZACUQUECDUPUJIIZUFDUJKABURAUQJQMRBCUQUECDUPUMIIZUFDUMKABUSBUQJSMRTRTUA
   $.
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-  COMPLEX TAUTOLOGIES
+  PROPERTIES OF BICONDITIONAL
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
@@ -469,19 +488,53 @@ notbi $p |- Ga => ( ( ph <-> ps ) -> ( ~ ph <-> ~ ps ) ) $=
   BUHSCUGHIJAUEKLUAUCUFHMNOTUAUCBCUBTFZGGZACUBUKBFZGZGGZBAUOUIUJUOABUOSCUNHIPBU
   LKLTUCUMHMNORO $.
 
+$( Congruence of biconditional with conjunction (left) $)
+anbil $p |- Ga => ( ( ph <-> ps ) -> ( ( ch /\ ph ) <-> ( ch /\ ps ) ) ) $=
+  ( wb wa cf cc idr ax-eanl wi ax-idc ax-ebi ax-eanr ax-eim jca ax-iim impbi )
+  ABEZCAFZCBFZEDUATDSGZHZUATUCACDUBUAGZHHZCBUEUAUCIZJBAUEABKZBAKZUEABUESDUDLMNC
+  BUEUFNOPQTUAUCBCDUBTGZHHZCAUJTUCIZJABUJUGUHUJABUJSDUILMJCAUJUKNOPQRQ $.
+
+$( Congruence of biconditional with conjunction (right $)
+anbir $p |- Ga => ( ( ph <-> ps ) -> ( ( ph /\ ch ) <-> ( ps /\ ch ) ) ) $=
+  ( wb wa cf cc wi ax-idc ax-ebi ax-eanr idr ax-eanl ax-eim jca ax-iim impbi )
+  ABEZACFZBCFZEDUATDSGZHZUATUCCADUBUAGZHHZBAUEABIZBAIZUEABUESDUDJKLBCUEUAUCMZNO
+  BCUEUHLPQTUAUCCBDUBTGZHHZABUJUFUGUJABUJSDUIJKNACUJTUCMZNOACUJUKLPQRQ $.
+
+orbil $p |- Ga => ( ( ph <-> ps ) -> ( ( ch \/ ph ) <-> ( ch \/ ps ) ) ) $=
+  ( wb wo cf cc idr ax-iorl ax-idc ax-ebi ax-eanr ax-eim ax-iorr ax-eor ax-eanl
+  wi ax-iim impbi ) ABEZCAFZCBFZEDUCUBDUAGZHZUCUBUECBUBDUDUCGZHHZUCUEICADUDUFCG
+  ZHHHCUGIJCADUDUFBGHZHHZBAUJABRZBARZUJABUJUADUIKLMBUGINOPSUBUCUECAUCDUDUBGZHHZ
+  UBUEICBDUDUMUHHHHCUNIJCBDUDUMAGHZHHZABUPUKULUPABUPUADUOKLQAUNINOPSTS $.
+
+orbir $p |- Ga => ( ( ph <-> ps ) -> ( ( ph \/ ch ) <-> ( ps \/ ch ) ) ) $=
+  ( wb wo cf cc idr ax-idc ax-ebi ax-eanr ax-eim ax-iorl ax-iorr ax-eor ax-eanl
+  wi ax-iim impbi ) ABEZACFZBCFZEDUCUBDUAGZHZUCUBUEBCUBDUDUCGZHHZUCUEIACDUDUFBG
+  HZHHZBAUIABRZBARZUIABUIUADUHJKLBUGIMNACDUDUFCGZHHHCUGIOPSUBUCUEACUCDUDUBGZHHZ
+  UBUEIBCDUDUMAGHZHHZABUPUJUKUPABUPUADUOJKQAUNIMNBCDUDUMULHHHCUNIOPSTS $.
+
+$(
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+  COMPLEX TAUTOLOGIES
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+$)
+
+jcn $p |- Ga , ph , ~ ps => ~ ( ph -> ps ) $=
+  ( wi cf wn cc idr ax-idc ax-eim ax-enot ax-inot ) ABDZCAEZBFZEZGGZBCNPMEZGZGG
+  ZABTMQHACSIJOCNGRIKL $.
+
 dfnot $p |- Ga => ( ~ ph <-> ( ph -> F. ) ) $=
-  ( wn wfal wi cf cc idr ax-idc ax-enot ax-iim ax-eim ax-inot jca ax-ibi ) ACZA
-  DEZBQPEPQEBPQBADBPFZGZABRAFZGGASHPBTIJKKQPBABQFZGZADBUATGGQBTIAUBHLMKNO $.
+  ( wfal wi wn cf cc ax-idc idr ax-eim ax-inot ax-iim ax-enot impbi ) ACDZAEZBO
+  PBABOFZGZACBQAFZGGOBSHARIJKLPOBACBPFZGZABTSGGAUAIPBSHMLLN $.
 
 $( Permutation of antecedents $)
 imcom $p |- Ga => ( ( ph -> ( ps -> ch ) ) <-> ( ps -> ( ph -> ch ) ) ) $=
-  ( wi cf cc ax-idc idr ax-eim ax-iim jca ax-ibi ) ABCEZEZBACEZEZDQOEOQEDOQDBPD
-  OFZGZACDRBFZGGZBCDRTAFZGZGGZANUDODUCHAUAIJBSUBHJKKKQODANDQFZGZBCDUEUBGGZACDUE
-  UBTGZGGZBPUIQDUHHBUGIJAUFTHJKKKLM $.
+  ( wi cf cc ax-idc idr ax-eim ax-iim iim2 impbi ) BACEZEZABCEZEZDOAPDBCDOFZAFZ
+  GGZACDRSBFZGZGGZBNUCODUBHBTIJADRGUAHJKLQBNDACDQFZUAGGZBCDUDUASGZGGZAPUGQDUFHA
+  UEIJBDUDGSHJKLM $.
 
 imor $p |- Ga => ( ( ~ ph \/ ps ) -> ( ph -> ps ) ) $=
-  ( wn wo wi cf cc ax-idc idr ax-enot ax-efal ax-eor ax-iim ) ADZBEZABFCABCPGZH
-  ZOBBCQAGZHHZPCSIBCQSOGZHHHZAUBARUAIOTJKLBTJMNN $.
+  ( wn wo cf cc ax-idc idr ax-enot ax-efal ax-eor iim2 ) ADZBEZABCNBBCOFZAFZGGZ
+  OCQHBCPQNFZGGGZATACPGSHNRIJKBRILM $.
 
 $( Conjunction implies disjunction. $)
 animor $p |- Ga => ( ( ph /\ ps ) -> ( ps \/ ph ) ) $=
@@ -510,8 +563,8 @@ andir $p |- Ga => ( ( ( ps \/ ch ) /\ ph )
   ULMNOQST $.
 
 anabs $p |- Ga => ( ( ph /\ ( ph \/ ps ) ) <-> ph ) $=
-  ( wo wa wi cf cc idr ax-eanl ax-iim ax-iorl jca ax-ibi ) AABDZEZACAPFPAFCPACA
-  OCPGHPCIJKAPCOACAGHZACIZABQRLMKMN $.
+  ( wo wa cf cc idr ax-iorl jca ax-iim ax-eanl impbi ) AAABDZEZCAOCNACAFGZACHZA
+  BPQIJKOACANCOFGOCHLKM $.
 
 $( Left-distributivity of disjunction over conjunction $)
 ordil $p |- Ga => ( ( ph \/ ( ps /\ ch ) )
@@ -528,15 +581,14 @@ ordir $p |- Ga => ( ( ( ps /\ ch ) \/ ph )
   CUDUENKCAUFUGLMOP $.
 
 orabs $p |- Ga => ( ( ph \/ ( ph /\ ps ) ) <-> ph ) $=
-  ( wa wo wi cf cc idr ax-eanl ax-eor ax-iim ax-iorl jca ax-ibi ) AABDZEZACAQFQ
-  AFCQACAPACQGZHZQCIASIABCRPGHHPSIJKLAQCAPCAGHACIMLNO $.
+  ( wa wo cf cc idr ax-iorl ax-iim ax-eanl ax-eor impbi ) AAABDZEZCAOCANCAFGACH
+  IJOACANACOFZGZOCHAQHABCPNFGGNQHKLJM $.
 
 dmor $p |- Ga => ( ~ ( ph \/ ps ) <-> ( ~ ph /\ ~ ps ) ) $=
-  ( wo wn wa wi cf cc idr ax-iorl ax-idc ax-enot ax-inot ax-iorr ax-iim ax-eanl
-  jca wfal ax-eanr ax-eor ax-ibi ) ABDZEZAEZBEZFZCUGUDGUDUGGCUDUGCUFUECUDHZIZAU
-  IUCCUHAHZIIZABUKAUIJKUDCUJLMNBUIUCCUHBHZIIZABUMBUIJOUDCULLMNRPUGUDCUCCUGHZIZA
-  BSCUNUCHZIIZUCUOJACUNUPUJIZIIZAUQJUEUFUSUGCURLQMBCUNUPULIZIIZBUQJUEUFVAUGCUTL
-  TMUANPRUB $.
+  ( wn wa wo cf cc ax-idc ax-eanl ax-enot ax-eanr ax-eor ax-inot ax-iim ax-iorl
+  wfal idr ax-iorr jca impbi ) ADZBDZEZABFZDZCUDUFCUECUDGZHZABQCUGUEGZHHZUEUHRA
+  CUGUIAGZHZHHZAUJRUBUCUMUDCULIJKBCUGUIBGZHZHHZBUJRUBUCUPUDCUOILKMNOUFUDCUCUBCU
+  FGZHZAURUECUQUKHHZABUSAURRPUFCUKIKNBURUECUQUNHHZABUTBURRSUFCUNIKNTOUA $.
 
 dman $p |- Ga => ( ( ~ ph \/ ~ ps ) -> ~ ( ph /\ ps ) ) $=
   ( wn wo wa cf wfal ax-idc ax-eanl idr ax-enot ax-eanr ax-eor ax-inot ax-iim
