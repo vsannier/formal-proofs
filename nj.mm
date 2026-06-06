@@ -169,6 +169,11 @@ ancom $p |- T. => ( ( ph /\ ps ) -> ( ps /\ ph ) ) $=
   ( wa wtru cf cc ax-id ax-str ax-eanr ax-eanl ax-ian ax-contr ax-iim )
   ABCZBACZDEZOPNEZFZNOPPFZPBAPRFZQPFZABTNTNPSFPGHIABUANUANPSGHJKLHM $.
 
+$( Disjunction is commutative. $)
+orcom $p |- T. => ( ( ph \/ ps ) -> ( ps \/ ph ) ) $=
+  ( wo wtru cf cc ax-id ax-str ax-iorr ax-iorl ax-eor ax-iim )
+  ABCZBACZDEZABNOMEZFZMQMOOFOGHBAOPAEFFZARAOQFZOGHIBAOPBEFFZBTBSOGHJKL $.
+
 animor $p |- T. => ( ( ph /\ ps ) -> ( ps \/ ph ) ) $=
   ( wa wo wtru cf cc ax-id ax-str ax-eanr ax-iorl ax-iim )
   ABCZBADEFZBANMFGZABOMOMNNGNHIJKL $.
