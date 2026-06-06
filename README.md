@@ -1,9 +1,12 @@
-This repository contains the following Metamath databases:
+<img align="center" width="120" src="https://us.metamath.org/mmlogotitle.svg">
 
-| Logic/Theory           | File      |
-|------------------------|-----------|
-| Natural deduction (NJ) | `nj.mm`   |
-| Four-term analogies    | `anlg.mm` |
+This repository contains
+the following [Metamath](https://us.metamath.org/) databases:
+
+| Logic/Theory           | File         |
+|------------------------|--------------|
+| Natural deduction (NJ) | `nj.mm`      |
+| Four-term analogies    | `analogy.mm` |
 
 (Please note that they have *not* been used extensively,
 and may therefore be incomplete or even unsound implementations
@@ -14,7 +17,8 @@ intended to replace several scripts hosted
 at <https://github.com/metamath/set.mm/tree/develop/scripts>
 for tasks such as listing theorems in a database, shortening proofs,
 showing repetitions, etc.,
-and a syntax file `misc/metamath.sublime-syntax` to be used with programs
+and a syntax file `misc/metamath.sublime-syntax`
+for use with text editors or typesetting programs
 like [Typst](https://typst.app/docs/reference/text/raw/).
 
 Contributions are welcome.
@@ -29,6 +33,8 @@ Other Metamath databases include:
   for Spencer-Brown's Primary Algebra by naipmoro,
 * [q0.mm](https://github.com/tirix/q0.mm)
   for Peter Andrews' Q<sub>0</sub> by Stefan O'Rear,
+* [matching-logic.mm](https://github.com/runtimeverification/proof-generation/blob/main/theory/matching-logic.mm)
+  for matching logic by Xiaohong Chen et al.,
 * [dtt.mm](https://github.com/digama0/dtt.mm)
   for dependent type theory
   and [hol.mm](https://github.com/metamath/set.mm/blob/develop/ql.mm)
