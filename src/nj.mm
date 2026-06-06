@@ -373,6 +373,10 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
+imor $p |- Ga => ( ( ~ ph \/ ps ) -> ( ph -> ps ) ) $=
+  ( wn wo wi cf cc ax-idc ax-idr ax-enot ax-efal ax-eor ax-iim ) ADZBEZABFCABCP
+  GZHZOBBCQAGZHHZPCSIBCQSOGZHHHZAUBARUAIOTJKLBTJMNN $.
+
 $( Conjunction implies disjunction. $)
 animor $p |- Ga => ( ( ph /\ ps ) -> ( ps \/ ph ) ) $=
   ( wa wo cf cc ax-idr ax-eanr ax-iorl ax-iim ) ABDZBAECBACLFGZABMLCHIJK $.
