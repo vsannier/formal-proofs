@@ -36,6 +36,8 @@ Other Metamath databases include:
   for matching logic by Xiaohong Chen et al.,
 * [peano.mm](https://github.com/metamath/set.mm/blob/develop/peano.mm)
   for Peano arithmetic (PA) by Robert Solovay,
+* [nat.mm](https://wiki.planetmath.org/cgi-bin/wiki.pl/Natural_deduction_based_metamath_system)
+  for classical set theory by Frédéric Liné,
 * [dtt.mm](https://github.com/digama0/dtt.mm)
   for dependent type theory
   and [hol.mm](https://github.com/metamath/set.mm/blob/develop/hol.mm)
