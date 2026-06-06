@@ -8,7 +8,10 @@ and [Dedukti](https://github.com/Deducteam/Dedukti/) theories:
 | SKI combinator calculus | [`ski.mm`](src/ski.mm)         | $\vdash \mathrm{Y}(f) \downarrow f(\mathrm{Y}(f))$ (`fix`)        |
 | Four-term analogies     | [`analogy.mm`](src/analogy.mm) | $\vdash a \mathbin{:} a \mathrel{::} b \mathbin{:} b$ (`id`)      |
 
-(Please note that they have *not* been used extensively,
+and a partial formalisation of Patrick Baillot and I's FSCD 2024 paper,
+see [`PlurimetricFuzz.v`](src/Plurimetric Fuzz/PlurimetricFuzz.v).
+
+(Please note that these theories have *not* been used extensively,
 and may therefore be incomplete or even unsound implementations
 of the above theories.)
 
