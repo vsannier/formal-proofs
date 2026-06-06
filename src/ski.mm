@@ -360,6 +360,10 @@ $( Why combinator $)
 tY $a term Y $.
 df-Y $a |- Y := ( ( B M ) ( ( C B ) M ) ) $.
 
+Yval $p |- ( Y f ) => ( M ( ( ( C B ) M ) f ) ) $=
+  ( tY tap tB tM tC df-Y apeql Bval ax-bstr ) BACDECFDCECZCZACEKACCBLAGHEKAIJ
+  $.
+
 fix $p |- ( ( Y f ) x ) =><= ( ( f ( Y f ) ) x ) $=
   ( tY tap tB tM tC df-Y apeqll Bval apl Cval aplr Mval ax-bstr apeql apr
   ax-ijn ) CADZBDZASDBDZAEADFDZUBDZDBDZTEFDGEDFDZDZADZBDZUDCUFABHIUHFUEADZDZBDZ
@@ -494,3 +498,25 @@ consnempty $p |- ( ISEMPTY ( ( CONS x ) y ) ) => FALSE $=
   ( tISMT tCONS tap tK tFAL tTRU ISMTval CONSval apl ax-K apll ax-bstr ) C
   DAEBEZEOFFFGEZEZEZEZHEZGOITRAEZBEZHEZGSUBHRABJKUCQBEZHEZGUAQBHQALMUEPHEGUDPHP
   BLKGHLNNNN $.
+
+$(
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+  INFINITE STREAMS
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+$)
+
+$c ZEROS $.
+tZEROS $a term ZEROS $.
+df-ZEROS $a |- ZEROS := ( Y ( CONS 0 ) ) $.
+
+zhead $p |- ( ZEROS FST ) => 0 $=
+  ( tZEROS tFST tap tY tCONS t0 df-ZEROS apeql tM tC tB Yval apl Mval Cval apll
+  Bval CONSval tTRU ax-bstr df-FST apeqll TRUval ) ABCDEFCZCZBCZFAUEBGHUFIJKCIC
+  UDCZCZBCZFUEUHBUDLMUIUGUGCZBCZFUHUJBUGNMUKKUDCICZUGCZBCZFUGULUGBKIUDOPUNUDUHC
+  ZBCZFUMUOBUDIUGQMUPBFCUHCZFBFUHRUQSFCUHCFBSFUHUAUBFUHUCTTTTTTT $.
+
+ztail $p |- ( ZEROS SND ) =><= ZEROS $=
+  ( tZEROS tSND tap tCONS t0 tY df-ZEROS apeql fix ax-ejnl ax-bstr ax-bseq aplr
+  ax-ijn CONSval tFAL df-SND apeqll FALval jnbs jntr ) ABCZDECZACBCZAUBUDUCFUCC
+  ZCBCZUBUEBCZUFAUEBGHUGUFUCBIJKUCABUEAUEGLMNUDAUDBECACZABEAOUHPECACABPEAQREASK
+  KTUA $.
