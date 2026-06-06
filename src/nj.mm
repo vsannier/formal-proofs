@@ -35,9 +35,11 @@ $)
 
 $c ctx , $.
 
-$v Ga De $.
+$v Ga De Si Pi $.
 cGa $f ctx Ga $.
 cDe $f ctx De $.
+cSi $f ctx Si $.
+cPi $f ctx Pi $.
 
 $( A well-formed formula is a context. $)
 cf $a ctx ph $.
@@ -55,40 +57,53 @@ $)
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-  STRUCTURAL AND IDENTITY RULES
+  IDENTITY AND STRUCTURAL RULES
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
 $c |- $.
 
+ax-idc $a |- Ga , ps , De => ps $.
+
+${
+  ax-strl.1 $e |- T. , Ga => ph $.
+  $( Truth-strengthening (left) $)
+  ax-strl $a |- Ga => ph $.
+$}
+
+${
+  ax-strc.1 $e |- Ga , T. , De => ph $.
+  $( Truth-strengthening (center) $)
+  ax-strc $a |- Ga , De => ph $.
+$}
+
+${
+  ax-strr.1 $e |- Ga , T. => ph $.
+  $( Truth-strengthening (right) $)
+  ax-strr $a |- Ga => ph $.
+$}
+
 ${
   ax-weakl.1 $e |- Ga => ps $.
-  ax-weakl $a |- ph , Ga => ps $.
+  ax-weakl $a |- De , Ga => ps $.
 $}
 
 ${
   ax-weakr.1 $e |- Ga => ps $.
-  ax-weakr $a |- Ga , ph => ps $.
+  ax-weakr $a |- Ga , De => ps $.
 $}
 
 ${
-  ax-contr.1 $e |- Ga , ph , ph , De => ps $.
+  ax-contr.1 $e |- Ga , Si , Si , De => ps $.
   $( Contraction rule $)
-  ax-contr $a |- Ga , ph , De => ps $.
+  ax-contr $a |- Ga , Si , De => ps $.
 $}
 
 ${
-  ax-exch.1 $e |- Ga , ph , ps , De => ch $.
+  ax-exch.1 $e |- Ga , Si , Pi , De => ch $.
   $( Exchange rule $)
-  ax-exch $a |- Ga , ps , ph , De => ch $.
+  ax-exch $a |- Ga , Pi , Si , De => ch $.
 $}
-
-${
-  ax-str.1 $e |- T. , Ga , T. => ph $.
-  ax-str $a |- Ga => ph $.
-$}
-
-ax-idc $a |- Ga , ps , De => ps $.
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
@@ -161,18 +176,23 @@ $}
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-  DERIVED AXIOMS AND DEFINITIONS
+  ADDITIONAL AXIOMS AND DEFINITIONS
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
+${
+  ax-dup.1 $e |- Ga , Ga => ph $.
+  ax-dup $a |- Ga => ph $.
+$}
+
 ax-id $p |- ps => ps $=
-  ( cf wtru ax-idc ax-str ) AABACBZFDE $.
+  ( cf wtru cc ax-idc ax-strr ax-strl ) AABZACBZHDAIIEFG $.
 
 ax-idl $p |- ps , Ga => ps $=
-  ( cf cc wtru ax-idc ax-str ) AACBDAECZBHDFG $.
+  ( cf cc wtru ax-idc ax-strl ) AACBDAECBFG $.
 
 ax-idr $p |- Ga , ps => ps $=
-  ( cf cc wtru ax-idc ax-str ) ABACDAECZBDHFG $.
+  ( cf cc wtru ax-idc ax-strr ) ABACDABECFG $.
 
 $c <-> $.
 wb $a wff ( ph <-> ps ) $.
@@ -208,8 +228,8 @@ mtp $p |- ( ph \/ ps ) , ~ ph => ps $=
 
 $( Hypothetical syllogism $)
 syl $p |- ( ph -> ps ) , ( ps -> ch ) => ( ph -> ch ) $=
-  ( wi cf cc ax-idc wtru ax-str ax-eim ax-iim ) ACABDZEZBCDZEZFZBCMOAEZFFZNMQGA
-  BRLRLHEZOQSFFGIARASPFSGIJJK $.
+  ( wi cf cc ax-idc ax-idl ax-idr ax-eim ax-iim ) ACABDZEZBCDZEZFZBCMOAEZFZFZNM
+  QGABSLRHAPIJJK $.
 
 notnot $p |- ( ph \/ ~ ph ) => ( ~ ~ ph -> ph ) $=
   ( wn wo cf cc ax-idl ax-idr ax-idc ax-enot ax-efal ax-eor ax-iim ) ABZBZAAMCZ
@@ -222,68 +242,65 @@ $(
 $)
 
 $( Law of non-contradiction $)
-lnc $p |- T. => ~ ( ph /\ ~ ph ) $=
-  ( wn wa wtru cf cc ax-idr ax-eanl ax-eanr ax-enot ax-inot ) AABZCZDEZANMEFZAL
-  OMNGZHALOPIJK $.
+lnc $p |- Ga => ~ ( ph /\ ~ ph ) $=
+  ( wn wa cf cc ax-idr ax-eanl ax-eanr ax-enot ax-inot ) AACZDZBABMEFZALNMBGZHA
+  LNOIJK $.
 
 $( Law of contraposition $)
-con $p |- T. => ( ( ph -> ps ) -> ( ~ ps -> ~ ph ) ) $=
-  ( wi wn wtru cf cc ax-idc ax-idr ax-eim ax-enot ax-inot ax-iim ) ABCZBDZADZCE
-  FZOPQNFZGZAQROFZGGZBQRTAFZGZGGZABUDNQUCHAUAIJOSUBHKLMM $.
+trans $p |- Ga => ( ( ph -> ps ) -> ( ~ ps -> ~ ph ) ) $=
+  ( wi wn cf cc ax-idc ax-idr ax-eim ax-enot ax-inot ax-iim ) ABDZBEZAEZDCOPCNF
+  ZGZACQOFZGGZBCQSAFZGZGGZABUCNCUBHATIJORUAHKLMM $.
 
 $( Conjunction is commutative. $)
-ancom $p |- T. => ( ( ph /\ ps ) -> ( ps /\ ph ) ) $=
-  ( wa wtru cf cc ax-idc ax-str ax-eanr ax-eanl ax-ian ax-contr ax-iim ) ABCZBA
-  CZDEZOPNEZFZNOPPFZPBAPRFZQPFZABTNTNPSFPGHIABUANUANPSGHJKLHM $.
+ancom $p |- Ga => ( ( ph /\ ps ) -> ( ps /\ ph ) ) $=
+  ( wa cf cc ax-idr ax-eanr ax-eanl ax-ian ax-dup ax-iim ) ABDZBADZCNCMEFZBAOOA
+  BOMCGZHABOPIJKL $.
 
 $( Conjunction is idempotent. $)
-anip $p |- T. => ( ( ph /\ ph ) <-> ph ) $=
-  ( wa wtru cf wi cc ax-idr ax-eanl ax-iim ax-idl ax-ian ax-contr ax-str ax-ibi
-  ) AABZACDZOAEZAOEZBPQRPPPFZOAPAAPODFOPGHIAOSOPPADZFFZAOPSFZPAAPUAFTPFAUBGAPJK
-  LMIKMN $.
+anip $p |- Ga => ( ( ph /\ ph ) <-> ph ) $=
+  ( wa wi cf cc ax-idr ax-eanl ax-iim ax-ian ax-dup ax-ibi ) AACZABMADZAMDZCBNO
+  BBMABAABMEFMBGHIAMBMBAEFZAAPPABGZQJKIJKL $.
 
 $( Disjunction is commutative. $)
-orcom $p |- T. => ( ( ph \/ ps ) -> ( ps \/ ph ) ) $=
-  ( wo wtru cf cc ax-idr ax-iorr ax-iorl ax-eor ax-iim ) ABCZBACZDEZABMNLEZFZLN
-  GBANOAEFFAPGHBANOBEFFBPGIJK $.
+orcom $p |- Ga => ( ( ph \/ ps ) -> ( ps \/ ph ) ) $=
+  ( wo cf cc ax-idr ax-iorr ax-iorl ax-eor ax-iim ) ABDZBADZCABMCLEZFZLCGBACNAE
+  FFAOGHBACNBEFFBOGIJK $.
 
 $( Disjunction is idempotent. $)
-orip $p |- T. => ( ( ph \/ ph ) <-> ph ) $=
-  ( wo wtru cf wi wa cc ax-idr ax-eor ax-iim ax-iorl ax-ian ax-str ax-ibi ) AAB
-  ZACDZOAEZAOEZFPQRPPPGZOAPAAAPODGZOPHATHZUAIJAOSAAPPADGGASHKJLMN $.
+orip $p |- Ga => ( ( ph \/ ph ) <-> ph ) $=
+  ( wo wi wa cf cc ax-idr ax-eor ax-iim ax-iorl ax-ian ax-dup ax-ibi ) AACZABOA
+  DZAODZEBPQBBOABAAABOFGZOBHARHZSIJAOBAABAFGABHKJLMN $.
 
 $( Conjunction implies disjunction. $)
-animor $p |- T. => ( ( ph /\ ps ) -> ( ps \/ ph ) ) $=
-  ( wa wo wtru cf cc ax-idr ax-eanr ax-iorl ax-iim ) ABCZBADEFZBAMLFGZABNLMHIJK
-  $.
+animor $p |- Ga => ( ( ph /\ ps ) -> ( ps \/ ph ) ) $=
+  ( wa wo cf cc ax-idr ax-eanr ax-iorl ax-iim ) ABDZBAECBACLFGZABMLCHIJK $.
 
 $( Left-distributivity of conjunction over disjunction $)
-andil $p |- T. => ( ( ph /\ ( ps \/ ch ) )
+andil $p |- Ga => ( ( ph /\ ( ps \/ ch ) )
   -> ( ( ph /\ ps ) \/ ( ph /\ ch ) ) ) $=
-  ( wo wa wtru cf ax-idr ax-eanr ax-eanl ax-ian ax-contr ax-iorl ax-iorr ax-eor
-  cc ax-iim ) ABCDZEZABEZACEZDZFGZBCUBUCSGZPZARUESUCHZITUAUCUDBGZPZPSTUCUGABUEU
-  HARUEUFJZBUDHKLMTUAUCUDCGZPZPSUAUCUJACUEUKUICUDHKLNOQ $.
+  ( wo wa cf ax-idr ax-eanr ax-eanl ax-id ax-ian ax-iorl ax-iorr ax-eor ax-iim
+  cc ) ABCEZFZABFZACFZEZDBCUBDSGZQZARUDSDHZITUADUCBGZQQABUDUFARUDUEJZBKLMTUADUC
+  CGZQQACUDUHUGCKLNOP $.
 
 $( Left-distributivity of disjunction over conjunction $)
-ordil $p |- T. => ( ( ph \/ ( ps /\ ch ) )
+ordil $p |- Ga => ( ( ph \/ ( ps /\ ch ) )
   -> ( ( ph \/ ps ) /\ ( ph \/ ch ) ) ) $=
-  ( wa wo wtru cf ax-idr ax-iorl ax-idl ax-ian ax-contr ax-eanl ax-iorr ax-eanr
-  cc ax-str ax-eor ax-iim ) ABCDZEZABEZACEZDZFGZATUDUEUAGZPZUAUEHUDUEUFAGZPPZAU
-  DUEUGPZUEUBUCUEUIPZUHUEPZABUKAUJHIACULAUEJIKLQUDUEUFTGZPPZTUDUJUEUBUCUEUNPZUM
-  UEPZABUOBCUOTUJHMNACUPBCUPTUEJONKLQRS $.
+  ( wa wo cf ax-idr ax-iorl ax-eanl ax-iorr ax-eor ax-eanr ax-ian ax-dup ax-iim
+  cc ) ABCEZFZABFZACFZEZDUBDSGZQZTUAUDUDARTUDSDHZABDUCAGQQZAUDHZIABDUCRGQQZBCUH
+  RUDHZJKLARUAUDUEACUFUGIACUHBCUHUIMKLNOP $.
 
-curry $p |- T. => ( ( ( ph /\ ps ) -> ch ) -> ( ph -> ( ps -> ch ) ) ) $=
-  ( wa wi wtru cf cc ax-idc ax-str ax-ian ax-eim ax-iim ) ABDZCEZABCEZEFGZAPQOG
-  ZHZBCQRAGZHHZNCQRTBGZHZHHOQUCIABUAUBAUAAQSHQIJBUBBQQIJKLMMM $.
+curry $p |- Ga => ( ( ( ph /\ ps ) -> ch ) -> ( ph -> ( ps -> ch ) ) ) $=
+  ( wa wi cf cc ax-idc ax-idr ax-id ax-ian ax-eim ax-iim ) ABEZCFZABCFZFDAQDPGZ
+  HZBCDRAGZHHZOCDRTBGZHZHHPDUCIABUAUBASJBKLMNNN $.
 
-uncurry $p |- T. => ( ( ph -> ( ps -> ch ) ) -> ( ( ph /\ ps ) -> ch ) ) $=
-  ( wi wa wtru cf cc ax-idc ax-idr ax-eanl ax-eim ax-eanr ax-iim ) ABCDZDZABEZC
-  DFGZQCRPGZHZBCRSQGZHHZAOUBPRUAIABUBQTJZKLABUBUCMLNN $.
+uncurry $p |- Ga => ( ( ph -> ( ps -> ch ) ) -> ( ( ph /\ ps ) -> ch ) ) $=
+  ( wi wa cf cc ax-idc ax-idr ax-eanl ax-eim ax-eanr ax-iim ) ABCEZEZABFZCEDQCD
+  PGZHZBCDRQGZHHZAOUAPDTIABUAQSJZKLABUAUBMLNN $.
 
 $( Law of exportation $)
-export $p |- T. => ( ( ph -> ( ps -> ch ) ) <-> ( ( ph /\ ps ) -> ch ) ) $=
-  ( wi wa wtru cf cc uncurry curry ax-ian ax-weakl ax-str ax-ibi ) ABCDDZABECDZ
-  FGZOPDZPODZEZQFTQQHRSQQABCIABCJKLMN $.
+export $p |- Ga => ( ( ph -> ( ps -> ch ) ) <-> ( ( ph /\ ps ) -> ch ) ) $=
+  ( wi wa uncurry curry ax-ian ax-dup ax-ibi ) ABCEEZABFCEZDLMEZMLEZFDNODDABCDG
+  ABCDHIJK $.
 
 $(
 ###############################################################################
@@ -309,6 +326,8 @@ $( $t
   htmldef "," as ", ";
   htmldef "Ga" as "&Gamma;";
   htmldef "De" as "&Delta;";
+  htmldef "Si" as "&Sigma;";
+  htmldef "Pi" as "&Pi;";
   htmldef "seq" as "<span class='typecode'>seq</span> ";
   htmldef "=>" as " &rArr; ";
   htmldef "|-" as " &vdash; ";
