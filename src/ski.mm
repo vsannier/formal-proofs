@@ -251,6 +251,14 @@ IMPval $p |- ( ( IMPLIES x ) y ) => ( ( OR ( NOT x ) ) y ) $=
   tI ) CADBDEFGDZDEFHDZDRDZDZADZBDZGHADZDZBDZCUBABIJUDSADZUAADZDZBDZUGUCUJBSUAA
   KLUKGUIDZBDUGUJULBUHGUIGAMLLULUFBGUIUEUITADZRADZDUETRAKUMHUNAHAMANOPQLPPP $.
 
+imptru $p |- ( ( IMPLIES TRUE ) x ) => x $=
+  ( tIMP tTRU tap tOR tNOT IMPval tFAL nottru aplr orfal ax-bstr ) BCDADEFCDZDA
+  DZACAGNEHDADAEMAHIJAKLL $.
+
+impfal $p |- ( ( IMPLIES FALSE ) x ) => TRUE $=
+  ( tIMP tFAL tap tOR tNOT tTRU IMPval notfal aplr ortru ax-bstr ) BCDADEFCDZDA
+  DZGCAHNEGDADGEMAGIJAKLL $.
+
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
   AVIARY COMBINATORS
