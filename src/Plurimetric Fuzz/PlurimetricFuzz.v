@@ -1044,11 +1044,12 @@ Section PrectxPad.
 
   Lemma prectx_pad_sound : Δ = prectx_contr p (prectx_scale s Γ1) Δ2.
   Proof.
-    extensionality x.
+    (* TODO: state and prove helper lemmas *)
   Admitted.
 
   Lemma prectx_pad_le : prectx_le Γ2 Δ2.
   Proof.
+    (* TODO: state and prove helper lemmas *)
   Admitted.
 End PrectxPad.
 
@@ -1477,6 +1478,7 @@ Lemma substitution (p : param) (Γ Δ : prectx)
   has_type (p, Δ) v σ ->
   prectx_comp Γ Δ ->
   has_type (p, prectx_contr p Γ (prectx_scale s Δ)) (t.[v/]) τ.
+Admitted.
 
 (** *** Subject reduction *)
 
@@ -1484,3 +1486,4 @@ Theorem subject_reduction (p : param) (Γ : prectx) (t v : term) (τ : type) :
   evals_to t v ->
   has_type (p, Γ) t τ ->
   has_type (p, Γ) v τ.
+Admitted.
