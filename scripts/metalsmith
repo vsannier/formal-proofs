@@ -112,6 +112,9 @@ function minimize_proofs(filepath)
      .. "  'quit'"
    )
 
+   content = handle:read("*all")
+   print(content)
+
    handle:close()
 end
 
@@ -120,7 +123,7 @@ end
 -------------------------------------------------------------------------------
 
 local usage = [[
-Usage: metalsmith <subcommand>
+Usage: metalsmith <subcommand> <database>
 Subcommands: help list-theorems minimize-all find-repeats
 ]]
 
