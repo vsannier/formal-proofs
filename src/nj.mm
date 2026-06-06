@@ -49,8 +49,8 @@ cf $a ctx ph $.
 $( The concatenation of two contexts is a context. $)
 cc $a ctx Ga , De $.
 
-$c seq => $.
-s $a seq Ga => ph $.
+$c |- => $.
+$( $j syntax '|-' as 'wff'; $)
 
 $(
 ###############################################################################
@@ -63,9 +63,6 @@ $(
   IDENTITY AND STRUCTURAL RULES
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
-
-$c |- $.
-$( $j syntax '|-' as 'wff'; $)
 
 $( Identity (center) $)
 ax-idc $a |- Ga , ps , De => ps $.
