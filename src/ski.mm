@@ -323,6 +323,12 @@ fix $p |- ( ( Y f ) x ) =><= ( ( f ( Y f ) ) x ) $=
   BJKAUMBUCUQMZOOOOOUAAUGDBDZUDASBUGCUFAHPMVAAUJDBDZUDAUGBUJULMVBUSUDAUJBUMFUIU
   BUOQMUTOOOR $.
 
+$( The fixed point of a constant function is the function itself. $)
+YK $p |- ( ( Y ( K f ) ) x ) => ( f x ) $=
+  ( tY tK tap tM tC tB df-Y apeqll Bval apl ax-bstr Mval Cval ax-K ) CDAEZEBEZF
+  GHEFEZQEZEZBEZABEZRHFESEZQEZBEUBCUDQBIJUEUABFSQKLMUBTTEZBEZUCUAUFBTNLUGHQEFEZ
+  TEZBEZUCUFUIBTUHTHFQOLLUJQUAEZBEUCUIUKBQFTKLUKABAUAPLMMMM $.
+
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
   ARITHMETIC
