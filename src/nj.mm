@@ -292,6 +292,16 @@ bitr $p |- Ga => ( ( ph <-> ps ) -> ( ( ps <-> ch ) -> ( ph <-> ch ) ) ) $=
   RZRRZBCFZCBFZUKBCUKUAUDUIHIJABUKABFZBAFZUKABUKTDUJHIJAUFKLLMCAUFBADUCUECGZRZR
   RZUNUOURABURTDUQHINCBURULUMURBCURUAUDUPHINCUFKLLMOPQMM $.
 
+$( Biconditional implies forward implication. $)
+biimp $p |- Ga => ( ( ph <-> ps ) -> ( ph -> ps ) ) $=
+  ( wb wi cf cc ax-idc ax-ebi ax-eanl idr ax-eim ax-iim ) ABDZABEZCABCNFZGZABCP
+  AFZGGZOBAESABSNCRHIJAQKLMM $.
+
+$( Biconditional implies reverse implication. $)
+biimpr $p |- Ga => ( ( ph <-> ps ) -> ( ps -> ph ) ) $=
+  ( wb wi cf cc ax-idc ax-ebi ax-eanr idr ax-eim ax-iim ) ABDZBAEZCBACNFZGZBACP
+  BFZGGZABEOSABSNCRHIJBQKLMM $.
+
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
   PROPERTIES OF NEGATION
