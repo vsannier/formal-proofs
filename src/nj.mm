@@ -176,13 +176,15 @@ $}
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-  ADDITIONAL AXIOMS AND DEFINITIONS
+  ADDITIONAL RULES AND DEFINITIONS
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
 ${
-  ax-dup.1 $e |- Ga , Ga => ph $.
-  ax-dup $a |- Ga => ph $.
+  dup.1 $e |- Ga , Ga => ph $.
+  dup $p |- Ga => ph $=
+    ( wtru cf cc ax-weakr ax-weakl ax-contr ax-strr ax-strl ) ABADEZBFALLBABBLF
+    FLABBFLCGHIJK $.
 $}
 
 ax-id $p |- ps => ps $=
@@ -271,7 +273,7 @@ ${
   jca.1 $e |- Ga => ps $.
   jca.2 $e |- Ga => ph $.
   jca $p |- Ga => ( ps /\ ph ) $=
-    ( wa ax-ian ax-dup ) BAFCBACCDEGH $.
+    ( wa ax-ian dup ) BAFCBACCDEGH $.
 $}
 
 $( Conjunction is idempotent. $)
@@ -311,6 +313,7 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
   PROPERTIES OF DISJUNCTION
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+$)
 
 truorfal $p |- Ga => ( ( T. \/ F. ) <-> T. ) $=
   ( wtru wfal wo wi cf cc ax-itru ax-iim ax-idr ax-iorl jca ax-ibi ) BCDZBABNEN
