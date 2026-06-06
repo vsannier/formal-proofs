@@ -252,7 +252,7 @@ syl $p |- ( ph -> ps ) , ( ps -> ch ) => ( ph -> ch ) $=
   ( wi cf cc ax-idc ax-idl ax-idr ax-eim ax-iim ) ACABDZEZBCDZEZFZBCMOAEZFZFZNM
   QGABSLRHAPIJJK $.
 
-notnot $p |- ( ph \/ ~ ph ) => ( ~ ~ ph -> ph ) $=
+enotnot $p |- ( ph \/ ~ ph ) => ( ~ ~ ph -> ph ) $=
   ( wn wo cf cc ax-idl ax-idr ax-idc ax-enot ax-efal ax-eor ax-iim ) ABZBZAAMCZ
   DZAMAPNDZEZOQFARGAPQMDZEEZMTMRGNPSHIJKL $.
 
@@ -307,6 +307,11 @@ $( Law of contraposition $)
 con $p |- Ga => ( ( ph -> ps ) -> ( ~ ps -> ~ ph ) ) $=
   ( wi wn cf cc ax-idc ax-idr ax-eim ax-enot ax-inot ax-iim ) ABDZBEZAEZDCOPCNF
   ZGZACQOFZGGZBCQSAFZGZGGZABUCNCUBHATIJORUAHKLMM $.
+
+$( Double negation introduction $)
+inotnot $p |- Ga => ( ph -> ~ ~ ph ) $=
+  ( wn cf cc ax-idc ax-idr ax-enot ax-inot ax-iim ) AACZCBKBADZEZABLKDZEEABNFKM
+  GHIJ $.
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
