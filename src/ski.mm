@@ -263,7 +263,7 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
-$c 0 1 2 SUCC ADD $.
+$c 0 1 2 SUCC ADD MUL $.
 
 t0 $a term 0 $.
 df-0 $a |- 0 := ( K I ) $.
@@ -301,6 +301,36 @@ eADD $p |- ( ( ADD x ) y ) => ( ( x SUCC ) y ) $=
   DBDEFDGHDZDZADZBDZAHDZBDZCRABIJTFADZQADZDZBDUBSUEBFQAKLUEUABUCAUDHAMHANOLPP
   $.
 
+add0 $p |- ( ( ADD 0 ) x ) => x $=
+  ( tADD t0 tap tSUCC eADD e0 ax-bstr ) BCDADCEDADACAFEAGH $.
+
 1p1 $p |- ( ( ADD 1 ) 1 ) =><= 2 $=
   ( tADD t1 tap t2 tSUCC eADD e1 ax-bstr df-2 ax-eqbs ax-ijn ) ABCBCZDEBCZLBECB
   CMBBFEBGHDMIJK $.
+
+tMUL $a term MUL $.
+df-MUL $a |- MUL := B $.
+
+eMUL $p |- ( ( ( MUL x ) y ) f ) => ( x ( y f ) ) $=
+  ( tMUL tap tB df-MUL eqaplll eB ax-bstr ) DBECEAEFBECEAEBCAEEDFBCAGHBCAIJ $.
+
+$c ISZERO $.
+
+tISZERO $a term ISZERO $.
+df-ISZERO $a |- ISZERO := ( ( S ( ( S I ) ( K ( K F ) ) ) ) ( K T ) ) $.
+
+eISZERO $p |- ( ISZERO x ) => ( ( x ( K F ) ) T ) $=
+  ( tISZERO tap tS tI tK tF tT df-ISZERO eqapl ax-S ax-K ax-ap ax-I apl ax-bstr
+  ) BACDDECFFGCZCZCZCFHCZCZACZAQCZHCZBUAAIJUBSACZTACZCZUDSTAKUGEACZRACZCZHCUDUE
+  UJUFHERAKHALMUJUCHUHAUIQANQALMOPPP $.
+
+0eq0 $p |- ( ISZERO 0 ) => T $=
+  ( tISZERO t0 tap tK tF tT eISZERO e0 ax-bstr ) ABCBDECZCFCFBGJFHI $.
+
+1ne0 $p |- ( ISZERO 1 ) => F $=
+  ( tISZERO t1 tap tK tF tT eISZERO e1 ax-K ax-bstr ) ABCBDECZCFCZEBGLKFCEKFHEF
+  IJJ $.
+
+succne0 $p |- ( ISZERO ( SUCC x ) ) => F $=
+  ( tISZERO tSUCC tap tK tF tT eISZERO eSUCC ax-K ax-bstr ) BCADZDLEFDZDGDZFLHN
+  MAMDGDZDFMAGIFOJKK $.
