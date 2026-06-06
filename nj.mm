@@ -20,8 +20,11 @@ wch $f wff ch $.
 
 $c ( ) -> ~ /\ \/ $.
 wi $a wff ( ph -> ps ) $.
+$( The negation of a wff is a wff. $)
 wn $a wff ~ ph $.
+$( The conjunction of two wff is a wff. $)
 wa $a wff ( ph /\ ps ) $.
+$( The disjunction of two wff is a wff. $)
 wo $a wff ( ph \/ ps ) $.
 
 $(
@@ -154,6 +157,11 @@ $(
 ###############################################################################
 $)
 
+$( Not true implies false. $)
+nottru $p |- T. => ( ~ T. -> F. ) $=
+  ( wtru wn wfal cf cc ax-id ax-str ax-enot ax-iim ) ABZCADZAKJDZEZAMAKLKEFGJMJ
+  KKEKFGHI $.
+
 $( Law of non-contradiction $)
 lnc $p |- T. => ~ ( ph /\ ~ ph ) $=
   ( wn wa wtru cf cc ax-id ax-str ax-eanl ax-eanr ax-enot ax-inot )
@@ -177,6 +185,14 @@ orcom $p |- T. => ( ( ph \/ ps ) -> ( ps \/ ph ) ) $=
 animor $p |- T. => ( ( ph /\ ps ) -> ( ps \/ ph ) ) $=
   ( wa wo wtru cf cc ax-id ax-str ax-eanr ax-iorl ax-iim )
   ABCZBADEFZBANMFGZABOMOMNNGNHIJKL $.
+
+$( Left-distributivity of conjunction over disjunction $)
+andil $p |- T. => ( ( ph /\ ( ps \/ ch ) )
+  -> ( ( ph /\ ps ) \/ ( ph /\ ch ) ) ) $=
+  ( wo wa wtru cf cc ax-id ax-str ax-eanr ax-eanl ax-ian ax-iorl ax-iorr ax-eor
+  ax-contr ax-iim ) ABCDZEZABEZACEZDZFGZBCUCUDTGZHZASUFTUFTUDUDHUDIJZKUAUBUDUEB
+  GZHZHTUAUDUHABUFUIASUFUGLZBUIBUFUDIJMQNUAUBUDUECGZHZHTUBUDUKACUFULUJCULCUFUDI
+  JMQOPR $.
 
 curry $p |- T. => ( ( ( ph /\ ps ) -> ch ) -> ( ph -> ( ps -> ch ) ) ) $=
   ( wa wi wtru cf cc ax-id ax-str ax-ian ax-eim ax-iim )
