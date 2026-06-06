@@ -16,6 +16,12 @@ contexts:
     - match: \$\(
       scope: punctuation.definition.comment.begin.metamath
       push: comment
+    - match: \$\{
+      scope: punctuation.section.block.begin.metamath
+      push: main
+    - match: \$\}
+      scope: punctuation.section.block.end.metamath
+      pop: true
     - match: "{{label}}"
       scope: entity.name.label.metamath
     - match: \$[cv]
