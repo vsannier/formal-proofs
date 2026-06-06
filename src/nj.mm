@@ -377,7 +377,7 @@ ormonl $p |- Ga => ( ( ph -> ps ) -> ( ( ph \/ ch ) -> ( ps \/ ch ) ) ) $=
 
 $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
-  COMPLEX PROPERTIES
+  COMPLEX TAUTOLOGIES
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
@@ -402,6 +402,18 @@ ordil $p |- Ga => ( ( ph \/ ( ps /\ ch ) )
   ( wa wo cf cc ax-idr ax-iorl ax-eanl ax-iorr ax-eor ax-eanr jca ax-iim ) ABCE
   ZFZABFZACFZEDTSDRGZHZAQSUBRDIZABDUAAGHHZAUBIZJABDUAQGHHZBCUFQUBIZKLMAQTUBUCAC
   UDUEJACUFBCUFUGNLMOP $.
+
+$(
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+  CLASSICAL TAUTOLOGIES
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
+$)
+
+$( Peirce's law $)
+peirce $p |- Ga , ( ph \/ ~ ph ) => ( ( ( ph -> ps ) -> ph ) -> ph ) $=
+  ( wi wn wo cf cc ax-idc ax-idr ax-enot ax-efal ax-iim ax-eim ax-eor ) ABDZADZ
+  ACAAEZFZGZHZARACTQGZHHZSCUBIAUCJPACTUBRGZHHHZQUAUDIABUEBCTUBUDAGZHHHHZAUGAUEJ
+  RUCUFIKLMNOM $.
 
 $(
 ###############################################################################
