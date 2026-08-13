@@ -29,3 +29,9 @@ Inductive has_type : ctx -> term -> type -> Prop :=
 Specifically, we allow for an arbitrary precontext `Δ` to appear
 in the conclusion, for otherwise, in the case `s = sens_infty`,
 weakening would not hold.
+
+## Use of Large Language Models
+
+Parts of this formalisation — particularly at later stages,
+after the primary definitions and theorem statements have been drafted —
+were developed with assistance from Large Language Models (LLMs).
