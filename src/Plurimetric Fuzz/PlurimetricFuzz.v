@@ -1112,12 +1112,62 @@ Section PrectxPad.
 
   Lemma prectx_pad_sound : Δ = prectx_contr p (prectx_scale s Γ1) Δ2.
   Proof.
-    (* TODO: state and prove helper lemmas *)
-  Admitted.
+    assert (Hscale : prectx_le (prectx_scale s Γ1) Δ).
+    {
+      intros x s1 τ1 H1.
+      destruct (prectx_contr_le_lookup p (prectx_scale s Γ1) Γ2 Δ
+        (prectx_comp_scale_l Γ1 Γ2 s H12) Hle x s1 τ1 H1)
+        as [sΔ HΔ].
+      exists sΔ; split; [exact HΔ |].
+      exact (prectx_contr_le_l p (prectx_scale s Γ1) Γ2 Δ
+        x s1 sΔ τ1 Hle H1 HΔ).
+    }
+    extensionality x.
+    unfold Δ2, prectx_pad, prectx_contr, prectx_scale.
+    destruct p as [r Hr |].
+    - destruct (Γ1 x) as [[s1 τ1] |] eqn:H1;
+      destruct (Δ x) as [[sΔ τΔ] |] eqn:HΔ.
+      + destruct (Hscale x (sens_mult s s1) τ1) as [sΔ' [HΔ' Hsens]].
+        { unfold prectx_scale; now rewrite H1. }
+        assert (HsΔ : sΔ = sΔ') by congruence.
+        assert (Hτ : τΔ = τ1) by congruence.
+        subst sΔ'; subst τΔ.
+        destruct sΔ as [rΔ HrΔ |].
+        * destruct (sens_eq_dec (sens_mult s s1) (sens_real rΔ HrΔ))
+            as [Heq | Hneq].
+          -- now rewrite Heq.
+          -- assert (Hlt : sens_lt (sens_mult s s1) (sens_real rΔ HrΔ)).
+             { destruct Hsens as [Hlt | Heq]; [exact Hlt | contradiction]. }
+             rewrite (sens_pad_sound (param_real r Hr)
+               (sens_mult s s1) (sens_real rΔ HrΔ) Hlt).
+             reflexivity.
+        * now rewrite sens_pnorm_infty_r.
+      + exfalso.
+        destruct (Hscale x (sens_mult s s1) τ1) as [sΔ [HΔ' _]].
+        { unfold prectx_scale; now rewrite H1. }
+        now rewrite HΔ in HΔ'.
+      + reflexivity.
+      + reflexivity.
+    - destruct (Γ1 x) as [[s1 τ1] |] eqn:H1;
+      destruct (Δ x) as [[sΔ τΔ] |] eqn:HΔ.
+      + destruct (Hscale x (sens_mult s s1) τ1) as [sΔ' [HΔ' Hsens]].
+        { unfold prectx_scale; now rewrite H1. }
+        assert (HsΔ : sΔ = sΔ') by congruence.
+        assert (Hτ : τΔ = τ1) by congruence.
+        subst sΔ'; subst τΔ.
+        change (Some (sΔ, τ1) = Some (sens_max (sens_mult s s1) sΔ, τ1)).
+        now rewrite (sens_le_max (sens_mult s s1) sΔ Hsens).
+      + exfalso.
+        destruct (Hscale x (sens_mult s s1) τ1) as [sΔ [HΔ' _]].
+        { unfold prectx_scale; now rewrite H1. }
+        now rewrite HΔ in HΔ'.
+      + reflexivity.
+      + reflexivity.
+  Qed.
 
   Lemma prectx_pad_le : prectx_le Γ2 Δ2.
   Proof.
-    (* TODO: state and prove helper lemmas *)
+    (* TODO *)
   Admitted.
 End PrectxPad.
 
