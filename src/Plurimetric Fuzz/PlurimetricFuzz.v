@@ -2063,18 +2063,488 @@ Qed.
 
 (** *** Substitution *)
 
-Lemma substitution (p : param) (Γ Δ : prectx)
+(* [skip k] embeds a context after deleting position [k]. *)
+Fixpoint skip (k x : nat) : nat :=
+  match k, x with
+  | 0, x       => S x
+  | S k, 0     => 0
+  | S k, S x   => S (skip k x)
+  end.
+
+Definition prectx_delete (k : nat) (Γ : prectx) : prectx :=
+  fun x => Γ (skip k x).
+
+Fixpoint prectx_insert
+  (k : nat) (a : option (sens * type)) (Γ : prectx) : prectx :=
+  match k with
+  | 0   => a .: Γ
+  | S k => Γ 0%nat .: prectx_insert k a (fun x => Γ (S x))
+  end.
+
+(* Substitution for the variable at depth [k]. *)
+Fixpoint subst_at (k : nat) (v : term) (x : var) : term :=
+  match k, x with
+  | 0, 0       => v
+  | 0, S x     => TmVar x
+  | S k, 0     => TmVar 0%nat
+  | S k, S x   => (subst_at k v x).[ren (+1%nat)]
+  end.
+
+(** Elementary facts about deletion and insertion. *)
+Lemma prectx_le_empty_l (Γ : prectx) : prectx_le prectx_empty Γ.
+Proof.
+  intros x s τ H.
+  discriminate H.
+Qed.
+
+Lemma prectx_delete_insert (k : nat) a Γ :
+  prectx_delete k (prectx_insert k a Γ) = Γ.
+Proof.
+  induction k as [|k IH] in Γ |- *.
+  - extensionality x.
+    reflexivity.
+  - extensionality x.
+    destruct x as [|x]; [reflexivity |].
+    change
+      (prectx_delete k
+        (prectx_insert k a (fun y => Γ (S y))) x = Γ (S x)).
+    rewrite IH.
+    reflexivity.
+Qed.
+
+Lemma prectx_insert_at (k : nat) a Γ :
+  prectx_insert k a Γ k = a.
+Proof.
+  induction k as [|k IH] in Γ |- *; [reflexivity |].
+  change
+    (prectx_insert k a (fun y => Γ (S y)) k = a).
+  apply IH.
+Qed.
+
+Lemma prectx_delete_cons (k : nat) a Γ :
+  prectx_delete (S k) (a .: Γ) = a .: prectx_delete k Γ.
+Proof.
+  extensionality x.
+  destruct x; reflexivity.
+Qed.
+
+Lemma prectx_delete_scale (k : nat) s Γ :
+  prectx_delete k (prectx_scale s Γ) =
+  prectx_scale s (prectx_delete k Γ).
+Proof.
+  reflexivity.
+Qed.
+
+Lemma prectx_delete_contr (k : nat) p Γ Δ :
+  prectx_delete k (prectx_contr p Γ Δ) =
+  prectx_contr p (prectx_delete k Γ) (prectx_delete k Δ).
+Proof.
+  reflexivity.
+Qed.
+
+Lemma prectx_comp_delete (k : nat) Γ Δ :
+  prectx_comp Γ Δ ->
+  prectx_comp (prectx_delete k Γ) (prectx_delete k Δ).
+Proof.
+  intros Hcomp x s1 τ1 s2 τ2 H1 H2.
+  exact (Hcomp (skip k x) s1 τ1 s2 τ2 H1 H2).
+Qed.
+
+Lemma prectx_contr_lookup_r (p : param) (Γ Δ : prectx)
+  (x : var) (s : sens) (τ : type) :
+  prectx_comp Γ Δ ->
+  Δ x = Some (s, τ) ->
+  exists s', prectx_contr p Γ Δ x = Some (s', τ).
+Proof.
+  intros Hcomp HΔ.
+  rewrite (prectx_contr_comm p Γ Δ Hcomp).
+  eapply prectx_contr_lookup.
+  - now apply prectx_comp_sym.
+  - exact HΔ.
+Qed.
+
+(** Substitution at depth [k] commutes with the binding constructors. *)
+Lemma subst_at_abs (k : nat) v t :
+  (TmAbs t).[subst_at k v] = TmAbs (t.[subst_at (S k) v]).
+Proof.
+  cbn.
+  f_equal.
+  f_equal.
+  extensionality x.
+  destruct x; asimpl; reflexivity.
+Qed.
+
+Lemma subst_at_letpair (k : nat) v t tbody :
+  (TmLetPair t tbody).[subst_at k v] =
+  TmLetPair (t.[subst_at k v]) (tbody.[subst_at (S (S k)) v]).
+Proof.
+  cbn.
+  f_equal.
+  f_equal.
+  extensionality x.
+  destruct x as [|[|x]]; asimpl; reflexivity.
+Qed.
+
+Lemma subst_at_case (k : nat) v t tl tr :
+  (TmCase t tl tr).[subst_at k v] =
+  TmCase (t.[subst_at k v])
+    (tl.[subst_at (S k) v]) (tr.[subst_at (S k) v]).
+Proof.
+  cbn.
+  f_equal; f_equal; extensionality x; destruct x; asimpl; reflexivity.
+Qed.
+
+Lemma subst_at_letbang (k : nat) v t tbody :
+  (TmLetBang t tbody).[subst_at k v] =
+  TmLetBang (t.[subst_at k v]) (tbody.[subst_at (S k) v]).
+Proof.
+  cbn.
+  f_equal.
+  f_equal.
+  extensionality x.
+  destruct x; asimpl; reflexivity.
+Qed.
+
+Lemma substitution_closed_var p Θ x τ sx :
+  Θ x = Some (sx, τ) ->
+  sens_le sens_1 sx ->
+  forall k v,
+    (forall s σ, Θ k = Some (s, σ) ->
+      has_type (p, prectx_empty) v σ) ->
+    has_type (p, prectx_delete k Θ)
+      ((TmVar x).[subst_at k v]) τ.
+Proof.
+  intros Hx Hsx.
+  induction k as [|k IH] in Θ, x, sx, τ, Hx, Hsx |- *;
+    intros v Hv.
+  - destruct x as [|x].
+    + cbn.
+      apply (weakening_prectx (p, prectx_empty) v τ (Hv sx τ Hx)).
+      apply prectx_le_empty_l.
+    + cbn.
+      eapply TVar with (s := sx); eauto.
+  - destruct x as [|x].
+    + cbn.
+      eapply TVar with (s := sx); eauto.
+    + cbn.
+      assert
+        (Hrec :
+          has_type
+            (p, prectx_delete k (fun y => Θ (S y)))
+            ((TmVar x).[subst_at k v]) τ).
+      {
+        eapply IH; eauto.
+      }
+      assert
+        (Hinj : is_injective (+1%nat)).
+      {
+        intros y z Hyz.
+        asimpl in Hyz.
+        now injection Hyz.
+      }
+      assert
+        (Hpf :
+          is_pushforward (+1%nat)
+            (prectx_delete k (fun y => Θ (S y)))
+            (None .: prectx_delete k (fun y => Θ (S y)))).
+      {
+        split.
+        - intro y.
+          asimpl.
+          reflexivity.
+        - intros [|y] Hnone; [reflexivity |].
+          exfalso.
+          apply (Hnone y).
+          asimpl.
+          reflexivity.
+      }
+      pose proof
+        (renaming p
+          (prectx_delete k (fun y => Θ (S y)))
+          (None .: prectx_delete k (fun y => Θ (S y)))
+          ((TmVar x).[subst_at k v]) τ (+1%nat)
+          Hinj Hpf Hrec) as Hren.
+      apply
+        (weakening_prectx
+          (p, None .: prectx_delete k (fun y => Θ (S y)))
+          _ τ Hren).
+      * intros [|y] s σ Hy.
+        -- discriminate Hy.
+        -- exists s; split.
+           ++ exact Hy.
+           ++ apply sens_le_refl.
+Qed.
+
+Lemma substitution_closed_delete pΘ t τ (Hty : has_type pΘ t τ) :
+  match pΘ with
+  | (p, Θ) => forall k v,
+      (forall s σ, Θ k = Some (s, σ) ->
+        has_type (p, prectx_empty) v σ) ->
+      has_type (p, prectx_delete k Θ) (t.[subst_at k v]) τ
+  end.
+Proof.
+  induction Hty as
+    [ pΘ
+    | pΘ n
+    | p Θ τ sx x Hx Hsx
+    | p Γ t σ τ Ht IHt
+    | p Γ Δ f t σ τ Hcomp Hf IHf Ht IHt
+    | p Γ Δ t1 t2 τ1 τ2 Hcomp Ht1 IHt1 Ht2 IHt2
+    | p Γ Δ tpair s t τ1 τ2 τ
+        Hcomp Hpair IHpair Hbody IHbody
+    | pΘ t τ1 τ2 Ht IHt
+    | pΘ t τ1 τ2 Ht IHt
+    | p Γ Δ t tl tr s τ1 τ2 τ
+        Hcomp Ht IHt Htl IHtl Htr IHtr
+    | p Γ Δ t τ s Hcomp Ht IHt
+    | p Γ Δ t1 t2 τ1 τ r s
+        Hcomp Ht1 IHt1 Ht2 IHt2
+    | p q Γ t τ Ht IHt Hpq
+    | p q Γ t τ Ht IHt Hpq
+    ].
+  all: try destruct pΘ as [p Γ].
+  all: intros k v Hv.
+
+  - change (has_type (p, prectx_delete k Γ) TmUnit (TyBase TyUnit)).
+    apply TUnit.
+
+  - change (has_type (p, prectx_delete k Γ) (TmNat n) (TyBase TyNat)).
+    apply TNat.
+
+  - eapply substitution_closed_var; eauto.
+
+  - rewrite subst_at_abs.
+    apply TAbs.
+    pose proof (IHt (S k) v) as Hbody.
+    rewrite prectx_delete_cons in Hbody.
+    apply Hbody.
+    intros s ρ Hlookup.
+    apply (Hv s ρ).
+    exact Hlookup.
+
+  - change
+      (has_type (p, prectx_delete k (prectx_contr p Γ Δ))
+        (TmApp (f.[subst_at k v]) (t.[subst_at k v])) τ).
+    rewrite prectx_delete_contr.
+    eapply TApp with (σ := σ).
+    + now apply prectx_comp_delete.
+    + apply IHf.
+      intros s ρ Hlookup.
+      destruct
+        (prectx_contr_lookup p Γ Δ k s ρ Hcomp Hlookup)
+        as [s' Hlookup'].
+      exact (Hv s' ρ Hlookup').
+    + apply IHt.
+      intros s ρ Hlookup.
+      destruct
+        (prectx_contr_lookup_r p Γ Δ k s ρ Hcomp Hlookup)
+        as [s' Hlookup'].
+      exact (Hv s' ρ Hlookup').
+
+  - change
+      (has_type (p, prectx_delete k (prectx_contr p Γ Δ))
+        (TmPair (t1.[subst_at k v]) (t2.[subst_at k v]))
+        (TyPair p τ1 τ2)).
+    rewrite prectx_delete_contr.
+    apply TPair.
+    + now apply prectx_comp_delete.
+    + apply IHt1.
+      intros s ρ Hlookup.
+      destruct
+        (prectx_contr_lookup p Γ Δ k s ρ Hcomp Hlookup)
+        as [s' Hlookup'].
+      exact (Hv s' ρ Hlookup').
+    + apply IHt2.
+      intros s ρ Hlookup.
+      destruct
+        (prectx_contr_lookup_r p Γ Δ k s ρ Hcomp Hlookup)
+        as [s' Hlookup'].
+      exact (Hv s' ρ Hlookup').
+
+  - rewrite subst_at_letpair.
+    rewrite prectx_delete_contr, prectx_delete_scale.
+    eapply TLetPair with (s := s) (τ1 := τ1) (τ2 := τ2).
+    + now apply prectx_comp_delete.
+    + apply IHpair.
+      intros r ρ Hlookup.
+      assert
+        (Hlookup_scale :
+          prectx_scale s Γ k = Some (sens_mult s r, ρ)).
+      { unfold prectx_scale; now rewrite Hlookup. }
+      destruct
+        (prectx_contr_lookup p (prectx_scale s Γ) Δ
+          k (sens_mult s r) ρ
+          (prectx_comp_scale_l Γ Δ s Hcomp) Hlookup_scale)
+        as [r' Hlookup'].
+      exact (Hv r' ρ Hlookup').
+    + pose proof (IHbody (S (S k)) v) as Hb.
+      rewrite !prectx_delete_cons in Hb.
+      apply Hb.
+      intros r ρ Hlookup.
+      destruct
+        (prectx_contr_lookup_r p (prectx_scale s Γ) Δ
+          k r ρ (prectx_comp_scale_l Γ Δ s Hcomp) Hlookup)
+        as [r' Hlookup'].
+      exact (Hv r' ρ Hlookup').
+
+  - change
+      (has_type (p, prectx_delete k Γ)
+        (TmInjL (t.[subst_at k v])) (TyPlus τ1 τ2)).
+    apply TInjL.
+    now apply IHt.
+
+  - change
+      (has_type (p, prectx_delete k Γ)
+        (TmInjR (t.[subst_at k v])) (TyPlus τ1 τ2)).
+    apply TInjR.
+    now apply IHt.
+
+  - rewrite subst_at_case.
+    rewrite prectx_delete_contr, prectx_delete_scale.
+    eapply TCase with (s := s) (τ1 := τ1) (τ2 := τ2).
+    + now apply prectx_comp_delete.
+    + apply IHt.
+      intros r ρ Hlookup.
+      assert
+        (Hlookup_scale :
+          prectx_scale s Γ k = Some (sens_mult s r, ρ)).
+      { unfold prectx_scale; now rewrite Hlookup. }
+      destruct
+        (prectx_contr_lookup p (prectx_scale s Γ) Δ
+          k (sens_mult s r) ρ
+          (prectx_comp_scale_l Γ Δ s Hcomp) Hlookup_scale)
+        as [r' Hlookup'].
+      exact (Hv r' ρ Hlookup').
+    + pose proof (IHtl (S k) v) as Hl.
+      rewrite prectx_delete_cons in Hl.
+      apply Hl.
+      intros r ρ Hlookup.
+      destruct
+        (prectx_contr_lookup_r p (prectx_scale s Γ) Δ
+          k r ρ (prectx_comp_scale_l Γ Δ s Hcomp) Hlookup)
+        as [r' Hlookup'].
+      exact (Hv r' ρ Hlookup').
+    + pose proof (IHtr (S k) v) as Hr.
+      rewrite prectx_delete_cons in Hr.
+      apply Hr.
+      intros r ρ Hlookup.
+      destruct
+        (prectx_contr_lookup_r p (prectx_scale s Γ) Δ
+          k r ρ (prectx_comp_scale_l Γ Δ s Hcomp) Hlookup)
+        as [r' Hlookup'].
+      exact (Hv r' ρ Hlookup').
+
+  - change
+      (has_type
+        (p, prectx_delete k
+          (prectx_contr p (prectx_scale s Γ) Δ))
+        (TmBang (t.[subst_at k v])) (TyBang s τ)).
+    rewrite prectx_delete_contr, prectx_delete_scale.
+    eapply TBang with
+      (Γ := prectx_delete k Γ) (Δ := prectx_delete k Δ).
+    + now apply prectx_comp_delete.
+    + apply IHt.
+      intros r ρ Hlookup.
+      assert
+        (Hlookup_scale :
+          prectx_scale s Γ k = Some (sens_mult s r, ρ)).
+      { unfold prectx_scale; now rewrite Hlookup. }
+      destruct
+        (prectx_contr_lookup p (prectx_scale s Γ) Δ
+          k (sens_mult s r) ρ
+          (prectx_comp_scale_l Γ Δ s Hcomp) Hlookup_scale)
+        as [r' Hlookup'].
+      exact (Hv r' ρ Hlookup').
+
+  - rewrite subst_at_letbang.
+    rewrite prectx_delete_contr, prectx_delete_scale.
+    eapply TLetBang with (τ1 := τ1) (r := r) (s := s).
+    + now apply prectx_comp_delete.
+    + apply IHt1.
+      intros u ρ Hlookup.
+      assert
+        (Hlookup_scale :
+          prectx_scale s Γ k = Some (sens_mult s u, ρ)).
+      { unfold prectx_scale; now rewrite Hlookup. }
+      destruct
+        (prectx_contr_lookup p (prectx_scale s Γ) Δ
+          k (sens_mult s u) ρ
+          (prectx_comp_scale_l Γ Δ s Hcomp) Hlookup_scale)
+        as [u' Hlookup'].
+      exact (Hv u' ρ Hlookup').
+    + pose proof (IHt2 (S k) v) as Hb.
+      rewrite prectx_delete_cons in Hb.
+      apply Hb.
+      intros u ρ Hlookup.
+      destruct
+        (prectx_contr_lookup_r p (prectx_scale s Γ) Δ
+          k u ρ (prectx_comp_scale_l Γ Δ s Hcomp) Hlookup)
+        as [u' Hlookup'].
+      exact (Hv u' ρ Hlookup').
+
+  - change
+      (has_type (q, prectx_delete k Γ) (t.[subst_at k v]) τ).
+    eapply TWeakGt with (p := p).
+    + apply IHt.
+      intros s σ Hlookup.
+      rewrite <- (prectx_scale_empty (sens_pnorm_c q p)).
+      eapply TWeakLt with (p := q).
+      * exact (Hv s σ Hlookup).
+      * exact Hpq.
+    + exact Hpq.
+
+  - change
+      (has_type
+        (q, prectx_delete k (prectx_scale (sens_pnorm_c p q) Γ))
+        (t.[subst_at k v]) τ).
+    rewrite prectx_delete_scale.
+    eapply TWeakLt with (p := p).
+    + apply IHt.
+      intros s σ Hlookup.
+      eapply TWeakGt with (p := q).
+      * apply (Hv (sens_mult (sens_pnorm_c p q) s) σ).
+        unfold prectx_scale.
+        now rewrite Hlookup.
+      * exact Hpq.
+    + exact Hpq.
+Qed.
+
+Lemma substitution_closed_at p Θ t τ :
+  has_type (p, Θ) t τ ->
+  forall k Γ v s σ,
+    prectx_le Θ
+      (prectx_insert k (Some (s, σ)) Γ) ->
+    has_type (p, prectx_empty) v σ ->
+    has_type (p, Γ) (t.[subst_at k v]) τ.
+Proof.
+  intros Ht k Γ v s σ Hle Hv.
+  assert
+    (Ht' :
+      has_type (p, prectx_insert k (Some (s, σ)) Γ) t τ).
+  {
+    apply (weakening_prectx (p, Θ) t τ Ht).
+    - exact Hle.
+  }
+  rewrite <- (prectx_delete_insert k (Some (s, σ)) Γ).
+  eapply (substitution_closed_delete
+    (p, prectx_insert k (Some (s, σ)) Γ) t τ Ht').
+  intros r ρ Hlookup.
+  rewrite prectx_insert_at in Hlookup.
+  inversion Hlookup; subst.
+  exact Hv.
+Qed.
+
+Lemma substitution_closed (p : param) (Γ : prectx)
   (t v : term) (s : sens) (σ τ : type) :
   has_type (p, Some (s, σ) .: Γ) t τ ->
-  has_type (p, Δ) v σ ->
-  prectx_comp Γ Δ ->
-  has_type (p, prectx_contr p Γ (prectx_scale s Δ)) (t.[v/]) τ.
-Admitted.
-
-(** *** Subject reduction *)
-
-Theorem subject_reduction (p : param) (Γ : prectx) (t v : term) (τ : type) :
-  evals_to t v ->
-  has_type (p, Γ) t τ ->
-  has_type (p, Γ) v τ.
-Admitted.
+  has_type (p, prectx_empty) v σ ->
+  has_type (p, Γ) (t.[v/]) τ.
+Proof.
+  intros Ht Hv.
+  eapply substitution_closed_at
+    with (Θ := Some (s, σ) .: Γ)
+         (k := 0%nat) (s := s) (σ := σ).
+  - exact Ht.
+  - apply prectx_le_refl.
+  - exact Hv.
+Qed.
