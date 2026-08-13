@@ -1167,8 +1167,80 @@ Section PrectxPad.
 
   Lemma prectx_pad_le : prectx_le Γ2 Δ2.
   Proof.
-    (* TODO *)
-  Admitted.
+    unfold prectx_le.
+    intros x s2 τ HΓ2.
+    unfold Δ2, prectx_pad.
+    destruct p as [r Hr |].
+    - destruct (Γ1 x) as [[s1 τ1] |] eqn:H1.
+      + destruct (Δ x) as [[sΔ τΔ] |] eqn:HΔ.
+        * destruct sΔ as [rΔ HrΔ |].
+          -- edestruct (Hle x (sens_pnorm (param_real r Hr) (sens_mult s s1) s2) τ)
+               as [sΔ' [HΔ' Hle']].
+             { unfold prectx_contr, prectx_scale.
+               rewrite H1, HΓ2.
+               change (Some (sens_pnorm (param_real r Hr) (sens_mult s s1) s2, τ1) =
+                       Some (sens_pnorm (param_real r Hr) (sens_mult s s1) s2, τ)).
+               rewrite (H12 x s1 τ1 s2 τ H1 HΓ2).
+               reflexivity. }
+             rewrite HΔ in HΔ'.
+             injection HΔ' as [= Hs HτΔ].
+             rewrite <- Hs in Hle'.
+             destruct (sens_eq_dec (sens_mult s s1) (sens_real rΔ HrΔ))
+               as [Heq | Hneq].
+             ++ exfalso.
+                rewrite Heq in Hle'.
+                destruct s2 as [r2 H2 |].
+                ** exact (sens_pnorm_not_le r Hr rΔ r2 HrΔ H2 Hle').
+                ** rewrite sens_pnorm_infty_r in Hle'.
+                   destruct Hle' as [Hlt | Heq2];
+                     [exact Hlt | discriminate Heq2].
+             ++ eexists (sens_pad (param_real r Hr) (sens_mult s s1)
+                       (sens_real rΔ HrΔ)).
+                split.
+                ** rewrite (H12 x s1 τ1 s2 τ H1 HΓ2).
+                   reflexivity.
+                ** eapply sens_pad_le; exact Hle'.
+          -- eexists sens_infty.
+             split.
+             ** rewrite (H12 x s1 τ1 s2 τ H1 HΓ2).
+                reflexivity.
+             ** destruct s2 as [r2 H2 |];
+                  [left; exact I | right; reflexivity].
+        * exfalso.
+          edestruct (Hle x (sens_pnorm (param_real r Hr) (sens_mult s s1) s2) τ)
+            as [sΔ' [HΔ' _]].
+          { unfold prectx_contr, prectx_scale.
+            rewrite H1, HΓ2.
+            change (Some (sens_pnorm (param_real r Hr) (sens_mult s s1) s2, τ1) =
+                    Some (sens_pnorm (param_real r Hr) (sens_mult s s1) s2, τ)).
+            rewrite (H12 x s1 τ1 s2 τ H1 HΓ2).
+            reflexivity. }
+          rewrite HΔ in HΔ'.
+          discriminate.
+      + edestruct (Hle x s2 τ) as [sΔ [HΔ Hle']].
+        { unfold prectx_contr, prectx_scale.
+          now rewrite H1, HΓ2. }
+        eexists; split.
+        * unfold prectx_pad.
+          rewrite HΔ.
+          reflexivity.
+        * exact Hle'.
+    - destruct (Γ1 x) as [[s1 τ1] |] eqn:H1.
+      + edestruct (Hle x (sens_pnorm param_infty (sens_mult s s1) s2) τ)
+          as [sΔ [HΔ Hle']].
+        { unfold prectx_contr, prectx_scale.
+          rewrite H1, HΓ2.
+          change (Some (sens_pnorm param_infty (sens_mult s s1) s2, τ1) =
+                  Some (sens_pnorm param_infty (sens_mult s s1) s2, τ)).
+          rewrite (H12 x s1 τ1 s2 τ H1 HΓ2).
+          reflexivity. }
+        eexists; split; [exact HΔ |].
+        eapply sens_le_trans; [apply sens_pnorm_le_l | exact Hle'].
+      + edestruct (Hle x s2 τ) as [sΔ [HΔ Hle']].
+        { unfold prectx_contr, prectx_scale.
+          now rewrite H1, HΓ2. }
+        eexists; split; [exact HΔ | exact Hle'].
+  Qed.
 End PrectxPad.
 
 (** The weakening rule for precontexts is admissible. *)
