@@ -1590,7 +1590,41 @@ Proof.
       now f_equal.
 Qed.
 
-From Stdlib Require Import Classical.
+Lemma is_injective_up2 (ξ : var -> var) :
+  is_injective ξ ->
+  is_injective (0%nat .: 1%nat .: ξ >>> (+2%nat)).
+Proof.
+  intro Hinj.
+  pose proof
+    (is_injective_up
+       (0%nat .: ξ >>> (+1%nat))
+       (is_injective_up ξ Hinj))
+    as Hup.
+  asimpl in Hup.
+  exact Hup.
+Qed.
+
+Lemma is_pushforward_up2
+  (ξ : var -> var) (Γ Δ : prectx)
+  (v0 v1 : option (sens * type)) :
+  is_pushforward ξ Γ Δ ->
+  is_pushforward
+    (0%nat .: 1%nat .: ξ >>> (+2%nat))
+    (v0 .: v1 .: Γ)
+    (v0 .: v1 .: Δ).
+Proof.
+  intro Hpf.
+  pose proof
+    (is_pushforward_up
+       (0%nat .: ξ >>> (+1%nat))
+       (v1 .: Γ) (v1 .: Δ) v0
+       (is_pushforward_up ξ Γ Δ v1 Hpf))
+    as Hup.
+  asimpl in Hup.
+  exact Hup.
+Qed.
+
+From Stdlib Require Import Classical ClassicalChoice.
 
 Lemma pushforward_inv (ξ : var -> var) Γ Δ y v :
   is_injective ξ ->
@@ -1652,13 +1686,279 @@ Proof.
   - now rewrite Hpf1_none, Hpf2_none.
 Qed.
 
+Lemma pushforward_unique (ξ : var -> var) Γ Δ1 Δ2 :
+  is_pushforward ξ Γ Δ1 ->
+  is_pushforward ξ Γ Δ2 ->
+  Δ1 = Δ2.
+Proof.
+  intros [Heq1 Hnone1] [Heq2 Hnone2].
+  extensionality y.
+  destruct (classic (exists x, ξ x = y)) as [[x Hx] | Hx].
+  - subst y.
+    now rewrite <- (Heq1 x), <- (Heq2 x).
+  - assert (Hy : forall x, ξ x <> y).
+    { intros x Heq. apply Hx. now exists x. }
+    now rewrite (Hnone1 y Hy), (Hnone2 y Hy).
+Qed.
+
+Lemma pushforward_exists (ξ : var -> var) Γ :
+  is_injective ξ ->
+  exists Δ, is_pushforward ξ Γ Δ.
+Proof.
+  intro Hinj.
+
+  assert
+    (Hchoice :
+      forall y : var,
+        exists o : option (sens * type),
+          (forall x, ξ x = y -> o = Γ x) /\
+          ((forall x, ξ x <> y) -> o = None)).
+  {
+    intro y.
+    destruct (classic (exists x, ξ x = y)) as [[x Hx] | Hnone].
+    - exists (Γ x).
+      split.
+      + intros x' Hx'.
+        assert (x = x').
+        { apply Hinj. congruence. }
+        now subst x'.
+      + intro Habsurd.
+        exfalso.
+        exact (Habsurd x Hx).
+    - exists None.
+      split.
+      + intros x Hx.
+        exfalso.
+        apply Hnone.
+        now exists x.
+      + intros _.
+        reflexivity.
+  }
+
+  destruct
+    (choice
+      (fun (y : var) (o : option (sens * type)) =>
+        (forall x, ξ x = y -> o = Γ x) /\
+        ((forall x, ξ x <> y) -> o = None))
+      Hchoice)
+    as [Δ HΔ].
+  exists Δ.
+  split.
+  - intro x.
+    symmetry.
+    apply (proj1 (HΔ (ξ x)) x).
+    reflexivity.
+  - intros y Hy.
+    exact (proj2 (HΔ y) Hy).
+Qed.
+
+Lemma renaming_aux pΓ t τ (Hty : has_type pΓ t τ) :
+  match pΓ with
+  | (p, Γ) =>
+      forall Δ ξ,
+        is_injective ξ ->
+        is_pushforward ξ Γ Δ ->
+        has_type (p, Δ) (t.[ren ξ]) τ
+  end.
+Proof.
+  induction Hty as
+    [ pΓ
+    | pΓ n
+    | p Γ τ s x Hx Hs
+    | p Γ t σ τ Ht IHt
+    | p Γ Δ f t σ τ Hcomp Hf IHf Ht IHt
+    | p Γ Δ t1 t2 τ1 τ2 Hcomp Ht1 IHt1 Ht2 IHt2
+    | p Γ Δ tpair s t τ1 τ2 τ
+        Hcomp Hpair IHpair Hbody IHbody
+    | pΓ t τ1 τ2 Ht IHt
+    | pΓ t τ1 τ2 Ht IHt
+    | p Γ Δ t tl tr s τ1 τ2 τ
+        Hcomp Ht IHt Htl IHtl Htr IHtr
+    | p Γ Δ t τ s Hcomp Ht IHt
+    | p Γ Δ t1 t2 τ1 τ r s
+        Hcomp Ht1 IHt1 Ht2 IHt2
+    | p q Γ t τ Ht IHt Hpq
+    | p q Γ t τ Ht IHt Hpq
+  ].
+  all: try destruct pΓ as [p' Γ'].
+  all: intros Θ ξ Hinj Hpf; asimpl.
+
+  - apply TUnit.
+
+  - apply TNat.
+
+  - eapply TVar with (s := s).
+    + rewrite <- (proj1 Hpf x).
+      exact Hx.
+    + exact Hs.
+
+  - apply TAbs.
+    eapply IHt.
+    + apply is_injective_up.
+      exact Hinj.
+    + apply is_pushforward_up.
+      exact Hpf.
+
+  - destruct (pushforward_exists ξ Γ Hinj) as [Γ' HΓ'].
+    destruct (pushforward_exists ξ Δ Hinj) as [Δ' HΔ'].
+    assert (HΘ : Θ = prectx_contr p Γ' Δ').
+    {
+      eapply pushforward_unique.
+      + exact Hpf.
+      + apply pushforward_contr; assumption.
+    }
+    subst Θ.
+    eapply TApp with (σ := σ).
+    + eapply pushforward_comp; eauto.
+    + eapply IHf; eauto.
+    + eapply IHt; eauto.
+
+  - destruct (pushforward_exists ξ Γ Hinj) as [Γ' HΓ'].
+    destruct (pushforward_exists ξ Δ Hinj) as [Δ' HΔ'].
+    assert (HΘ : Θ = prectx_contr p Γ' Δ').
+    {
+      eapply pushforward_unique.
+      + exact Hpf.
+      + apply pushforward_contr; assumption.
+    }
+    subst Θ.
+    apply TPair.
+    + eapply pushforward_comp; eauto.
+    + eapply IHt1; eauto.
+    + eapply IHt2; eauto.
+
+  - destruct (pushforward_exists ξ Γ Hinj) as [Γ' HΓ'].
+    destruct (pushforward_exists ξ Δ Hinj) as [Δ' HΔ'].
+    assert
+      (HΘ :
+        Θ = prectx_contr p (prectx_scale s Γ') Δ').
+    {
+      eapply pushforward_unique.
+      + exact Hpf.
+      + apply pushforward_contr.
+        * apply pushforward_scale.
+          exact HΓ'.
+        * exact HΔ'.
+    }
+    subst Θ.
+    eapply TLetPair with
+      (s := s) (τ1 := τ1) (τ2 := τ2).
+    + eapply pushforward_comp; eauto.
+    + eapply IHpair; eauto.
+    + eapply IHbody.
+      * apply is_injective_up2.
+        exact Hinj.
+      * apply is_pushforward_up2.
+        exact HΔ'.
+
+  - apply TInjL.
+    eapply IHt; eauto.
+
+  - apply TInjR.
+    eapply IHt; eauto.
+
+  - destruct (pushforward_exists ξ Γ Hinj) as [Γ' HΓ'].
+    destruct (pushforward_exists ξ Δ Hinj) as [Δ' HΔ'].
+    assert
+      (HΘ :
+        Θ = prectx_contr p (prectx_scale s Γ') Δ').
+    {
+      eapply pushforward_unique.
+      + exact Hpf.
+      + apply pushforward_contr.
+        * apply pushforward_scale.
+          exact HΓ'.
+        * exact HΔ'.
+    }
+    subst Θ.
+    eapply TCase with
+      (s := s) (τ1 := τ1) (τ2 := τ2).
+    + eapply pushforward_comp; eauto.
+    + eapply IHt; eauto.
+    + eapply IHtl.
+      * apply is_injective_up.
+        exact Hinj.
+      * apply is_pushforward_up.
+        exact HΔ'.
+    + eapply IHtr.
+      * apply is_injective_up.
+        exact Hinj.
+      * apply is_pushforward_up.
+        exact HΔ'.
+
+  - destruct (pushforward_exists ξ Γ Hinj) as [Γ' HΓ'].
+    destruct (pushforward_exists ξ Δ Hinj) as [Δ' HΔ'].
+    assert
+      (HΘ :
+        Θ = prectx_contr p (prectx_scale s Γ') Δ').
+    {
+      eapply pushforward_unique.
+      + exact Hpf.
+      + apply pushforward_contr.
+        * apply pushforward_scale.
+          exact HΓ'.
+        * exact HΔ'.
+    }
+    subst Θ.
+    eapply TBang with (Γ := Γ') (Δ := Δ').
+    + eapply pushforward_comp; eauto.
+    + eapply IHt; eauto.
+
+  - destruct (pushforward_exists ξ Γ Hinj) as [Γ' HΓ'].
+    destruct (pushforward_exists ξ Δ Hinj) as [Δ' HΔ'].
+    assert
+      (HΘ :
+        Θ = prectx_contr p (prectx_scale s Γ') Δ').
+    {
+      eapply pushforward_unique.
+      + exact Hpf.
+      + apply pushforward_contr.
+        * apply pushforward_scale.
+          exact HΓ'.
+        * exact HΔ'.
+    }
+    subst Θ.
+    eapply TLetBang with
+      (τ1 := τ1) (r := r) (s := s).
+    + eapply pushforward_comp; eauto.
+    + eapply IHt1; eauto.
+    + eapply IHt2.
+      * apply is_injective_up.
+        exact Hinj.
+      * apply is_pushforward_up.
+        exact HΔ'.
+
+  - eapply TWeakGt with (p := p).
+    + eapply IHt; eauto.
+    + exact Hpq.
+
+  - destruct (pushforward_exists ξ Γ Hinj) as [Γ' HΓ'].
+    assert
+      (HΘ :
+        Θ =
+        prectx_scale (sens_pnorm_c p q) Γ').
+    {
+      eapply pushforward_unique.
+      + exact Hpf.
+      + apply pushforward_scale.
+        exact HΓ'.
+    }
+    subst Θ.
+    eapply TWeakLt with (p := p).
+    + eapply IHt; eauto.
+    + exact Hpq.
+Qed.
+
 Lemma renaming (p : param) (Γ Δ : prectx) (t : term) (τ : type)
   (ξ : var -> var) :
   is_injective ξ ->
   is_pushforward ξ Γ Δ ->
   has_type (p, Γ) t τ ->
   has_type (p, Δ) (t.[ren ξ]) τ.
-Admitted.
+Proof.
+  intros Hinj Hpf Hty.
+  exact (renaming_aux (p, Γ) t τ Hty Δ ξ Hinj Hpf).
+Qed.
 
 (** *** Substitution *)
 
