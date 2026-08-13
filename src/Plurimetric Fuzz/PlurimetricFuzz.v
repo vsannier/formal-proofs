@@ -287,6 +287,21 @@ Proof.
   - rewrite Rpower_mult, Rinv_r, Rpower_1; lra.
 Qed.
 
+(** The $L^p$ norm of two strictly positive real numbers is strictly greater
+    than its first argument. *)
+Lemma real_pnorm_strict (p ra rb : R) (Hp : 0 < p) (Hra : 0 < ra) (Hrb : 0 < rb) :
+  ra < real_pnorm p ra rb.
+Proof.
+  unfold real_pnorm.
+  replace ra with (Rpower (Rpower ra p) (/p)) at 1.
+  - apply Rlt_Rpower_l.
+    + apply Rinv_0_lt_compat; lra.
+    + split; [apply exp_pos |].
+      rewrite <- Rplus_0_r at 1.
+      apply Rplus_lt_compat_l, exp_pos.
+  - rewrite Rpower_mult, Rinv_r, Rpower_1; lra.
+Qed.
+
 (** The norm equivalence constant for $L^p$ norms in dimension $2$. *)
 Definition real_pnorm_c (p q : param) : R :=
   match p, q with
@@ -324,6 +339,13 @@ Lemma sens_pnorm_infty_l (p : param) (s : sens) :
   sens_pnorm p sens_infty s = sens_infty.
 Proof.
   now destruct p.
+Qed.
+
+(** For all [p], [sens_infty] is right-absorbing for [sens_pnorm p]. *)
+Lemma sens_pnorm_infty_r (p : param) (s : sens) :
+  sens_pnorm p s sens_infty = sens_infty.
+Proof.
+  destruct p, s; reflexivity.
 Qed.
 
 Lemma sens_1norm_1_1 : sens_pnorm param_1 sens_1 sens_1 = sens_2.
@@ -457,6 +479,19 @@ Proof.
   - apply sens_le_trans with sens_infty.
     + now left.
     + exact Hle.
+Qed.
+
+(** If the [p]-norm of [ra] and [rb] is no greater than [ra],
+    then this contradicts the strict positivity of [rb]. *)
+Lemma sens_pnorm_not_le (p : R) (Hp : 1 <= p) (ra rb : R)
+  (Hra : 0 < ra) (Hrb : 0 < rb) :
+  sens_le (sens_pnorm (param_real p Hp) (sens_real ra Hra) (sens_real rb Hrb))
+    (sens_real ra Hra) -> False.
+Proof.
+  intro H.
+  apply sens_le_real in H.
+  apply Rle_not_lt in H.
+  apply H, real_pnorm_strict; lra.
 Qed.
 
 Definition sens_pnorm_c (p q : param) : sens :=
