@@ -856,6 +856,39 @@ Proof.
   - now exists s.
 Qed.
 
+(** If [x] is in [Γ], then it is also in [Θ] with the same type,
+    provided [Γ] is compatible with [Δ]
+    and [prectx_contr p Γ Δ] is smaller than or equal to [Θ]. *)
+Lemma prectx_contr_le_lookup (p : param) (Γ Δ Θ : prectx) :
+  prectx_comp Γ Δ ->
+  prectx_le (prectx_contr p Γ Δ) Θ ->
+  forall x s τ, Γ x = Some (s, τ) ->
+  exists s', Θ x = Some (s', τ).
+Proof.
+  intros Hcomp Hle x s τ HΓ.
+  destruct (prectx_contr_lookup p Γ Δ x s τ Hcomp HΓ) as [s' Hcontr].
+  destruct (Hle x s' τ Hcontr) as [s'' [HΘ _]].
+  eauto.
+Qed.
+
+(** If [x] is in [Γ] and in [Θ] with the same type,
+    then the scaled sensitivity of [x] in [Γ]
+    is no greater than its sensitivity in [Θ]. *)
+Lemma prectx_contr_scale_le_l (p : param) (s : sens) (Γ Δ Θ : prectx)
+  (x : var) (sΓ sΘ : sens) (τ : type) :
+  prectx_le (prectx_contr p (prectx_scale s Γ) Δ) Θ ->
+  Γ x = Some (sΓ, τ) ->
+  Θ x = Some (sΘ, τ) ->
+  sens_le (sens_mult s sΓ) sΘ.
+Proof.
+  intros Hle HΓ HΘ.
+  eapply prectx_contr_le_l with (p := p) (Γ := prectx_scale s Γ) (Δ := Δ) (Θ := Θ) (x := x) (τ := τ).
+  - exact Hle.
+  - unfold prectx_scale.
+    now rewrite HΓ.
+  - exact HΘ.
+Qed.
+
 (** A context is the datum of a parameter and a precontext.
    In @FSCD2024, we write $(p) \; \Gamma$. *)
 Definition ctx : Type := param * prectx.
