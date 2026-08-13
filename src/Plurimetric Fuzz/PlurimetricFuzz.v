@@ -170,6 +170,16 @@ Proof.
   apply sens_eq_real, Rmult_comm.
 Qed.
 
+Lemma sens_mult_assoc (r s t : sens) :
+  sens_mult r (sens_mult s t) = sens_mult (sens_mult r s) t.
+Proof.
+  destruct r as [r Hr |], s as [s Hs |], t as [t Ht |];
+    try reflexivity.
+  apply sens_eq_real.
+  symmetry.
+  apply Rmult_assoc.
+Qed.
+
 (** [sens_1] is a right identity for [sens_mult]. *)
 Lemma sens_mult_1_r (s : sens) : (sens_mult s sens_1) = s.
 Proof.
@@ -377,6 +387,38 @@ Proof.
   - unfold sens_max.
     apply sens_eq_real.
     apply Rmax_comm.
+Qed.
+
+(** Multiplication distributes over the sensitivity [p]-norm. *)
+Lemma sens_mult_pnorm (p : param) (r s t : sens) :
+  sens_mult r (sens_pnorm p s t) =
+  sens_pnorm p (sens_mult r s) (sens_mult r t).
+Proof.
+  destruct p as [p Hp |],
+           r as [r Hr |],
+           s as [s Hs |],
+           t as [t Ht |];
+    try reflexivity;
+    unfold sens_mult, sens_pnorm.
+  - apply sens_eq_real.
+    unfold real_pnorm.
+    assert (Hrpow : 0 < Rpower r p) by apply exp_pos.
+    assert (Hsum : 0 < Rpower s p + Rpower t p).
+    { apply Rplus_lt_0_compat; apply exp_pos. }
+    rewrite <- (Rpower_mult_distr r s p Hr Hs).
+    rewrite <- (Rpower_mult_distr r t p Hr Ht).
+    rewrite <- (Rmult_plus_distr_l (Rpower r p) (Rpower s p) (Rpower t p)).
+    rewrite <- (Rpower_mult_distr (Rpower r p) (Rpower s p + Rpower t p) (/ p) Hrpow Hsum).
+    assert (Hinv : Rpower (Rpower r p) (/ p) = r).
+    { rewrite Rpower_mult, Rinv_r, Rpower_1; lra. }
+    rewrite Hinv.
+    reflexivity.
+  - unfold sens_max.
+    apply sens_eq_real.
+    unfold Rmax.
+    destruct (Rle_dec s t);
+    destruct (Rle_dec (r * s) (r * t));
+    nra.
 Qed.
 
 (** [sens_pnorm] is associative. *)
@@ -654,6 +696,34 @@ Proof.
   - reflexivity.
 Qed.
 
+Lemma prectx_scale_empty (s : sens) :
+  prectx_scale s prectx_empty = prectx_empty.
+Proof.
+  extensionality x.
+  unfold prectx_scale, prectx_empty.
+  reflexivity.
+Qed.
+
+Lemma prectx_scale_assoc (r s : sens) (Γ : prectx) :
+  prectx_scale r (prectx_scale s Γ) =
+  prectx_scale (sens_mult r s) Γ.
+Proof.
+  extensionality x.
+  unfold prectx_scale.
+  destruct (Γ x) as [[t τ] |]; [| reflexivity].
+  f_equal.
+  f_equal.
+  apply sens_mult_assoc.
+Qed.
+
+Lemma prectx_scale_cons (r s : sens) (τ : type) (Γ : prectx) :
+  prectx_scale r (Some (s, τ) .: Γ) =
+  Some (sens_mult r s, τ) .: prectx_scale r Γ.
+Proof.
+  extensionality x.
+  destruct x; reflexivity.
+Qed.
+
 Lemma prectx_scale_le (s : sens) (Γ : prectx) :
   sens_le sens_1 s ->
   prectx_le Γ (prectx_scale s Γ).
@@ -763,6 +833,15 @@ Proof.
   now inversion H2.
 Qed.
 
+Lemma prectx_comp_scale (r s : sens) (Γ Δ : prectx) :
+  prectx_comp Γ Δ ->
+  prectx_comp (prectx_scale r Γ) (prectx_scale s Δ).
+Proof.
+  intro Hcomp.
+  apply prectx_comp_scale_l.
+  now apply prectx_comp_scale_r.
+Qed.
+
 Definition prectx_contr (p : param) (Γ Δ : prectx) : prectx := fun x =>
   match (Γ x), (Δ x) with
   | Some (s1, τ1), Some (s2, τ2) => Some (sens_pnorm p s1 s2, τ1)
@@ -816,6 +895,28 @@ Proof.
   destruct (Θ x) as [[s3 τ3]|].
   rewrite sens_pnorm_assoc.
   all: reflexivity.
+Qed.
+
+Lemma prectx_scale_contr (p : param) (s : sens) (Γ Δ : prectx) :
+  prectx_scale s (prectx_contr p Γ Δ) =
+  prectx_contr p (prectx_scale s Γ) (prectx_scale s Δ).
+Proof.
+  extensionality x.
+  unfold prectx_scale, prectx_contr.
+  destruct (Γ x) as [[r τr] |];
+  destruct (Δ x) as [[t τt] |];
+    try reflexivity.
+  repeat f_equal.
+  apply sens_mult_pnorm.
+Qed.
+
+Lemma prectx_contr_cons (p : param) (r s : sens) (τ : type)
+  (Γ Δ : prectx) :
+  prectx_contr p (Some (r, τ) .: Γ) (Some (s, τ) .: Δ) =
+  Some (sens_pnorm p r s, τ) .: prectx_contr p Γ Δ.
+Proof.
+  extensionality x.
+  destruct x; reflexivity.
 Qed.
 
 Lemma prectx_contr_le_l (p : param) (Γ Δ Θ : prectx)
