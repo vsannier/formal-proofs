@@ -1,3 +1,6 @@
+*.vo
+*.vos
+*.vok
 *.glob
 .*
 !/.gitignore

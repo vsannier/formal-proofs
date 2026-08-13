@@ -4,11 +4,11 @@
   by Victor Sannier (2024–2026)
 *)
 
-Require Import ProofIrrelevance.
-Require Import Program.Program.
+From Stdlib Require Import Logic.ProofIrrelevance.
+From Stdlib Require Import Program.Program.
 From Autosubst Require Import Autosubst.
 
-Require Import Reals Psatz.
+From Stdlib Require Import Reals Psatz.
 Open Scope R_scope.
 
 (** * Parameters
@@ -1400,7 +1400,7 @@ Proof.
       now f_equal.
 Qed.
 
-Require Import Classical.
+From Stdlib Require Import Classical.
 
 Lemma pushforward_inv (ξ : var -> var) Γ Δ y v :
   is_injective ξ ->
