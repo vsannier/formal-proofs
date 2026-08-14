@@ -526,6 +526,9 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
+simpl $p |- Ga => ( ( ph /\ ps ) -> ph ) $=
+  ( wa cf cc idr ax-eanl ax-iim ) ABDZACABCJEFJCGHI $.
+
 jcn $p |- Ga , ph , ~ ps => ~ ( ph -> ps ) $=
   ( wi cf wn cc idr ax-idc ax-eim ax-enot ax-inot ) ABDZCAEZBFZEZGGZBCNPMEZGZGG
   ZABTMQHACSIJOCNGRIKL $.
