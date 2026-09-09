@@ -1719,6 +1719,41 @@ Proof.
   - solve_inv_struct IHhas_type Heqt_letbang StructLt.
 Qed.
 
+Lemma closed_contr_inv p Γ Δ q :
+  ctx_struct (p, prectx_contr p Γ Δ) (q, prectx_empty) ->
+  Γ = prectx_empty /\
+  Δ = prectx_empty /\
+  ctx_struct (p, prectx_empty) (q, prectx_empty).
+Proof.
+  intro Hstruct.
+  assert (Hcontr : prectx_contr p Γ Δ = prectx_empty).
+  { eapply ctx_struct_empty_inv; exact Hstruct. }
+  destruct (prectx_contr_empty_inv p Γ Δ Hcontr) as [-> ->].
+  repeat split; try reflexivity.
+  rewrite Hcontr in Hstruct.
+  exact Hstruct.
+Qed.
+
+Lemma closed_scale_contr_inv p s Γ Δ q :
+  ctx_struct (p, prectx_contr p (prectx_scale s Γ) Δ) (q, prectx_empty) ->
+  Γ = prectx_empty /\
+  Δ = prectx_empty /\
+  ctx_struct (p, prectx_empty) (q, prectx_empty).
+Proof.
+  intro Hstruct.
+  assert (Hcontr :
+    prectx_contr p (prectx_scale s Γ) Δ = prectx_empty).
+  { eapply ctx_struct_empty_inv; exact Hstruct. }
+  destruct (prectx_contr_empty_inv p (prectx_scale s Γ) Δ Hcontr)
+    as [Hscale ->].
+  assert (HΓ : Γ = prectx_empty).
+  { eapply prectx_scale_empty_inv; exact Hscale. }
+  subst Γ.
+  repeat split; try reflexivity.
+  rewrite Hcontr in Hstruct.
+  exact Hstruct.
+Qed.
+
 Lemma inversion_closed_TmApp p f t τ :
   has_type (p, prectx_empty) (TmApp f t) τ ->
   exists p' σ,
@@ -1731,15 +1766,12 @@ Proof.
   intros H.
   destruct (inversion_TmApp (p, prectx_empty) f t τ H)
     as [p' [Γ' [Δ' [σ' [Hcomp [Hf [Ht Hstruct]]]]]]].
-  assert (Hcontr : prectx_contr p' Γ' Δ' = prectx_empty).
-  { eapply ctx_struct_empty_inv; exact Hstruct. }
-  destruct (prectx_contr_empty_inv p' Γ' Δ' Hcontr) as [HΓ' HΔ'].
-  subst Γ' Δ'.
+  destruct (closed_contr_inv p' Γ' Δ' p Hstruct)
+    as [-> [-> Hstruct']].
   repeat eexists; repeat split.
   - exact Hf.
   - exact Ht.
-  - rewrite Hcontr in Hstruct.
-    exact Hstruct.
+  - exact Hstruct'.
 Qed.
 
 Lemma inversion_closed_TmPair p t1 t2 τ :
@@ -1755,16 +1787,13 @@ Proof.
   intros H.
   destruct (inversion_TmPair (p, prectx_empty) t1 t2 τ H)
     as [p' [Γ' [Δ' [τ1' [τ2' [Hτ [Hcomp [Ht1 [Ht2 Hstruct]]]]]]]]].
-  assert (Hcontr : prectx_contr p' Γ' Δ' = prectx_empty).
-  { eapply ctx_struct_empty_inv; exact Hstruct. }
-  destruct (prectx_contr_empty_inv p' Γ' Δ' Hcontr) as [HΓ' HΔ'].
-  subst Γ' Δ'.
+  destruct (closed_contr_inv p' Γ' Δ' p Hstruct)
+    as [-> [-> Hstruct']].
   repeat eexists; repeat split.
   - exact Hτ.
   - exact Ht1.
   - exact Ht2.
-  - rewrite Hcontr in Hstruct.
-    exact Hstruct.
+  - exact Hstruct'.
 Qed.
 
 Lemma inversion_closed_TmLetPair p tpair tbody τ :
@@ -1787,18 +1816,12 @@ Proof.
   intros H.
   destruct (inversion_TmLetPair (p, prectx_empty) tpair tbody τ H)
     as [p' [Γ' [Δ' [s' [τ1' [τ2' [Hcomp [Hpair [Hbody Hstruct]]]]]]]]].
-  assert (Hcontr : prectx_contr p' (prectx_scale s' Γ') Δ' = prectx_empty).
-  { eapply ctx_struct_empty_inv; exact Hstruct. }
-  destruct (prectx_contr_empty_inv p' (prectx_scale s' Γ') Δ' Hcontr)
-    as [Hscale HΔ'].
-  assert (HΓ' : Γ' = prectx_empty).
-  { eapply prectx_scale_empty_inv; exact Hscale. }
-  subst Γ' Δ'.
+  destruct (closed_scale_contr_inv p' s' Γ' Δ' p Hstruct)
+    as [-> [-> Hstruct']].
   repeat eexists; repeat split.
   - exact Hpair.
   - exact Hbody.
-  - rewrite Hcontr in Hstruct.
-    exact Hstruct.
+  - exact Hstruct'.
 Qed.
 
 Lemma inversion_closed_TmCase p t tl tr τ :
@@ -1821,19 +1844,13 @@ Proof.
   intros H.
   destruct (inversion_TmCase (p, prectx_empty) t tl tr τ H)
     as [p' [Γ' [Δ' [s' [τ1' [τ2' [Hcomp [Ht [Htl [Htr Hstruct]]]]]]]]]].
-  assert (Hcontr : prectx_contr p' (prectx_scale s' Γ') Δ' = prectx_empty).
-  { eapply ctx_struct_empty_inv; exact Hstruct. }
-  destruct (prectx_contr_empty_inv p' (prectx_scale s' Γ') Δ' Hcontr)
-    as [Hscale HΔ'].
-  assert (HΓ' : Γ' = prectx_empty).
-  { eapply prectx_scale_empty_inv; exact Hscale. }
-  subst Γ' Δ'.
+  destruct (closed_scale_contr_inv p' s' Γ' Δ' p Hstruct)
+    as [-> [-> Hstruct']].
   repeat eexists; repeat split.
   - exact Ht.
   - exact Htl.
   - exact Htr.
-  - rewrite Hcontr in Hstruct.
-    exact Hstruct.
+  - exact Hstruct'.
 Qed.
 
 Lemma inversion_closed_TmBang p t τ :
@@ -1848,18 +1865,12 @@ Proof.
   intros H.
   destruct (inversion_TmBang (p, prectx_empty) t τ H)
     as [p' [Γ' [Δ' [τ' [s' [Hτ [Hcomp [Ht Hstruct]]]]]]]].
-  assert (Hcontr : prectx_contr p' (prectx_scale s' Γ') Δ' = prectx_empty).
-  { eapply ctx_struct_empty_inv; exact Hstruct. }
-  destruct (prectx_contr_empty_inv p' (prectx_scale s' Γ') Δ' Hcontr)
-    as [Hscale HΔ'].
-  assert (HΓ' : Γ' = prectx_empty).
-  { eapply prectx_scale_empty_inv; exact Hscale. }
-  subst Γ' Δ'.
+  destruct (closed_scale_contr_inv p' s' Γ' Δ' p Hstruct)
+    as [-> [-> Hstruct']].
   repeat eexists; repeat split.
   - exact Hτ.
   - exact Ht.
-  - rewrite Hcontr in Hstruct.
-    exact Hstruct.
+  - exact Hstruct'.
 Qed.
 
 Lemma inversion_closed_TmLetBang p t tbody τ :
@@ -1881,18 +1892,37 @@ Proof.
   intros H.
   destruct (inversion_TmLetBang (p, prectx_empty) t tbody τ H)
     as [p' [Γ' [Δ' [τ1' [r' [s' [Hcomp [Ht [Hbody Hstruct]]]]]]]]].
-  assert (Hcontr : prectx_contr p' (prectx_scale s' Γ') Δ' = prectx_empty).
-  { eapply ctx_struct_empty_inv; exact Hstruct. }
-  destruct (prectx_contr_empty_inv p' (prectx_scale s' Γ') Δ' Hcontr)
-    as [Hscale HΔ'].
-  assert (HΓ' : Γ' = prectx_empty).
-  { eapply prectx_scale_empty_inv; exact Hscale. }
-  subst Γ' Δ'.
+  destruct (closed_scale_contr_inv p' s' Γ' Δ' p Hstruct)
+    as [-> [-> Hstruct']].
   repeat eexists; repeat split.
   - exact Ht.
   - exact Hbody.
-  - rewrite Hcontr in Hstruct.
-    exact Hstruct.
+  - exact Hstruct'.
+Qed.
+
+Lemma has_type_closed_pair p v1 v2 τ1 τ2 :
+  has_type (p, prectx_empty) v1 τ1 ->
+  has_type (p, prectx_empty) v2 τ2 ->
+  has_type (p, prectx_empty) (TmPair v1 v2) (TyPair p τ1 τ2).
+Proof.
+  intros Hv1 Hv2.
+  change prectx_empty with (prectx_contr p prectx_empty prectx_empty).
+  apply TPair.
+  - apply prectx_comp_refl.
+  - exact Hv1.
+  - exact Hv2.
+Qed.
+
+Lemma has_type_closed_bang p v s σ :
+  has_type (p, prectx_empty) v σ ->
+  has_type (p, prectx_empty) (TmBang v) (TyBang s σ).
+Proof.
+  intro Hv.
+  change prectx_empty with
+    (prectx_contr p (prectx_scale s prectx_empty) prectx_empty).
+  apply TBang.
+  - apply prectx_comp_refl.
+  - exact Hv.
 Qed.
 
 Lemma inversion_closed_abs_value p tbody σ τ :
@@ -1925,10 +1955,8 @@ Proof.
   intros H.
   destruct (inversion_TmPair (p, prectx_empty) v1 v2 (TyPair p τ1 τ2) H)
     as [p' [Γ' [Δ' [τ1' [τ2' [Hτ [Hcomp [Hv1 [Hv2 Hstruct]]]]]]]]].
-  assert (Hcontr : prectx_contr p' Γ' Δ' = prectx_empty).
-  { eapply ctx_struct_empty_inv; exact Hstruct. }
-  destruct (prectx_contr_empty_inv p' Γ' Δ' Hcontr) as [HΓ' HΔ'].
-  subst Γ' Δ'.
+  destruct (closed_contr_inv p' Γ' Δ' p Hstruct)
+    as [-> [-> _]].
   injection Hτ as [= <- <- <-].
   split; assumption.
 Qed.
@@ -1971,13 +1999,8 @@ Proof.
   intros H.
   destruct (inversion_TmBang (p, prectx_empty) v (TyBang r σ) H)
     as [p' [Γ' [Δ' [τ' [s' [Hτ [Hcomp [Hv Hstruct]]]]]]]].
-  assert (Hcontr : prectx_contr p' (prectx_scale s' Γ') Δ' = prectx_empty).
-  { eapply ctx_struct_empty_inv; exact Hstruct. }
-  destruct (prectx_contr_empty_inv p' (prectx_scale s' Γ') Δ' Hcontr)
-    as [Hscale HΔ'].
-  assert (HΓ' : Γ' = prectx_empty).
-  { eapply prectx_scale_empty_inv; exact Hscale. }
-  subst Γ' Δ'.
+  destruct (closed_scale_contr_inv p' s' Γ' Δ' p Hstruct)
+    as [-> [-> Hstruct']].
   injection Hτ as [= <- <-].
   eapply has_type_struct; eauto.
 Qed.
@@ -2986,15 +3009,7 @@ Proof.
 
     eapply has_type_struct.
     + exact Hstruct.
-    + change
-        (has_type
-          (p', prectx_contr p' prectx_empty prectx_empty)
-          (TmPair v1 v2)
-          (TyPair p' τ1 τ2)).
-      apply TPair.
-      * apply prectx_comp_refl.
-      * exact IH1.
-      * exact IH2.
+    + now apply has_type_closed_pair.
 
   (* EvLetPair *)
   - destruct
@@ -3088,17 +3103,7 @@ Proof.
 
     eapply has_type_struct.
     + exact Hstruct.
-    + change
-        (has_type
-          (p',
-            prectx_contr p'
-              (prectx_scale s prectx_empty)
-              prectx_empty)
-          (TmBang w)
-          (TyBang s σ)).
-      apply TBang.
-      * apply prectx_comp_refl.
-      * exact IH.
+    + now apply has_type_closed_bang.
 
   (* EvLetBang *)
   - destruct
