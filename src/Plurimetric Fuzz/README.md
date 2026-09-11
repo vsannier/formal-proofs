@@ -1,9 +1,12 @@
 # Plurimetric Fuzz
 
-The file `PlurimetricFuzz.v` contains a partial mechanisation
-of the metatheory of Plurimetric Fuzz, a type system we presented
+The file `PlurimetricFuzz.v` contains a mechanisation
+of the metatheory of the deterministic fragment of Plurimetric Fuzz,
+a type system we presented
 in a paper published at the FSCD 2024 conference;
 see <https://doi.org/10.4230/LIPIcs.FSCD.2024.12>.
+
+## Main results
 
 The main results proved in the file are
 the admissibility of the structural rules and
@@ -50,6 +53,28 @@ Theorem subject_reduction_closed (p : param) (t v : term) (τ : type) :
 
 The development also contains a full set of inversion lemmas (`inversion_*`)
 used in the proof of subject reduction.
+
+## Recursive types
+
+The syntax includes type variables and iso-recursive types, represented with
+de Bruijn indices and Autosubst:
+
+```coq
+Inductive type :=
+  | TyVar (α : var)
+  | ...
+  | TyRec (τ : {bind type}).
+```
+
+As in the paper, fold and unfold terms carry the complete recursive type as an
+annotation. Their typing rules substitute that type for the bound type variable:
+
+```coq
+| TFold pΓ t τ : has_type pΓ t (τ.[TyRec τ/]) ->
+    has_type pΓ (TmFold (TyRec τ) t) (TyRec τ)
+| TUnfold pΓ t τ : has_type pΓ t (TyRec τ) ->
+    has_type pΓ (TmUnfold (TyRec τ) t) (τ.[TyRec τ/])
+```
 
 ## A remark on the (!I) typing rule
 

@@ -1,5 +1,5 @@
 (*
-  Formalisation of the metatheory of Core Plurimetric Fuzz
+  Formalisation of the metatheory of Plurimetric Fuzz
   <https://doi.org/10.4230/LIPIcs.FSCD.2024.12>
   by Victor Sannier (2024–2026)
 *)
@@ -571,13 +571,37 @@ Inductive ty_base : Type :=
   | TyNat.
 
 Inductive type :=
+  | TyVar (α : var)
   | TyBase (τ : ty_base)
   | TyArrow (p : param) (σ τ : type)
   | TyPair (p : param) (τ1 τ2 : type)
   | TyPlus (τ1 τ2 : type)
-  | TyBang (s : sens) (τ : type).
+  | TyBang (s : sens) (τ : type)
+  | TyRec (τ : {bind type}).
+
+Instance Ids_type : Ids type. derive. Defined.
+Instance Rename_type : Rename type. derive. Defined.
+Instance Subst_type : Subst type. derive. Defined.
+
+Instance SubstLemmas_type : SubstLemmas type. derive. Qed.
 
 Definition TyBool := TyPlus (TyBase TyUnit) (TyBase TyUnit).
+
+(** The recursive list type [mu alpha. Unit + (τ * alpha)].  The element
+    type is lifted because [TyRec] binds the type variable at index zero. *)
+Definition TyListBody (p : param) (τ : type) : type :=
+  TyPlus (TyBase TyUnit) (TyPair p τ.[ren (+1%nat)] (TyVar 0%nat)).
+
+Definition TyList (p : param) (τ : type) : type := TyRec (TyListBody p τ).
+
+Lemma TyList_unfold (p : param) (τ : type) :
+  (TyListBody p τ).[TyList p τ/] =
+  TyPlus (TyBase TyUnit) (TyPair p τ (TyList p τ)).
+Proof.
+  unfold TyListBody.
+  asimpl.
+  reflexivity.
+Qed.
 
 Inductive term_base : Type :=
   | ValUnit : term_base
@@ -594,7 +618,9 @@ Inductive term :=
   | TmInjR (t : term)
   | TmCase (t : term) (tl tr : {bind term})
   | TmBang (t : term)
-  | TmLetBang (t : term) (tbody : {bind term}).
+  | TmLetBang (t : term) (tbody : {bind term})
+  | TmFold (τ : type) (t : term)
+  | TmUnfold (τ : type) (t : term).
 
 Instance Ids_term : Ids term. derive. Defined.
 Instance Rename_term : Rename term. derive. Defined.
@@ -609,6 +635,12 @@ Definition TmNat (n : nat) := TmBase (ValNat n).
 Definition TmTrue := TmInjL (TmBase ValUnit).
 
 Definition TmFalse := TmInjR (TmBase ValUnit).
+
+Definition TmNil (p : param) (τ : type) : term :=
+  TmFold (TyList p τ) (TmInjL TmUnit).
+
+Definition TmCons (p : param) (τ : type) (thead ttail : term) : term :=
+  TmFold (TyList p τ) (TmInjR (TmPair thead ttail)).
 
 Definition TmDiag := TmAbs (TmPair (TmVar 0%nat) (TmVar 0%nat)).
 
@@ -1083,6 +1115,10 @@ Inductive has_type : ctx -> term -> type -> Prop :=
       has_type (p, Γ) t1 (TyBang r τ1) ->
       has_type (p, Some (sens_mult r s, τ1) .: Δ) t2 τ ->
       has_type (p, prectx_contr p (prectx_scale s Γ) Δ) (TmLetBang t1 t2) τ
+  | TFold pΓ t τ : has_type pΓ t (τ.[TyRec τ/]) ->
+      has_type pΓ (TmFold (TyRec τ) t) (TyRec τ)
+  | TUnfold pΓ t τ : has_type pΓ t (TyRec τ) ->
+      has_type pΓ (TmUnfold (TyRec τ) t) (τ.[TyRec τ/])
   | TWeakGt p q Γ t τ : has_type (p, Γ) t τ -> param_lt q p ->
       has_type (q, Γ) t τ
   | TWeakLt p q Γ t τ : has_type (p, Γ) t τ -> param_lt p q ->
@@ -1094,6 +1130,48 @@ Proof.
   unfold TmTrue.
   apply TInjL.
   apply TUnit.
+Qed.
+
+Example has_type_nil (p : param) (Γ : prectx) (τ : type) :
+  has_type (p, Γ) (TmNil p τ) (TyList p τ).
+Proof.
+  unfold TmNil.
+  apply TFold.
+  pose proof (TyList_unfold p τ) as Hunfold.
+  unfold TyList in Hunfold.
+  rewrite Hunfold.
+  apply TInjL.
+  apply TUnit.
+Qed.
+
+Example has_type_closed_cons (p : param) (τ : type) (vhead vtail : term) :
+  has_type (p, prectx_empty) vhead τ ->
+  has_type (p, prectx_empty) vtail (TyList p τ) ->
+  has_type (p, prectx_empty) (TmCons p τ vhead vtail) (TyList p τ).
+Proof.
+  intros Hhead Htail.
+  unfold TmCons.
+  apply TFold.
+  pose proof (TyList_unfold p τ) as Hunfold.
+  unfold TyList in Hunfold.
+  rewrite Hunfold.
+  apply TInjR.
+  change prectx_empty with (prectx_contr p prectx_empty prectx_empty).
+  apply TPair.
+  - apply prectx_comp_refl.
+  - exact Hhead.
+  - exact Htail.
+Qed.
+
+Example has_type_unfold_nil (p : param) (Γ : prectx) (τ : type) :
+  has_type
+    (p, Γ)
+    (TmUnfold (TyList p τ) (TmNil p τ))
+    (TyPlus (TyBase TyUnit) (TyPair p τ (TyList p τ))).
+Proof.
+  rewrite <- TyList_unfold.
+  apply TUnfold.
+  apply has_type_nil.
 Qed.
 
 (** For all types $τ$, we can derive
@@ -1127,7 +1205,8 @@ Inductive is_value : term -> Prop :=
   | ValPair v1 v2 : is_value v1 -> is_value v2 -> is_value (TmPair v1 v2)
   | ValInjL v : is_value v -> is_value (TmInjL v)
   | ValInjR v : is_value v -> is_value (TmInjR v)
-  | ValBang v : is_value v -> is_value (TmBang v).
+  | ValBang v : is_value v -> is_value (TmBang v)
+  | ValFold τ v : is_value v -> is_value (TmFold τ v).
 
 Lemma is_value_true : is_value TmTrue.
 Proof.
@@ -1169,7 +1248,13 @@ Inductive evals_to : term -> term -> Prop :=
   | EvLetBang t tbody v_bang v :
       evals_to t (TmBang v_bang) ->
       evals_to (tbody.[v_bang/]) v ->
-      evals_to (TmLetBang t tbody) v.
+      evals_to (TmLetBang t tbody) v
+  | EvFold τ t v :
+      evals_to t v ->
+      evals_to (TmFold τ t) (TmFold τ v)
+  | EvUnfold τ t v :
+      evals_to t (TmFold τ v) ->
+      evals_to (TmUnfold τ t) v.
 
 Ltac step_eval := eauto || (asimpl; eauto) || econstructor.
 
@@ -1191,10 +1276,20 @@ Proof.
   repeat step_eval.
 Qed.
 
+Example eval_unfold_nil (p : param) (τ : type) :
+  evals_to
+    (TmUnfold (TyList p τ) (TmNil p τ))
+    (TmInjL TmUnit).
+Proof.
+  unfold TmNil.
+  repeat step_eval.
+Qed.
+
 Lemma evals_to_is_value t v : evals_to t v -> is_value v.
 Proof.
   intros H; induction H.
   all: eauto using is_value.
+  inversion IHevals_to; assumption.
 Qed.
 
 (** ** Metatheory *)
@@ -1441,6 +1536,8 @@ Proof.
     * apply IHhas_type2.
       repeat apply prectx_le_cons.
       now apply prectx_pad_le.
+  - now apply IHhas_type.
+  - now apply IHhas_type.
   - apply TWeakGt with p.
     + now apply IHhas_type.
     + exact H0.
@@ -1717,6 +1814,46 @@ Proof.
     apply StructRefl.
   - solve_inv_struct IHhas_type Heqt_letbang StructGt.
   - solve_inv_struct IHhas_type Heqt_letbang StructLt.
+Qed.
+
+Lemma inversion_TmFold pΓ rec_ty t τ :
+  has_type pΓ (TmFold rec_ty t) τ ->
+  exists body,
+    rec_ty = TyRec body /\
+    τ = TyRec body /\
+    has_type pΓ t (body.[TyRec body/]).
+Proof.
+  intros H; remember (TmFold rec_ty t) as t_fold.
+  induction H; try discriminate Heqt_fold.
+  - injection Heqt_fold as [= Hrec Hterm].
+    subst.
+    repeat eexists; eauto.
+  - destruct (IHhas_type Heqt_fold)
+      as [body [Hrec [Hτ Htype]]].
+    exists body; repeat split; eauto using TWeakGt.
+  - destruct (IHhas_type Heqt_fold)
+      as [body [Hrec [Hτ Htype]]].
+    exists body; repeat split; eauto using TWeakLt.
+Qed.
+
+Lemma inversion_TmUnfold pΓ rec_ty t τ :
+  has_type pΓ (TmUnfold rec_ty t) τ ->
+  exists body,
+    rec_ty = TyRec body /\
+    τ = body.[TyRec body/] /\
+    has_type pΓ t (TyRec body).
+Proof.
+  intros H; remember (TmUnfold rec_ty t) as t_unfold.
+  induction H; try discriminate Heqt_unfold.
+  - injection Heqt_unfold as [= Hrec Hterm].
+    subst.
+    repeat eexists; eauto.
+  - destruct (IHhas_type Heqt_unfold)
+      as [body [Hrec [Hτ Htype]]].
+    exists body; repeat split; eauto using TWeakGt.
+  - destruct (IHhas_type Heqt_unfold)
+      as [body [Hrec [Hτ Htype]]].
+    exists body; repeat split; eauto using TWeakLt.
 Qed.
 
 Lemma closed_contr_inv p Γ Δ q :
@@ -2277,6 +2414,8 @@ Proof.
     | p Γ Δ t τ s Hcomp Ht IHt
     | p Γ Δ t1 t2 τ1 τ r s
         Hcomp Ht1 IHt1 Ht2 IHt2
+    | pΓ t τ Ht IHt
+    | pΓ t τ Ht IHt
     | p q Γ t τ Ht IHt Hpq
     | p q Γ t τ Ht IHt Hpq
   ].
@@ -2359,6 +2498,12 @@ Proof.
         exact Hinj.
       * apply is_pushforward_up.
         exact HΔ'.
+
+  - apply TFold.
+    eapply IHt; eauto.
+
+  - apply TUnfold.
+    eapply IHt; eauto.
 
   - eapply TWeakGt with (p := p).
     + eapply IHt; eauto.
@@ -2657,6 +2802,8 @@ Proof.
     | p Γ Δ t τ s Hcomp Ht IHt
     | p Γ Δ t1 t2 τ1 τ r s
         Hcomp Ht1 IHt1 Ht2 IHt2
+    | pΘ t τ Ht IHt
+    | pΘ t τ Ht IHt
     | p q Γ t τ Ht IHt Hpq
     | p q Γ t τ Ht IHt Hpq
     ].
@@ -2821,6 +2968,18 @@ Proof.
       exact (Hv u' ρ Hlookup').
 
   - change
+      (has_type (p, prectx_delete k Γ)
+        (TmFold (TyRec τ) (t.[subst_at k v])) (TyRec τ)).
+    apply TFold.
+    now apply IHt.
+
+  - change
+      (has_type (p, prectx_delete k Γ)
+        (TmUnfold (TyRec τ) (t.[subst_at k v])) (τ.[TyRec τ/])).
+    apply TUnfold.
+    now apply IHt.
+
+  - change
       (has_type (q, prectx_delete k Γ) (t.[subst_at k v]) τ).
     eapply TWeakGt with (p := p).
     + apply IHt.
@@ -2947,6 +3106,8 @@ Proof.
     | t w H_eval IH
     | t tbody vbang w
         Hbang_eval IHbang Hbody_eval IHbody
+    | rec_ty t w H_eval IH
+    | rec_ty t w H_eval IH
     ];
     intros p τ Hty.
 
@@ -3100,4 +3261,25 @@ Proof.
       eapply substitution_closed.
       * exact Htbody_ty.
       * exact IHbang.
+
+  (* EvFold *)
+  - destruct
+      (inversion_TmFold (p, prectx_empty) rec_ty t τ Hty)
+      as (body & Hrec & Hτ & Ht_ty).
+    subst rec_ty; subst τ.
+    apply TFold.
+    exact (IH p (body.[TyRec body/]) Ht_ty).
+
+  (* EvUnfold *)
+  - destruct
+      (inversion_TmUnfold (p, prectx_empty) rec_ty t τ Hty)
+      as (body & Hrec & Hτ & Ht_ty).
+    subst rec_ty; subst τ.
+    specialize (IH p (TyRec body) Ht_ty).
+    destruct
+      (inversion_TmFold
+        (p, prectx_empty) (TyRec body) w (TyRec body) IH)
+      as (body' & Hrec & Hτ & Hw_ty).
+    inversion Hrec; subst.
+    exact Hw_ty.
 Qed.
