@@ -2204,6 +2204,54 @@ Proof.
     exact (proj2 (HΔ y) Hy).
 Qed.
 
+Ltac pushforward_contr_context :=
+  match goal with
+  | Hinj : is_injective ?ξ,
+    Hpf : is_pushforward ?ξ (prectx_contr ?p ?Γ ?Δ) ?Θ |- _ =>
+      let Γ' := fresh "Γ'" in
+      let HΓ' := fresh "HΓ'" in
+      let Δ' := fresh "Δ'" in
+      let HΔ' := fresh "HΔ'" in
+      destruct (pushforward_exists ξ Γ Hinj) as [Γ' HΓ'];
+      destruct (pushforward_exists ξ Δ Hinj) as [Δ' HΔ'];
+      assert (Θ = prectx_contr p Γ' Δ') by
+        (eapply pushforward_unique;
+         [ exact Hpf | apply pushforward_contr; assumption ]);
+      subst Θ
+  end.
+
+Ltac pushforward_scale_contr_context :=
+  match goal with
+  | Hinj : is_injective ?ξ,
+    Hpf : is_pushforward ?ξ
+      (prectx_contr ?p (prectx_scale ?s ?Γ) ?Δ) ?Θ |- _ =>
+      let Γ' := fresh "Γ'" in
+      let HΓ' := fresh "HΓ'" in
+      let Δ' := fresh "Δ'" in
+      let HΔ' := fresh "HΔ'" in
+      destruct (pushforward_exists ξ Γ Hinj) as [Γ' HΓ'];
+      destruct (pushforward_exists ξ Δ Hinj) as [Δ' HΔ'];
+      assert (Θ = prectx_contr p (prectx_scale s Γ') Δ') by
+        (eapply pushforward_unique;
+         [ exact Hpf
+         | apply pushforward_contr;
+           [ apply pushforward_scale; exact HΓ' | exact HΔ' ] ]);
+      subst Θ
+  end.
+
+Ltac pushforward_scale_context :=
+  match goal with
+  | Hinj : is_injective ?ξ,
+    Hpf : is_pushforward ?ξ (prectx_scale ?s ?Γ) ?Θ |- _ =>
+      let Γ' := fresh "Γ'" in
+      let HΓ' := fresh "HΓ'" in
+      destruct (pushforward_exists ξ Γ Hinj) as [Γ' HΓ'];
+      assert (Θ = prectx_scale s Γ') by
+        (eapply pushforward_unique;
+         [ exact Hpf | apply pushforward_scale; exact HΓ' ]);
+      subst Θ
+  end.
+
 Lemma renaming_aux pΓ t τ (Hty : has_type pΓ t τ) :
   match pΓ with
   | (p, Γ) =>
@@ -2251,48 +2299,19 @@ Proof.
     + apply is_pushforward_up.
       exact Hpf.
 
-  - destruct (pushforward_exists ξ Γ Hinj) as [Γ' HΓ'].
-    destruct (pushforward_exists ξ Δ Hinj) as [Δ' HΔ'].
-    assert (HΘ : Θ = prectx_contr p Γ' Δ').
-    {
-      eapply pushforward_unique.
-      + exact Hpf.
-      + apply pushforward_contr; assumption.
-    }
-    subst Θ.
+  - pushforward_contr_context.
     eapply TApp with (σ := σ).
     + eapply pushforward_comp; eauto.
     + eapply IHf; eauto.
     + eapply IHt; eauto.
 
-  - destruct (pushforward_exists ξ Γ Hinj) as [Γ' HΓ'].
-    destruct (pushforward_exists ξ Δ Hinj) as [Δ' HΔ'].
-    assert (HΘ : Θ = prectx_contr p Γ' Δ').
-    {
-      eapply pushforward_unique.
-      + exact Hpf.
-      + apply pushforward_contr; assumption.
-    }
-    subst Θ.
+  - pushforward_contr_context.
     apply TPair.
     + eapply pushforward_comp; eauto.
     + eapply IHt1; eauto.
     + eapply IHt2; eauto.
 
-  - destruct (pushforward_exists ξ Γ Hinj) as [Γ' HΓ'].
-    destruct (pushforward_exists ξ Δ Hinj) as [Δ' HΔ'].
-    assert
-      (HΘ :
-        Θ = prectx_contr p (prectx_scale s Γ') Δ').
-    {
-      eapply pushforward_unique.
-      + exact Hpf.
-      + apply pushforward_contr.
-        * apply pushforward_scale.
-          exact HΓ'.
-        * exact HΔ'.
-    }
-    subst Θ.
+  - pushforward_scale_contr_context.
     eapply TLetPair with
       (s := s) (τ1 := τ1) (τ2 := τ2).
     + eapply pushforward_comp; eauto.
@@ -2309,20 +2328,7 @@ Proof.
   - apply TInjR.
     eapply IHt; eauto.
 
-  - destruct (pushforward_exists ξ Γ Hinj) as [Γ' HΓ'].
-    destruct (pushforward_exists ξ Δ Hinj) as [Δ' HΔ'].
-    assert
-      (HΘ :
-        Θ = prectx_contr p (prectx_scale s Γ') Δ').
-    {
-      eapply pushforward_unique.
-      + exact Hpf.
-      + apply pushforward_contr.
-        * apply pushforward_scale.
-          exact HΓ'.
-        * exact HΔ'.
-    }
-    subst Θ.
+  - pushforward_scale_contr_context.
     eapply TCase with
       (s := s) (τ1 := τ1) (τ2 := τ2).
     + eapply pushforward_comp; eauto.
@@ -2338,38 +2344,12 @@ Proof.
       * apply is_pushforward_up.
         exact HΔ'.
 
-  - destruct (pushforward_exists ξ Γ Hinj) as [Γ' HΓ'].
-    destruct (pushforward_exists ξ Δ Hinj) as [Δ' HΔ'].
-    assert
-      (HΘ :
-        Θ = prectx_contr p (prectx_scale s Γ') Δ').
-    {
-      eapply pushforward_unique.
-      + exact Hpf.
-      + apply pushforward_contr.
-        * apply pushforward_scale.
-          exact HΓ'.
-        * exact HΔ'.
-    }
-    subst Θ.
+  - pushforward_scale_contr_context.
     eapply TBang with (Γ := Γ') (Δ := Δ').
     + eapply pushforward_comp; eauto.
     + eapply IHt; eauto.
 
-  - destruct (pushforward_exists ξ Γ Hinj) as [Γ' HΓ'].
-    destruct (pushforward_exists ξ Δ Hinj) as [Δ' HΔ'].
-    assert
-      (HΘ :
-        Θ = prectx_contr p (prectx_scale s Γ') Δ').
-    {
-      eapply pushforward_unique.
-      + exact Hpf.
-      + apply pushforward_contr.
-        * apply pushforward_scale.
-          exact HΓ'.
-        * exact HΔ'.
-    }
-    subst Θ.
+  - pushforward_scale_contr_context.
     eapply TLetBang with
       (τ1 := τ1) (r := r) (s := s).
     + eapply pushforward_comp; eauto.
@@ -2384,18 +2364,7 @@ Proof.
     + eapply IHt; eauto.
     + exact Hpq.
 
-  - destruct (pushforward_exists ξ Γ Hinj) as [Γ' HΓ'].
-    assert
-      (HΘ :
-        Θ =
-        prectx_scale (sens_pnorm_c p q) Γ').
-    {
-      eapply pushforward_unique.
-      + exact Hpf.
-      + apply pushforward_scale.
-        exact HΓ'.
-    }
-    subst Θ.
+  - pushforward_scale_context.
     eapply TWeakLt with (p := p).
     + eapply IHt; eauto.
     + exact Hpq.
@@ -2511,6 +2480,33 @@ Proof.
   rewrite (prectx_contr_comm p Γ Δ Hcomp).
   eapply prectx_contr_lookup.
   - now apply prectx_comp_sym.
+  - exact HΔ.
+Qed.
+
+Lemma prectx_contr_scale_lookup_l (p : param) (s : sens) (Γ Δ : prectx)
+  (x : var) (r : sens) (τ : type) :
+  prectx_comp Γ Δ ->
+  Γ x = Some (r, τ) ->
+  exists r',
+    prectx_contr p (prectx_scale s Γ) Δ x = Some (r', τ).
+Proof.
+  intros Hcomp HΓ.
+  eapply prectx_contr_lookup.
+  - now apply prectx_comp_scale_l.
+  - unfold prectx_scale.
+    now rewrite HΓ.
+Qed.
+
+Lemma prectx_contr_scale_lookup_r (p : param) (s : sens) (Γ Δ : prectx)
+  (x : var) (r : sens) (τ : type) :
+  prectx_comp Γ Δ ->
+  Δ x = Some (r, τ) ->
+  exists r',
+    prectx_contr p (prectx_scale s Γ) Δ x = Some (r', τ).
+Proof.
+  intros Hcomp HΔ.
+  eapply prectx_contr_lookup_r.
+  - now apply prectx_comp_scale_l.
   - exact HΔ.
 Qed.
 
@@ -2729,14 +2725,9 @@ Proof.
     + now apply prectx_comp_delete.
     + apply IHpair.
       intros r ρ Hlookup.
-      assert
-        (Hlookup_scale :
-          prectx_scale s Γ k = Some (sens_mult s r, ρ)).
-      { unfold prectx_scale; now rewrite Hlookup. }
       destruct
-        (prectx_contr_lookup p (prectx_scale s Γ) Δ
-          k (sens_mult s r) ρ
-          (prectx_comp_scale_l Γ Δ s Hcomp) Hlookup_scale)
+        (prectx_contr_scale_lookup_l p s Γ Δ
+          k r ρ Hcomp Hlookup)
         as [r' Hlookup'].
       exact (Hv r' ρ Hlookup').
     + pose proof (IHbody (S (S k)) v) as Hb.
@@ -2744,8 +2735,8 @@ Proof.
       apply Hb.
       intros r ρ Hlookup.
       destruct
-        (prectx_contr_lookup_r p (prectx_scale s Γ) Δ
-          k r ρ (prectx_comp_scale_l Γ Δ s Hcomp) Hlookup)
+        (prectx_contr_scale_lookup_r p s Γ Δ
+          k r ρ Hcomp Hlookup)
         as [r' Hlookup'].
       exact (Hv r' ρ Hlookup').
 
@@ -2767,14 +2758,9 @@ Proof.
     + now apply prectx_comp_delete.
     + apply IHt.
       intros r ρ Hlookup.
-      assert
-        (Hlookup_scale :
-          prectx_scale s Γ k = Some (sens_mult s r, ρ)).
-      { unfold prectx_scale; now rewrite Hlookup. }
       destruct
-        (prectx_contr_lookup p (prectx_scale s Γ) Δ
-          k (sens_mult s r) ρ
-          (prectx_comp_scale_l Γ Δ s Hcomp) Hlookup_scale)
+        (prectx_contr_scale_lookup_l p s Γ Δ
+          k r ρ Hcomp Hlookup)
         as [r' Hlookup'].
       exact (Hv r' ρ Hlookup').
     + pose proof (IHtl (S k) v) as Hl.
@@ -2782,8 +2768,8 @@ Proof.
       apply Hl.
       intros r ρ Hlookup.
       destruct
-        (prectx_contr_lookup_r p (prectx_scale s Γ) Δ
-          k r ρ (prectx_comp_scale_l Γ Δ s Hcomp) Hlookup)
+        (prectx_contr_scale_lookup_r p s Γ Δ
+          k r ρ Hcomp Hlookup)
         as [r' Hlookup'].
       exact (Hv r' ρ Hlookup').
     + pose proof (IHtr (S k) v) as Hr.
@@ -2791,8 +2777,8 @@ Proof.
       apply Hr.
       intros r ρ Hlookup.
       destruct
-        (prectx_contr_lookup_r p (prectx_scale s Γ) Δ
-          k r ρ (prectx_comp_scale_l Γ Δ s Hcomp) Hlookup)
+        (prectx_contr_scale_lookup_r p s Γ Δ
+          k r ρ Hcomp Hlookup)
         as [r' Hlookup'].
       exact (Hv r' ρ Hlookup').
 
@@ -2807,14 +2793,9 @@ Proof.
     + now apply prectx_comp_delete.
     + apply IHt.
       intros r ρ Hlookup.
-      assert
-        (Hlookup_scale :
-          prectx_scale s Γ k = Some (sens_mult s r, ρ)).
-      { unfold prectx_scale; now rewrite Hlookup. }
       destruct
-        (prectx_contr_lookup p (prectx_scale s Γ) Δ
-          k (sens_mult s r) ρ
-          (prectx_comp_scale_l Γ Δ s Hcomp) Hlookup_scale)
+        (prectx_contr_scale_lookup_l p s Γ Δ
+          k r ρ Hcomp Hlookup)
         as [r' Hlookup'].
       exact (Hv r' ρ Hlookup').
 
@@ -2824,14 +2805,9 @@ Proof.
     + now apply prectx_comp_delete.
     + apply IHt1.
       intros u ρ Hlookup.
-      assert
-        (Hlookup_scale :
-          prectx_scale s Γ k = Some (sens_mult s u, ρ)).
-      { unfold prectx_scale; now rewrite Hlookup. }
       destruct
-        (prectx_contr_lookup p (prectx_scale s Γ) Δ
-          k (sens_mult s u) ρ
-          (prectx_comp_scale_l Γ Δ s Hcomp) Hlookup_scale)
+        (prectx_contr_scale_lookup_l p s Γ Δ
+          k u ρ Hcomp Hlookup)
         as [u' Hlookup'].
       exact (Hv u' ρ Hlookup').
     + pose proof (IHt2 (S k) v) as Hb.
@@ -2839,8 +2815,8 @@ Proof.
       apply Hb.
       intros u ρ Hlookup.
       destruct
-        (prectx_contr_lookup_r p (prectx_scale s Γ) Δ
-          k u ρ (prectx_comp_scale_l Γ Δ s Hcomp) Hlookup)
+        (prectx_contr_scale_lookup_r p s Γ Δ
+          k u ρ Hcomp Hlookup)
         as [u' Hlookup'].
       exact (Hv u' ρ Hlookup').
 
