@@ -21,7 +21,7 @@ Theorem weakening_ctx p Γ t τ : has_type (p, Γ) t τ ->
   has_type (q, Δ) t τ.
 ```
 
-Renaming along injective, order-preserving maps is admissible:
+Renaming along injective maps is admissible:
 
 ```coq
 Lemma renaming (p : param) (Γ Δ : prectx) (t : term) (τ : type)
@@ -37,7 +37,7 @@ Substitution of a closed value for the topmost variable is admissible:
 ```coq
 Theorem substitution_closed (p : param) (Γ : prectx)
   (t v : term) (s : sens) (σ τ : type) :
-  has_type (p, Some (s, σ) .: Γ) t τ ->
+  has_type (p, prectx_cons (Some (s, σ)) Γ) t τ ->
   has_type (p, prectx_empty) v σ ->
   has_type (p, Γ) (t.[v/]) τ.
 ```
