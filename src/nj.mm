@@ -370,6 +370,11 @@ inotnot $p |- Ga => ( ph -> ~ ~ ph ) $=
   ( wn cf cc ax-idc idr ax-enot ax-inot ax-iim ) AACZCBKBADZEZABLKDZEEABNFKMGHI
   J $.
 
+$( Double negation is monotonic with respect to implication. $)
+notnotim $p |- Ga => ( ( ph -> ps ) -> ( ~ ~ ph -> ~ ~ ps ) ) $=
+  ( wi wn cf cc con idr ax-eim ax-iim ) ABDZAEZEBEZEDZCNMDZOCLFGZNMQHLPQABQHLCI
+  JJK $.
+
 $( A weak version of the law of excluded middle. $)
 exmidw $p |- Ga => ~ ~ ( ph \/ ~ ph ) $=
   ( wn wo cf cc idr ax-iorl ax-idc ax-enot ax-inot ax-iorr ) AACZDZCZBNBOEZFZAM
@@ -415,6 +420,11 @@ $( Conjunction is monotonic with respect to implication. $)
 anmonl $p |- Ga => ( ( ph -> ps ) -> ( ( ph /\ ch ) -> ( ps /\ ch ) ) ) $=
   ( wi wa cf cc ax-idc idr ax-eanl ax-eim ax-eanr jca iim2 ) ABEZACFZBCFDCBDPGZ
   QGZHHZABTPDSIACTQDRHJZKLACTUAMNO $.
+
+$( Conjunction is monotonic in its right argument. $)
+anmonr $p |- Ga => ( ( ph -> ps ) -> ( ( ch /\ ph ) -> ( ch /\ ps ) ) ) $=
+  ( wi wa cf cc idr ax-eanl ax-idc ax-eanr ax-eim jca iim2 ) ABEZCAFZCBFDBCDPGH
+  ZQGZHZCATQRIZJABTPDSKCATUALMNO $.
 
 curry $p |- Ga => ( ( ( ph /\ ps ) -> ch ) -> ( ph -> ( ps -> ch ) ) ) $=
   ( wa wi cf cc ax-idc idr id ax-ian ax-eim ax-iim iim2 ) ABEZCFZABCFDBCDQGZAGZ
@@ -466,6 +476,11 @@ $( Disjunction is monotonic with respect to implication. $)
 ormonl $p |- Ga => ( ( ph -> ps ) -> ( ( ph \/ ch ) -> ( ps \/ ch ) ) ) $=
   ( wi wo cf cc idr ax-idc ax-eim ax-iorl ax-iorr ax-eor iim2 ) ABEZACFZBCFZDAC
   RDPGZQGZHHZQDSHIBCDSTAGHZHHZABUCPDUBJAUAIKLBCDSTCGHHHCUAIMNO $.
+
+$( Disjunction is monotonic in its right argument. $)
+ormonr $p |- Ga => ( ( ph -> ps ) -> ( ( ch \/ ph ) -> ( ch \/ ps ) ) ) $=
+  ( wi wo cf cc idr ax-iorl ax-idc ax-eim ax-iorr ax-eor iim2 ) ABEZCAFZCBFZDCA
+  RDPGHZQGZHZQSICBUACGHCUAIJCBUAAGZHZABUCPDTUBHKAUAILMNO $.
 
 $( Reasoning by cases $)
 cases $p |- Ga => ( ( ( ph -> ch ) /\ ( ps -> ch ) )
