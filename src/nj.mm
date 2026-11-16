@@ -375,6 +375,11 @@ notnotim $p |- Ga => ( ( ph -> ps ) -> ( ~ ~ ph -> ~ ~ ps ) ) $=
   ( wi wn cf cc con idr ax-eim ax-iim ) ABDZAEZEBEZEDZCNMDZOCLFGZNMQHLPQABQHLCI
   JJK $.
 
+$( Triple negation is equivalent to single negation. $)
+notnotnot $p |- Ga => ( ~ ~ ~ ph <-> ~ ph ) $=
+  ( wn wi wa con inotnot ax-eim ax-ian dup ax-ibi ) ACZCZCZLBNLDZLNDZEBOPBBAMDO
+  BAMBFABGHLBGIJK $.
+
 $( A weak version of the law of excluded middle. $)
 exmidw $p |- Ga => ~ ~ ( ph \/ ~ ph ) $=
   ( wn wo cf cc idr ax-iorl ax-idc ax-enot ax-inot ax-iorr ) AACZDZCZBNBOEZFZAM
@@ -510,6 +515,18 @@ notbi $p |- Ga => ( ( ph <-> ps ) -> ( ~ ph <-> ~ ps ) ) $=
   wi impbi ) ABDZAEZBEZDCUATCSFZGZUATUCACUBUAFZGGZBCUBUDAFZGZGGZABUHABQZBAQZUHA
   BUHSCUGHIJAUEKLUAUCUFHMNOTUAUCBCUBTFZGGZACUBUKBFZGZGGZBAUOUIUJUOABUOSCUNHIPBU
   LKLTUCUMHMNORO $.
+
+$( Congruence of biconditional with implication (left) $)
+imbil $p |- Ga => ( ( ph <-> ps ) -> ( ( ch -> ph ) <-> ( ch -> ps ) ) ) $=
+  ( wb wi cf cc ax-idc ax-ebi ax-eanr idr ax-eim ax-iim ax-eanl impbi ) ABEZCAF
+  ZCBFZEDSRDQGHZSRTCATSGZHZBAUBCGZHZABFZBAFZUDABUDQDUAUCHIJKCBUDSTUCICUBLMMNNRS
+  TCBTRGZHZABUHUCHZUEUFUIABUIQDUGUCHIJOCAUIRTUCICUHLMMNNPN $.
+
+$( Congruence of biconditional with implication (right) $)
+imbir $p |- Ga => ( ( ph <-> ps ) -> ( ( ph -> ch ) <-> ( ps -> ch ) ) ) $=
+  ( wb wi cf cc ax-idc ax-ebi ax-eanl idr ax-eim ax-iim ax-eanr impbi ) ABEZACF
+  ZBCFZEDSRDQGHZSRTACTSGZHZBCUBAGZHZSTUCIABUDABFZBAFZUDABUDQDUAUCHIJKAUBLMMNNRS
+  TBCTRGZHZACUHBGZHZRTUIIBAUJUEUFUJABUJQDUGUIHIJOBUHLMMNNPN $.
 
 $( Congruence of biconditional with conjunction (left) $)
 anbil $p |- Ga => ( ( ph <-> ps ) -> ( ( ch /\ ph ) <-> ( ch /\ ps ) ) ) $=
