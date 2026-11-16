@@ -80,13 +80,14 @@ ${
 $}
 
 ${
-  ax-ejnl.1 $e |- x =><= y $.
-  ax-ejnl $a |- x => y $.
+  ax-jnsym.1 $e |- x =><= y $.
+  ax-jnsym $a |- y =><= x $.
 $}
 
 ${
-  ax-ejnr.1 $e |- x =><= y $.
-  ax-ejnr $a |- y => x $.
+  ax-jntr.1 $e |- x =><= y $.
+  ax-jntr.2 $e |- y =><= z $.
+  ax-jntr $a |- x =><= z $.
 $}
 
 $(
@@ -179,19 +180,6 @@ ${
   jneq.1 $e |- x := y $.
   jneq $p |- x =><= y $=
     ( ax-bseq bsid ax-ijn ) ABBABCDBEF $.
-$}
-
-${
-  jntr.1 $e |- x =><= y $.
-  jntr.2 $e |- y =><= z $.
-  jntr $p |- x =><= z $=
-    ( ax-ejnl ax-ejnr ax-ijn ) ACBABDFBCEGH $.
-$}
-
-${
-  jnsym.1 $e |- x =><= y $.
-  jnsym $p |- y =><= x $=
-    ( bsid ax-ejnl ax-ijn ) BABBDABCEF $.
 $}
 
 ${
@@ -516,7 +504,6 @@ zhead $p |- ( ZEROS FST ) => 0 $=
   ZBCZFUMUOBUDIUGQMUPBFCUHCZFBFUHRUQSFCUHCFBSFUHUAUBFUHUCTTTTTTT $.
 
 ztail $p |- ( ZEROS SND ) =><= ZEROS $=
-  ( tZEROS tSND tap tCONS t0 tY df-ZEROS apeql fix ax-ejnl ax-bstr ax-bseq aplr
-  ax-ijn CONSval tFAL df-SND apeqll FALval jnbs jntr ) ABCZDECZACBCZAUBUDUCFUCC
-  ZCBCZUBUEBCZUFAUEBGHUGUFUCBIJKUCABUEAUEGLMNUDAUDBECACZABEAOUHPECACABPEAQREASK
-  KTUA $.
+  ( tZEROS tSND tap tCONS t0 df-ZEROS apeql jnbs fix ax-jntr CONSval df-SND apeqll
+  tY tFAL FALval ax-bstr ax-bseq ax-ijn ) ABCZDECZNUACZCBCZATUBBCZUCTUDAUBBFGHU
+  ABIJUCAUBUCBECUBCZUBBEUBKUEOECUBCUBBOEUBLMEUBPQQAUBFRSJ $.
