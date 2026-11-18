@@ -467,8 +467,18 @@ CONSval $p |- ( ( ( CONS x ) y ) f ) => ( ( f x ) y ) $=
 tFST $a term FST $.
 df-FST $a |- FST := TRUE $.
 
+$( The first projection of a pair is its first component. $)
+consfst $p |- ( ( ( CONS x ) y ) FST ) => x $=
+  ( tCONS tap tFST CONSval tTRU df-FST apeqll TRUval ax-bstr ) CADBDEDEADBDZAEA
+  BFLGADBDAEGABHIABJKK $.
+
 tSND $a term SND $.
 df-SND $a |- SND := FALSE $.
+
+$( The second projection of a pair is its second component. $)
+conssnd $p |- ( ( ( CONS x ) y ) SND ) => y $=
+  ( tCONS tap tSND CONSval tFAL df-SND apeqll FALval ax-bstr ) CADBDEDEADBDZBEA
+  BFLGADBDBEGABHIABJKK $.
 
 tISMT $a term ISEMPTY $.
 df-ISMT $a |- ISEMPTY := ( ( B ( T TRUE ) ) ( T ( K ( K ( K FALSE ) ) ) ) ) $.
