@@ -9,7 +9,6 @@ $(
 $)
 
 $c ( ) term wff |- $.
-$( $j syntax '|-' as 'wff'; $)
 $v f g h x y z $.
 
 tf $f term f $.
@@ -507,3 +506,8 @@ ztail $p |- ( ZEROS SND ) =><= ZEROS $=
   ( tZEROS tSND tap tCONS t0 df-ZEROS apeql jnbs fix ax-jntr CONSval df-SND apeqll
   tY tFAL FALval ax-bstr ax-bseq ax-ijn ) ABCZDECZNUACZCBCZATUBBCZUCTUDAUBBFGHU
   ABIJUCAUBUCBECUBCZUBBEUBKUEOECUBCUBBOEUBLMEUBPQQAUBFRSJ $.
+
+$( $j
+  syntax 'term' 'wff';
+  syntax '|-' as 'wff';
+$)

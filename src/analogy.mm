@@ -2,7 +2,6 @@ $( FOUR-TERMS ANALOGIES AND DISANALOGIES $)
 $( This work by Victor SANNIER is released under the MIT License. $)
 
 $c wff |- : $.
-$( $j syntax '|-' as 'wff'; $)
 
 $(
 ###############################################################################
@@ -222,3 +221,8 @@ ${
   $( Transport a disanalogy across two analogies. $)
   dtr $p |- a' : b' >< c' : d' $= ( dtrr ax-dtrl ) ABGHEFABCDGHIKLJM $.
 $}
+
+$( $j
+  syntax 'term' 'wff';
+  syntax '|-' as 'wff';
+$)

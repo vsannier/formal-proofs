@@ -50,7 +50,9 @@ $( The concatenation of two contexts is a context. $)
 cc $a ctx Ga , De $.
 
 $c |- => $.
-$( $j syntax '|-' as 'wff'; $)
+
+$( A sequent is a well-formed formula. $)
+wseq $a wff Ga => ph $.
 
 $(
 ###############################################################################
@@ -357,7 +359,7 @@ lnc $p |- Ga => ~ ( ph /\ ~ ph ) $=
   IJK $.
 
 $( Law of contraposition $)
-con $p |- Ga => ( ( ph -> ps ) -> ( ~ ps -> ~ ph ) ) $=
+ctp $p |- Ga => ( ( ph -> ps ) -> ( ~ ps -> ~ ph ) ) $=
   ( wi wn cf cc ax-idc idr ax-eim ax-enot ax-inot iim2 ) ABDZBEZAECACNFZOFZGGZB
   CPQAFZGZGGZABUANCTHARIJOCPGSHKLM $.
 
@@ -372,12 +374,12 @@ inotnot $p |- Ga => ( ph -> ~ ~ ph ) $=
 
 $( Double negation is monotonic with respect to implication. $)
 notnotim $p |- Ga => ( ( ph -> ps ) -> ( ~ ~ ph -> ~ ~ ps ) ) $=
-  ( wi wn cf cc con idr ax-eim ax-iim ) ABDZAEZEBEZEDZCNMDZOCLFGZNMQHLPQABQHLCI
+  ( wi wn cf cc ctp idr ax-eim ax-iim ) ABDZAEZEBEZEDZCNMDZOCLFGZNMQHLPQABQHLCI
   JJK $.
 
 $( Triple negation is equivalent to single negation. $)
 notnotnot $p |- Ga => ( ~ ~ ~ ph <-> ~ ph ) $=
-  ( wn wi wa con inotnot ax-eim ax-ian dup ax-ibi ) ACZCZCZLBNLDZLNDZEBOPBBAMDO
+  ( wn wi wa ctp inotnot ax-eim ax-ian dup ax-ibi ) ACZCZCZLBNLDZLNDZEBOPBBAMDO
   BAMBFABGHLBGIJK $.
 
 $( A weak version of the law of excluded middle. $)
@@ -680,3 +682,5 @@ $( $t
   htmldef "=>" as " &rArr; ";
   htmldef "|-" as " &vdash; ";
 $)
+
+$( $j syntax 'wff' 'ctx'; syntax '|-' as 'wff'; $)
