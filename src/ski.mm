@@ -411,15 +411,22 @@ ADDval $p |- ( ( ADD x ) y ) => ( ( x SUCC ) y ) $=
 add0 $p |- ( ( ADD 0 ) x ) => x $=
   ( tADD t0 tap tSUCC ADDval e0 ax-bstr ) BCDADCEDADACAFEAGH $.
 
+$( Adding one is the successor operation. $)
+add1 $p |- ( ( ADD 1 ) x ) => ( SUCC x ) $=
+  ( tADD t1 tap tSUCC ADDval e1 ax-bstr ) BCDADCEDADEADCAFEAGH $.
+
 1p1 $p |- ( ( ADD 1 ) 1 ) =><= 2 $=
-  ( tADD t1 tap t2 tSUCC ADDval e1 ax-bstr df-2 ax-bseq ax-ijn ) ABCBCZDEBCZLBE
-  CBCMBBFEBGHDMIJK $.
+  ( tADD t1 tap t2 tSUCC add1 df-2 ax-bseq ax-ijn ) ABCBCDEBCZBFDJGHI $.
 
 tMUL $a term MUL $.
 df-MUL $a |- MUL := B $.
 
 MULval $p |- ( ( ( MUL x ) y ) f ) => ( x ( y f ) ) $=
   ( tMUL tap tB df-MUL apeqlll Bval ax-bstr ) DBECEAEFBECEAEBCAEEDFBCAGHBCAIJ $.
+
+$( Zero multiplied by a numeral is zero. $)
+mul0 $p |- ( ( ( ( MUL 0 ) x ) f ) y ) => y $=
+  ( tMUL t0 tap MULval apl e0 ax-bstr ) DEFBFAFZCFEBAFZFZCFCKMCAEBGHLCIJ $.
 
 $c ISZERO $.
 
@@ -508,14 +515,12 @@ df-ZEROS $a |- ZEROS := ( Y ( CONS 0 ) ) $.
 
 zhead $p |- ( ZEROS FST ) => 0 $=
   ( tZEROS tFST tap tY tCONS t0 df-ZEROS apeql tM tC tB Yval apl Mval Cval apll
-  Bval CONSval tTRU ax-bstr df-FST apeqll TRUval ) ABCDEFCZCZBCZFAUEBGHUFIJKCIC
-  UDCZCZBCZFUEUHBUDLMUIUGUGCZBCZFUHUJBUGNMUKKUDCICZUGCZBCZFUGULUGBKIUDOPUNUDUHC
-  ZBCZFUMUOBUDIUGQMUPBFCUHCZFBFUHRUQSFCUHCFBSFUHUAUBFUHUCTTTTTTT $.
+  Bval consfst ax-bstr ) ABCDEFCZCZBCZFAUABGHUBIJKCICTCZCZBCZFUAUDBTLMUEUCUCCZB
+  CZFUDUFBUCNMUGKTCICZUCCZBCZFUCUHUCBKITOPUJTUDCZBCFUIUKBTIUCQMFUDRSSSSS $.
 
 ztail $p |- ( ZEROS SND ) =><= ZEROS $=
-  ( tZEROS tSND tap tCONS t0 df-ZEROS apeql jnbs fix ax-jntr CONSval df-SND apeqll
-  tY tFAL FALval ax-bstr ax-bseq ax-ijn ) ABCZDECZNUACZCBCZATUBBCZUCTUDAUBBFGHU
-  ABIJUCAUBUCBECUBCZUBBEUBKUEOECUBCUBBOEUBLMEUBPQQAUBFRSJ $.
+  ( tZEROS tSND tap tCONS t0 tY df-ZEROS apeql jnbs fix ax-jntr conssnd ax-bseq
+  ax-ijn ) ABCZDECZFPCZCBCZAOQBCZROSAQBGHIPBJKRAQEQLAQGMNK $.
 
 $( $j
   syntax 'term' 'wff';
