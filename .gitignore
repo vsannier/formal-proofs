@@ -1,3 +1,4 @@
 misc/set.mm
 src/*.min
 scripts/check-braces
+.direnv/
