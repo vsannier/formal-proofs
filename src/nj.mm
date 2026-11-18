@@ -49,10 +49,10 @@ cf $a ctx ph $.
 $( The concatenation of two contexts is a context. $)
 cc $a ctx Ga , De $.
 
-$c |- => $.
+$c seq |- => $.
 
-$( A sequent is a well-formed formula. $)
-wseq $a wff Ga => ph $.
+$( A context and a formula form a sequent. $)
+sseq $a seq Ga => ph $.
 
 $(
 ###############################################################################
@@ -683,4 +683,4 @@ $( $t
   htmldef "|-" as " &vdash; ";
 $)
 
-$( $j syntax 'wff' 'ctx'; syntax '|-' as 'wff'; $)
+$( $j syntax 'wff' 'ctx'; syntax '|-' as 'seq'; $)
