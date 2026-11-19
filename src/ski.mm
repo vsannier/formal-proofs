@@ -517,7 +517,7 @@ $(
 #*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#
 $)
 
-$c ZEROS $.
+$c ZEROS ONES $.
 tZEROS $a term ZEROS $.
 df-ZEROS $a |- ZEROS := ( Y ( CONS 0 ) ) $.
 
@@ -528,6 +528,18 @@ zhead $p |- ( ZEROS FST ) => 0 $=
 
 ztail $p |- ( ZEROS SND ) =><= ZEROS $=
   ( tZEROS tSND tap tCONS t0 tY df-ZEROS apeql jnbs fix ax-jntr conssnd ax-bseq
+  ax-ijn ) ABCZDECZFPCZCBCZAOQBCZROSAQBGHIPBJKRAQEQLAQGMNK $.
+
+tONES $a term ONES $.
+df-ONES $a |- ONES := ( Y ( CONS 1 ) ) $.
+
+ohead $p |- ( ONES FST ) => 1 $=
+  ( tONES tFST tap tY tCONS t1 df-ONES apeql tM tC tB Yval apl Mval Cval apll
+  Bval consfst ax-bstr ) ABCDEFCZCZBCZFAUABGHUBIJKCICTCZCZBCZFUAUDBTLMUEUCUCCZB
+  CZFUDUFBUCNMUGKTCICZUCCZBCZFUCUHUCBKITOPUJTUDCZBCFUIUKBTIUCQMFUDRSSSSS $.
+
+otail $p |- ( ONES SND ) =><= ONES $=
+  ( tONES tSND tap tCONS t1 tY df-ONES apeql jnbs fix ax-jntr conssnd ax-bseq
   ax-ijn ) ABCZDECZFPCZCBCZAOQBCZROSAQBGHIPBJKRAQEQLAQGMNK $.
 
 $( $j
