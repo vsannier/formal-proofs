@@ -495,6 +495,18 @@ conssnd $p |- ( ( ( CONS x ) y ) SND ) => y $=
   ( tCONS tap tSND CONSval tFAL df-SND apeqll FALval ax-bstr ) CADBDEDEADBDZBEA
   BFLGADBDBEGABHIABJKK $.
 
+$( A pair can be reconstructed from its projections. $)
+consfstsnd $p |-
+  ( ( CONS ( ( ( CONS x ) y ) FST ) ) ( ( ( CONS x ) y ) SND ) )
+    => ( ( CONS x ) y ) $=
+  ( tCONS tap tFST tSND consfst apr conssnd ax-ap ) CCADZBDZEDZDKLFDBCMAABGHABI
+  J $.
+
+$( The head of the tail is the second element of a cons-list. $)
+conssndfst $p |- ( ( ( ( CONS x ) ( ( CONS y ) z ) ) SND ) FST ) => y $=
+  ( tCONS tap tSND tFST conssnd apl consfst ax-bstr ) DAEDBECEZEFEZGELGEBMLGALH
+  IBCJK $.
+
 tISMT $a term ISEMPTY $.
 df-ISMT $a |- ISEMPTY := ( ( B ( T TRUE ) ) ( T ( K ( K ( K FALSE ) ) ) ) ) $.
 
