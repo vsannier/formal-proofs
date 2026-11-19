@@ -415,6 +415,10 @@ $( Adding one is the successor operation. $)
 add1 $p |- ( ( ADD 1 ) x ) => ( SUCC x ) $=
   ( tADD t1 tap tSUCC ADDval e1 ax-bstr ) BCDADCEDADEADCAFEAGH $.
 
+$( Adding two applies the successor operation twice. $)
+add2 $p |- ( ( ADD 2 ) x ) => ( SUCC ( SUCC x ) ) $=
+  ( tADD t2 tap tSUCC ADDval 2val ax-bstr ) BCDADCEDADEEADDCAFEAGH $.
+
 1p1 $p |- ( ( ADD 1 ) 1 ) =><= 2 $=
   ( tADD t1 tap t2 tSUCC add1 df-2 ax-bseq ax-ijn ) ABCBCDEBCZBFDJGHI $.
 
@@ -427,6 +431,10 @@ MULval $p |- ( ( ( MUL x ) y ) f ) => ( x ( y f ) ) $=
 $( Zero multiplied by a numeral is zero. $)
 mul0 $p |- ( ( ( ( MUL 0 ) x ) f ) y ) => y $=
   ( tMUL t0 tap MULval apl e0 ax-bstr ) DEFBFAFZCFEBAFZFZCFCKMCAEBGHLCIJ $.
+
+$( One multiplied by a numeral is that numeral. $)
+mul1 $p |- ( ( ( ( MUL 1 ) x ) f ) y ) => ( ( x f ) y ) $=
+  ( tMUL t1 tap MULval apl e1 ax-bstr ) DEFBFAFZCFEBAFZFZCFLCFKMCAEBGHLCIJ $.
 
 $c ISZERO $.
 
